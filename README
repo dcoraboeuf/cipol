@@ -1,0 +1,6 @@
+cipol
+
+cipol stands for Continuous Integration Policy ans helps you to enforce a policy for your
+commits in your organization. It works for both centralized (Subversion) and decentralized
+(Git, Mercurial) SCM.
+
