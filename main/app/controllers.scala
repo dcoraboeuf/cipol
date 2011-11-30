@@ -7,8 +7,6 @@ object Application extends Controller {
     
     import views.Application._
     
-    def index = {
-        html.index("Your Scala application is ready!")
-    }
+    def index = html.index()
     
 }
