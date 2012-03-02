@@ -46,9 +46,15 @@
 	</licenses>
 
 	<url>https://github.com/dcoraboeuf/cipol</url>
+	
+	<properties>
+		<springVersion>3.1.1.RELEASE</springVersion>
+		<springSecurityVersion>3.1.0.RELEASE</springSecurityVersion>
+	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- Commons -->
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
@@ -64,6 +70,13 @@
 				<artifactId>commons-io</artifactId>
 				<version>2.0.1</version>
 			</dependency>
+			<!-- Spring -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${springVersion}</version>
+			</dependency>
+			<!-- Utilities -->
 			<dependency>
 				<groupId>net.sf.jstring</groupId>
 				<artifactId>jstring</artifactId>
@@ -74,6 +87,7 @@
 				<artifactId>guava</artifactId>
 				<version>11.0.2</version>
 			</dependency>
+			<!-- Logging -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-log4j12</artifactId>
@@ -255,5 +269,6 @@
 	</profiles>
 
 	<modules>
+	<module>cipol-web</module>
 	</modules>
 </project>
