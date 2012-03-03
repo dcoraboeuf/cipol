@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>cipol-web</artifactId>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>CIPOL Web</name>
 	
@@ -21,5 +21,19 @@
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<configuration>
+					<webApp>
+						<contextPath>/cipol</contextPath>
+					</webApp>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	
 </project>
