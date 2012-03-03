@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>cipol-web</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>CIPOL Web</name>
 	
