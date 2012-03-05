@@ -31,10 +31,21 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
+	    <dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	
 	<build>
 		<plugins>
+			<!-- Running w/ Jetty -->
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
@@ -42,7 +53,52 @@
 					<webApp>
 						<contextPath>/cipol</contextPath>
 					</webApp>
+					<stopPort>9966</stopPort>
+					<stopKey>foo</stopKey>
 				</configuration>
+				<!-- Integration tests with Jetty -->
+				<executions>
+					<execution>
+						<id>it-jetty-start</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<daemon>true</daemon>
+							<systemProperties>
+					            <systemProperty>
+					              <name>spring.profiles.active</name>
+					              <value>test</value>
+					            </systemProperty>
+					        </systemProperties>
+						</configuration>
+					</execution>
+					<execution>
+						<id>it-jetty-stop</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+            
+            <!-- Running the integration tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<testSourceDirectory>src/it/java</testSourceDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<!-- <goal>verify</goal> -->
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
