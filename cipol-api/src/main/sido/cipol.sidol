@@ -1,0 +1,6 @@
+schema <net.cipol.api> .
+
+a VersionInformation
+has
+	a versionNumber
+	.

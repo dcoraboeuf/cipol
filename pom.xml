@@ -50,7 +50,13 @@
 	<properties>
 		<springVersion>3.1.1.RELEASE</springVersion>
 		<springSecurityVersion>3.1.0.RELEASE</springSecurityVersion>
+		<sidoVersion>1.0.0-SNAPSHOT</sidoVersion>
 	</properties>
+
+	<modules>
+		<module>cipol-api</module>
+		<module>cipol-web</module>
+	</modules>
 
 	<dependencyManagement>
 		<dependencies>
@@ -139,6 +145,11 @@
 					<groupId>org.mortbay.jetty</groupId>
 					<artifactId>jetty-maven-plugin</artifactId>
 					<version>8.1.1.v20120215</version>
+				</plugin>
+				<plugin>
+					<groupId>net.sf.sido</groupId>
+					<artifactId>sido-gen-maven</artifactId>
+					<version>${sidoVersion}</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -272,8 +283,5 @@
 			</build>
 		</profile>
 	</profiles>
-
-	<modules>
-	<module>cipol-web</module>
-	</modules>
+	
 </project>
