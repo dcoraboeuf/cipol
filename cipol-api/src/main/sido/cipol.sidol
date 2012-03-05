@@ -1,4 +1,4 @@
-schema <net.cipol.api> .
+schema <net.cipol.api.model> .
 
 a VersionInformation
 has
