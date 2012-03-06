@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@RequestMapping("/api")
 public class APIController implements API {
 
 	private final APIService api;
@@ -21,7 +23,7 @@ public class APIController implements API {
 
 	@Override
 	@RequestMapping(value = "/version", method = RequestMethod.GET)
-	public VersionInformation getVersionInformation() {
+	public @ResponseBody VersionInformation getVersionInformation() {
 		return api.getVersionInformation();
 	}
 
