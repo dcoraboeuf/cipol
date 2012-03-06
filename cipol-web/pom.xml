@@ -86,17 +86,18 @@
             
             <!-- Running the integration tests -->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<configuration>
-					<testSourceDirectory>src/it/java</testSourceDirectory>
-				</configuration>
+				<groupId>org.codehaus.gmaven</groupId>
+				<artifactId>gmaven-plugin</artifactId>
 				<executions>
 					<execution>
+						<id>it-groovy-test</id>
+						<phase>integration-test</phase>
 						<goals>
-							<goal>integration-test</goal>
-							<!-- <goal>verify</goal> -->
+							<goal>execute</goal>
 						</goals>
+						<configuration>
+							<source>${project.basedir}/src/test/it/it.groovy</source>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
