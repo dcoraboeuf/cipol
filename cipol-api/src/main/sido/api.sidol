@@ -1,0 +1,25 @@
+schema <net.cipol.api.model> .
+
+a VersionInformation
+has
+	a versionNumber
+	.
+
+a CommitInformation
+has
+	an author,
+	a message,
+	a collection of string as paths
+	.
+
+a ValidationResult
+has
+	a boolean as valid,
+	a nullable collection of string as messages
+	.
+
+a Policy
+has
+	an uid,
+	a name
+	.
