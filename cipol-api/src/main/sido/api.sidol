@@ -15,7 +15,7 @@ has
 a ValidationResult
 has
 	a boolean as valid,
-	a nullable collection of string as messages
+	a collection of string as messages
 	.
 
 a Policy

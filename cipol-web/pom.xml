@@ -132,8 +132,12 @@
 							<daemon>true</daemon>
 							<systemProperties>
 					            <systemProperty>
-					              <name>spring.profiles.active</name>
-					              <value>test</value>
+						            <name>spring.profiles.active</name>
+						            <value>test</value>
+					            </systemProperty>
+					            <systemProperty>
+					            	<name>cipol.home</name>
+					            	<value>${project.basedir}/src/it/home</value>
 					            </systemProperty>
 					        </systemProperties>
 						</configuration>
