@@ -100,6 +100,11 @@
 				<artifactId>spring-context</artifactId>
 				<version>${springVersion}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${springVersion}</version>
+			</dependency>
 			<!-- Utilities -->
 			<dependency>
 				<groupId>net.sf.jstring</groupId>

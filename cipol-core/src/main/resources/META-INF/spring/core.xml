@@ -9,6 +9,7 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
 http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
     
+    <context:component-scan base-package="net.cipol"/>
     <context:property-placeholder location="classpath:META-INF/resources/app.properties"/>
 
 </beans>
