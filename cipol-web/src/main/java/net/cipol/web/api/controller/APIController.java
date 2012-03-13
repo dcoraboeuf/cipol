@@ -32,7 +32,7 @@ public class APIController implements API {
 	}
 	
 	@Override
-	@RequestMapping(value = "/validate/${policyId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/validate/{policyId}", method = RequestMethod.POST)
 	public @ResponseBody ValidationResult validate(@PathVariable String policyId,
 			@RequestBody CommitInformation information) {
 		return api.validate(policyId, information);

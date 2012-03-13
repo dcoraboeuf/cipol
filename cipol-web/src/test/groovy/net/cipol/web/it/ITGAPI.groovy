@@ -3,7 +3,9 @@ package net.cipol.web.it
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.fail
 
+import groovyx.net.http.ContentType;
 import groovyx.net.http.HTTPBuilder;
+import groovyx.net.http.Method;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +13,7 @@ import org.junit.Test;
 class ITGAPI {
 	
 	def version
+	def http
 	
 	@Before
 	void before() {
@@ -20,11 +23,12 @@ class ITGAPI {
 		}
 		version = props["project.version"]
 		println("Version = $version")
+		// Creates the HTTP client for the API
+		http = new HTTPBuilder('http://localhost:8080/cipol/api/')
 	}
 	
 	@Test
 	void version() {
-		def http = new HTTPBuilder('http://localhost:8080/cipol/api/')
 		http.get ( path: 'version' ) { resp, json ->
 			println("Response status : $resp.status")
 			println("Response content: $json")
@@ -32,6 +36,16 @@ class ITGAPI {
 			if (actualVersion != version) {
 				fail("Expected version $version but was $actualVersion")
 			}
+		}
+	}
+	
+	@Test
+	void validate_no_policy() {
+		http.request ( Method.POST, ContentType.JSON ) {
+			uri.path = 'validate/UID'
+			body = [author: 'albert', message: 'My message']
+			requestContentType = ContentType.JSON
+			// FIXME Checks the error message
 		}
 	}	
 
