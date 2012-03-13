@@ -190,6 +190,13 @@
 					<groupId>org.codehaus.gmaven</groupId>
 					<artifactId>gmaven-plugin</artifactId>
 					<version>1.4</version>
+				    <dependencies>
+				        <dependency>
+				            <groupId>org.codehaus.gmaven.runtime</groupId>
+				            <artifactId>gmaven-runtime-1.7</artifactId>
+				            <version>1.4</version>
+				        </dependency>
+				    </dependencies>
 				</plugin>
 				<plugin>
 					<groupId>net.sf.sido</groupId>
