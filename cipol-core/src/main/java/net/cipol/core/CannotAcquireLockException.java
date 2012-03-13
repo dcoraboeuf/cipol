@@ -1,5 +1,6 @@
 package net.cipol.core;
 
+
 public class CannotAcquireLockException extends CoreException {
 
 	public CannotAcquireLockException(String key) {

@@ -12,17 +12,16 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     <context:component-scan base-package="net.cipol"/>
 
     <!-- Strings -->
-	<!--
     <bean class="net.sf.jstring.Strings">
         <constructor-arg value="true" />
         <constructor-arg>
             <list>
                 <value>META-INF.resources.web</value>
                 <value>META-INF.resources.app</value>
+                <value>META-INF.resources.core</value>
             </list>
         </constructor-arg>
     </bean>
-	-->
 
 	<!--<task:annotation-driven />-->
     <mvc:annotation-driven/>

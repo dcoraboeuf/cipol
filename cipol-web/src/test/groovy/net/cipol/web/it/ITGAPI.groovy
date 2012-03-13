@@ -1,6 +1,8 @@
 package net.cipol.web.it
 
 import static org.junit.Assert.assertEquals
+import static org.junit.Assert.assertFalse
+import static org.junit.Assert.assertTrue
 import static org.junit.Assert.fail
 
 import groovyx.net.http.ContentType;
@@ -45,7 +47,13 @@ class ITGAPI {
 			uri.path = 'validate/UID'
 			body = [author: 'albert', message: 'My message']
 			requestContentType = ContentType.JSON
-			// FIXME Checks the error message
+			response.success = { resp, json ->
+				println("Response status : $resp.status")
+				println("Response content: $json")
+				assertFalse(json.valid);
+				assertEquals(1, json.messages.size());
+				assertTrue(json.messages[0].startsWith("[CORE-002]"));				
+			}
 		}
 	}	
 
