@@ -21,5 +21,28 @@ has
 a Policy
 has
 	an uid,
-	a name
+	a name,
+	a description,
+	a collection of RuleSet as rules
 	.
+
+a RuleSet
+has
+	a path,
+	a description,
+	a collection of Rule as rules
+	.
+
+a Rule
+has
+	a ruleId,
+	a nullable string as description,
+	a nullable collection of ParamValue as parameters
+	.
+
+a ParamValue
+has
+	a name,
+	a value
+	.
+
