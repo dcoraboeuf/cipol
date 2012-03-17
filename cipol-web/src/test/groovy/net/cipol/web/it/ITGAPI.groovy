@@ -20,14 +20,22 @@ class ITGAPI {
 	
 	@Before
 	void before() {
+		def itPort = System.properties['it.port']
+		println ("it.port = $itPort")
+		if (itPort == null || itPort == "") {
+			itPort = "8080"
+		}
 		def props = new Properties()
 		getClass().getResourceAsStream("/Project.properties").withStream {
 			stream -> props.load(stream)
 		}
 		version = props["project.version"]
 		println("Version = $version")
+		// URL of the server
+		def url = "http://localhost:$itPort/cipol/api/"
+		println ("URL = $url")
 		// Creates the HTTP client for the API
-		http = new HTTPBuilder('http://localhost:8080/cipol/api/')
+		http = new HTTPBuilder(url)
 	}
 	
 	@Test

@@ -15,6 +15,11 @@
 
 	<name>CIPOL Web</name>
 	
+	<properties>
+		<!-- Port to use when running IT tests -->
+		<it.port>8081</it.port>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -139,6 +144,10 @@
 					            	<name>cipol.home</name>
 					            	<value>${project.basedir}/src/it/home</value>
 					            </systemProperty>
+						    <systemProperty>
+						    	<name>jetty.port</name>
+								<value>${it.port}</value>
+						    </systemProperty>
 					        </systemProperties>
 						</configuration>
 					</execution>
@@ -162,6 +171,14 @@
 		              <goal>integration-test</goal>
 		              <goal>verify</goal>
 		            </goals>
+					<configuration>
+						<systemProperties>
+							<property>
+								<name>it.port</name>
+								<value>${it.port}</value>
+							</property>
+						</systemProperties>
+					</configuration>
 		          </execution>
 		        </executions>
 			</plugin>
