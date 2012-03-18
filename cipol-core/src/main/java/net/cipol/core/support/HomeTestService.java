@@ -1,4 +1,4 @@
-package net.cipol.core;
+package net.cipol.core.support;
 
 import java.io.File;
 
@@ -8,13 +8,13 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
-@Profile(value = { "dev", "prod" })
-public class HomeCore implements HomeService {
+@Profile(value = { "test" })
+public class HomeTestService implements HomeService {
 
 	private final File home;
 
-	public HomeCore() {
-		home = HomeSupport.home();
+	public HomeTestService() {
+		home = new File("src/test/resources/home");
 	}
 
 	@Override

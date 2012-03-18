@@ -144,10 +144,10 @@
 					            	<name>cipol.home</name>
 					            	<value>${project.basedir}/src/it/home</value>
 					            </systemProperty>
-						    <systemProperty>
-						    	<name>jetty.port</name>
-								<value>${it.port}</value>
-						    </systemProperty>
+							    <systemProperty>
+							    	<name>jetty.port</name>
+									<value>${it.port}</value>
+							    </systemProperty>
 					        </systemProperties>
 						</configuration>
 					</execution>
