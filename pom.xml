@@ -57,6 +57,8 @@
 		<module>cipol-api</module>
 		<module>cipol-web</module>
 		<module>cipol-core</module>
+		<module>cipol-rule</module>
+		<module>cipol-model</module>
 	</modules>
 
 	<dependencyManagement>

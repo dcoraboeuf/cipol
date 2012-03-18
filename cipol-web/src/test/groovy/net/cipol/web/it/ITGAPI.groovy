@@ -61,7 +61,7 @@ class ITGAPI {
 				println("Response content: $json")
 				assertFalse(json.valid);
 				assertEquals(1, json.messages.size());
-				assertTrue(json.messages[0].startsWith("[CORE-002]"));				
+				assertTrue(json.messages[0].startsWith("[CORE-004]"));				
 			}
 		}
 	}	

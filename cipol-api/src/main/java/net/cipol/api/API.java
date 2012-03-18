@@ -1,8 +1,8 @@
 package net.cipol.api;
 
-import net.cipol.api.model.CommitInformation;
-import net.cipol.api.model.ValidationResult;
-import net.cipol.api.model.VersionInformation;
+import net.cipol.model.CommitInformation;
+import net.cipol.model.ValidationResult;
+import net.cipol.model.VersionInformation;
 
 public interface API {
 	

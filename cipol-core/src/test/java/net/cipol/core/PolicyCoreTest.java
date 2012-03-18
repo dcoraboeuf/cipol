@@ -9,7 +9,7 @@ import java.io.File;
 
 import net.cipol.api.FileService;
 import net.cipol.api.PolicyService;
-import net.cipol.api.model.Policy;
+import net.cipol.model.Policy;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class PolicyCoreTest {
 		policyService = new PolicyCore(fileService);
 	}
 	
-	@Test(expected = CannotFindFileException.class)
+	@Test(expected = PolicyNotFoundException.class)
 	public void load_not_found() {
 		policyService.loadPolicy("0");
 	}

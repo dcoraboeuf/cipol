@@ -2,7 +2,7 @@ package net.cipol.web.api.controller;
 
 import static org.junit.Assert.assertSame;
 import net.cipol.api.APIService;
-import net.cipol.api.model.VersionInformation;
+import net.cipol.model.VersionInformation;
 import net.sf.jstring.Strings;
 
 import org.junit.Test;

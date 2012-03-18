@@ -1,6 +1,6 @@
 package net.cipol.api;
 
-import net.cipol.api.model.Policy;
+import net.cipol.model.Policy;
 
 public interface PolicyService {
 

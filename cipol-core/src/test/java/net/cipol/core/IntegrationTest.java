@@ -7,8 +7,8 @@ import java.io.File;
 
 import net.cipol.api.APIService;
 import net.cipol.api.HomeService;
-import net.cipol.api.model.CommitInformation;
-import net.cipol.api.model.ValidationResult;
+import net.cipol.model.CommitInformation;
+import net.cipol.model.ValidationResult;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +37,7 @@ public class IntegrationTest {
 
 	@Test
 	public void home() {
-		File file = homeService.getFile("net.cipol.api.model.Policy.bare.json");
+		File file = homeService.getFile("net.cipol.model.Policy.bare.json");
 		assertNotNull(file);
 		assertTrue(file.exists());
 	}

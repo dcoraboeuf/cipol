@@ -10,10 +10,10 @@ import java.io.File;
 
 import net.cipol.api.APIService;
 import net.cipol.api.PolicyService;
-import net.cipol.api.model.CommitInformation;
-import net.cipol.api.model.Policy;
-import net.cipol.api.model.ValidationResult;
-import net.cipol.api.model.VersionInformation;
+import net.cipol.model.CommitInformation;
+import net.cipol.model.Policy;
+import net.cipol.model.ValidationResult;
+import net.cipol.model.VersionInformation;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -5,9 +5,9 @@ import java.util.Locale;
 
 import net.cipol.api.API;
 import net.cipol.api.APIService;
-import net.cipol.api.model.CommitInformation;
-import net.cipol.api.model.ValidationResult;
-import net.cipol.api.model.VersionInformation;
+import net.cipol.model.CommitInformation;
+import net.cipol.model.ValidationResult;
+import net.cipol.model.VersionInformation;
 import net.sf.jstring.LocalizableException;
 import net.sf.jstring.Strings;
 
