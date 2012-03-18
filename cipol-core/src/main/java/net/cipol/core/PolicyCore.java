@@ -21,7 +21,11 @@ public class PolicyCore implements PolicyService {
 	@Override
 	@Cacheable("policy")
 	public Policy loadPolicy(String policyId) {
-		return fileService.read (Policy.class, policyId);
+		try {
+			return fileService.read(Policy.class, policyId);
+		} catch (CannotFindFileException ex) {
+			throw new PolicyNotFoundException(policyId);
+		}
 	}
 
 }
