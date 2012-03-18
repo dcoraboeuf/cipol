@@ -138,7 +138,7 @@
 							<systemProperties>
 					            <systemProperty>
 						            <name>spring.profiles.active</name>
-						            <value>test</value>
+						            <value>it</value>
 					            </systemProperty>
 					            <systemProperty>
 					            	<name>cipol.home</name>
