@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 
-import net.cipol.api.APIService;
 import net.cipol.api.PolicyService;
 import net.cipol.model.CommitInformation;
 import net.cipol.model.Policy;
@@ -20,7 +19,7 @@ import org.junit.Test;
 
 public class APICoreTest {
 
-	private APIService api;
+	private APICore api;
 	private PolicyService policyService;
 
 	@Before

@@ -12,11 +12,15 @@ import net.cipol.model.RuleSet;
 import net.cipol.model.ValidationResult;
 import net.cipol.model.VersionInformation;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 
 @Service
 public class APICore implements APIService {
@@ -57,16 +61,27 @@ public class APICore implements APIService {
 		List<RuleSet> rules = policy.getRules();
 		for (RuleSet ruleSet : rules) {
 			logger.debug("[validate] Getting rule set for path [{}]", ruleSet.getPath());
-			// FIXME Is this rule set appliable?
-			// if (isPathAppliable(ruleSet.getPath(), information.getPaths())) {
-				// Applies this rule set
-				
-			// }
+			// Is this rule set appliable?
+			if (isPathAppliable(ruleSet.getPath(), information.getPaths())) {
+				// FIXME Applies this rule set
+			}
 		}
 		// FIXME Result
 		ValidationResult result = new ValidationResult();
 		result.setValid(true);
 		return result;
+	}
+
+	protected boolean isPathAppliable(final String path, List<String> paths) {
+		String candidate = Iterables.find(paths, new Predicate<String>() {
+			
+			@Override
+			public boolean apply(String value) {
+				return StringUtils.startsWith(value, path);
+			}
+
+		}, null);
+		return candidate != null;
 	}
 
 }
