@@ -17,7 +17,7 @@
 	
 	<properties>
 		<!-- Port to use when running IT tests -->
-		<it.port>8081</it.port>
+		<it.port>9999</it.port>
 	</properties>
 	
 	<dependencies>
