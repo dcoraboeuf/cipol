@@ -30,10 +30,10 @@ a RuleSet
 has
 	a path,
 	a description,
-	a collection of Rule as rules
+	a collection of RuleDefinition as rules
 	.
 
-a Rule
+a RuleDefinition
 has
 	a ruleId,
 	a nullable string as description,
@@ -46,3 +46,10 @@ has
 	a value
 	.
 
+a RuleExecutionResult
+has
+	a boolean as success,
+	a nullable boolean as terminate,
+	a nullable string as message
+	.
+	

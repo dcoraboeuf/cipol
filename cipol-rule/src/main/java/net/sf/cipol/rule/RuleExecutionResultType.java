@@ -13,4 +13,14 @@ public enum RuleExecutionResultType {
 	 * The rule could not be applied.
 	 */
 	FAIL;
+
+	public RuleExecutionResultType combineWith(RuleExecutionResultType thisType) {
+		if (thisType == FAIL || this == FAIL) {
+			return FAIL;
+		} else if (thisType == TERMINATE || this == TERMINATE) {
+			return TERMINATE;
+		} else {
+			return OK;
+		}
+	}
 }
