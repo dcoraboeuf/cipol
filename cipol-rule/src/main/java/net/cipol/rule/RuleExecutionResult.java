@@ -1,4 +1,4 @@
-package net.sf.cipol.rule;
+package net.cipol.rule;
 
 public interface RuleExecutionResult {
 

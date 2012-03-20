@@ -1,7 +1,7 @@
-package net.sf.cipol.rule.support;
+package net.cipol.rule.support;
 
-import net.sf.cipol.rule.RuleExecutionContext;
-import net.sf.cipol.rule.RuleExecutionResult;
+import net.cipol.rule.RuleExecutionContext;
+import net.cipol.rule.RuleExecutionResult;
 
 public abstract class AbstractMessageRule<T> extends AbstractPathIndependantRule<T> {
 

@@ -1,10 +1,10 @@
-package net.sf.cipol.rule.support;
+package net.cipol.rule.support;
 
 import java.util.Map;
 
-import net.sf.cipol.rule.Rule;
-import net.sf.cipol.rule.RuleExecutionContext;
-import net.sf.cipol.rule.RuleExecutionResult;
+import net.cipol.rule.Rule;
+import net.cipol.rule.RuleExecutionContext;
+import net.cipol.rule.RuleExecutionResult;
 
 import org.apache.commons.lang.StringUtils;
 

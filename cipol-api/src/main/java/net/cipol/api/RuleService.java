@@ -3,7 +3,7 @@ package net.cipol.api;
 import java.util.List;
 
 import net.cipol.model.ParamValue;
-import net.sf.cipol.rule.RuleExecution;
+import net.cipol.rule.RuleExecution;
 
 public interface RuleService {
 

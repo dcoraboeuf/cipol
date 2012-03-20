@@ -14,9 +14,9 @@ import net.cipol.model.RuleSet;
 import net.cipol.model.ValidationDetail;
 import net.cipol.model.ValidationReport;
 import net.cipol.model.VersionInformation;
-import net.sf.cipol.rule.RuleExecution;
-import net.sf.cipol.rule.RuleExecutionResult;
-import net.sf.cipol.rule.RuleExecutionResultType;
+import net.cipol.rule.RuleExecution;
+import net.cipol.rule.RuleExecutionResult;
+import net.cipol.rule.RuleExecutionResultType;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

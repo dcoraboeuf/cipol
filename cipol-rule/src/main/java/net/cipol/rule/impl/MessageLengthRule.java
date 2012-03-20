@@ -1,10 +1,10 @@
-package net.sf.cipol.rule.impl;
+package net.cipol.rule.impl;
 
 import java.util.Map;
 
-import net.sf.cipol.rule.RuleExecutionContext;
-import net.sf.cipol.rule.RuleExecutionResult;
-import net.sf.cipol.rule.support.AbstractMessageRule;
+import net.cipol.rule.RuleExecutionContext;
+import net.cipol.rule.RuleExecutionResult;
+import net.cipol.rule.support.AbstractMessageRule;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;

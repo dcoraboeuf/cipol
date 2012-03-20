@@ -15,10 +15,10 @@ import com.google.common.collect.Maps;
 import net.cipol.api.RuleService;
 import net.cipol.model.CommitInformation;
 import net.cipol.model.ParamValue;
-import net.sf.cipol.rule.Rule;
-import net.sf.cipol.rule.RuleExecution;
-import net.sf.cipol.rule.RuleExecutionContext;
-import net.sf.cipol.rule.RuleExecutionResult;
+import net.cipol.rule.Rule;
+import net.cipol.rule.RuleExecution;
+import net.cipol.rule.RuleExecutionContext;
+import net.cipol.rule.RuleExecutionResult;
 import net.sf.jstring.Strings;
 
 @Service

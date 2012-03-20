@@ -1,7 +1,7 @@
-package net.sf.cipol.rule.support;
+package net.cipol.rule.support;
 
-import net.sf.cipol.rule.RuleExecutionResult;
-import net.sf.cipol.rule.RuleExecutionResultType;
+import net.cipol.rule.RuleExecutionResult;
+import net.cipol.rule.RuleExecutionResultType;
 
 public class FailRuleExecutionResult implements RuleExecutionResult {
 	

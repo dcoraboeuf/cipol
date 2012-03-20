@@ -1,4 +1,4 @@
-package net.sf.cipol.rule.support;
+package net.cipol.rule.support;
 
 import net.cipol.model.support.CoreException;
 

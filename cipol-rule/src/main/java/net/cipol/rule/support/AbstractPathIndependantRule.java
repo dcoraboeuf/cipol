@@ -1,8 +1,8 @@
-package net.sf.cipol.rule.support;
+package net.cipol.rule.support;
 
 import net.cipol.model.CommitInformation;
-import net.sf.cipol.rule.RuleExecutionContext;
-import net.sf.cipol.rule.RuleExecutionResult;
+import net.cipol.rule.RuleExecutionContext;
+import net.cipol.rule.RuleExecutionResult;
 
 public abstract class AbstractPathIndependantRule<T> extends AbstractRule<T> {
 

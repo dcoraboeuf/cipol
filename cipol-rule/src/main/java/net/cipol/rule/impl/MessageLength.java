@@ -1,4 +1,4 @@
-package net.sf.cipol.rule.impl;
+package net.cipol.rule.impl;
 
 public class MessageLength {
 
