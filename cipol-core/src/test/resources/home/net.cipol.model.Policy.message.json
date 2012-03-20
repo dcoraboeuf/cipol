@@ -1,0 +1,16 @@
+{
+	"uid": "message",
+	"name": "Message",
+	"description": "Message length",
+	"rules": [{
+		"description": "Minimal message length",
+		"path": "/",
+		"rules": [{
+			"ruleId": "message",
+			"parameters": [{
+				"name": "maxlength",
+				"value": "10"
+			}]
+		}]
+	}]
+}

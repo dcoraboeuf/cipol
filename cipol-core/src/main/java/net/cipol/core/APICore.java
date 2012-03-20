@@ -112,6 +112,9 @@ public class APICore implements APIService {
 			detail.setPath(ruleSetPath);
 			// Applies the rule
 			boolean abort = applyRule (detail, ruleDefinition, information);
+			// Adding the details
+			validationReport.addDetails(detail);
+			// Aborting the rules
 			if (abort) {
 				return true;
 			}
@@ -135,6 +138,8 @@ public class APICore implements APIService {
 		detail.setRuleDescription(rule.getDescription());
 		detail.setSuccess(executionType.success());
 		detail.setMessage(result.getMessage());
+		// Logging
+		logger.debug("[validate] success = {}, message = {}", detail.isSuccess(), detail.getMessage());
 		// Status -> fail or terminate ==> abort
 		return executionType.abort();
 	}

@@ -2,15 +2,16 @@ package net.cipol.rule.impl;
 
 import java.util.Map;
 
+import net.cipol.model.CommitInformation;
 import net.cipol.rule.RuleExecutionContext;
 import net.cipol.rule.RuleExecutionResult;
-import net.cipol.rule.support.AbstractMessageRule;
+import net.cipol.rule.support.AbstractRule;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MessageLengthRule extends AbstractMessageRule<MessageLength> {
+public class MessageLengthRule extends AbstractRule<MessageLength> {
 	
 	public static final String RULE_ID = "message";
 
@@ -24,7 +25,9 @@ public class MessageLengthRule extends AbstractMessageRule<MessageLength> {
 	}
 	
 	@Override
-	protected RuleExecutionResult apply(RuleExecutionContext context, MessageLength options, String message) {
+	public RuleExecutionResult apply(RuleExecutionContext context,
+			MessageLength options, CommitInformation commitInformation) {
+		String message = commitInformation.getMessage();
 		if (StringUtils.length(message) < options.getMaxlength()) {
 			return fail(context, "message", options.getMaxlength());
 		} else {

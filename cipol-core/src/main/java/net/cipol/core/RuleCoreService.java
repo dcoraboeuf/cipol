@@ -1,6 +1,7 @@
 package net.cipol.core;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -40,19 +41,24 @@ public class RuleCoreService implements RuleService {
 
 	@Override
 	public <T> RuleExecution getRule(String ruleId, List<ParamValue> parameters) {
-		// Indexes the parameters
-		ImmutableMap<String, ParamValue> paramsEntries = Maps.uniqueIndex(parameters, new Function<ParamValue, String>() {
-			@Override
-			public String apply(ParamValue param) {
-				return param.getName();
-			}
-		});
-		Map<String, String> params = Maps.transformValues(paramsEntries, new Function<ParamValue, String>() {
-			@Override
-			public String apply(ParamValue param) {
-				return param.getValue();
-			}
-		});
+		Map<String, String> params;
+		if (parameters != null) {
+			// Indexes the parameters
+			ImmutableMap<String, ParamValue> paramsEntries = Maps.uniqueIndex(parameters, new Function<ParamValue, String>() {
+				@Override
+				public String apply(ParamValue param) {
+					return param.getName();
+				}
+			});
+			params = Maps.transformValues(paramsEntries, new Function<ParamValue, String>() {
+				@Override
+				public String apply(ParamValue param) {
+					return param.getValue();
+				}
+			});
+		} else {
+			params = Collections.emptyMap();
+		}
 		// Execution context
 		final RuleExecutionContext context = new RuleExecutionContext() {
 			
