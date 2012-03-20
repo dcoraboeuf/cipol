@@ -3,7 +3,6 @@ package net.cipol.web.api.controller;
 import java.util.Collections;
 import java.util.Locale;
 
-import net.cipol.api.API;
 import net.cipol.api.APIService;
 import net.cipol.model.CommitInformation;
 import net.cipol.model.ValidationResult;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/api")
-public class APIController implements API {
+public class APIController {
 
 	private final APIService api;
 	private final Strings strings;
@@ -32,13 +31,11 @@ public class APIController implements API {
 		this.strings = strings;
 	}
 
-	@Override
 	@RequestMapping(value = "/version", method = RequestMethod.GET)
 	public @ResponseBody VersionInformation getVersionInformation() {
 		return api.getVersionInformation();
 	}
 	
-	@Override
 	@RequestMapping(value = "/validate/{policyId}", method = RequestMethod.POST)
 	public @ResponseBody ValidationResult validate(@PathVariable String policyId,
 			@RequestBody CommitInformation information) {

@@ -1,5 +1,13 @@
 package net.cipol.api;
 
-public interface APIService extends API {
+import net.cipol.model.CommitInformation;
+import net.cipol.model.ValidationResult;
+import net.cipol.model.VersionInformation;
+
+public interface APIService {
+	
+	VersionInformation getVersionInformation();
+	
+	ValidationResult validate (String policyId, CommitInformation information);
 
 }
