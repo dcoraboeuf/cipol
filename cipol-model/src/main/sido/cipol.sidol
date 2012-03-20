@@ -17,6 +17,20 @@ has
 	a boolean as valid,
 	a collection of string as messages
 	.
+	
+a ValidationReport
+has
+	a collection of ValidationDetail as details
+	.
+
+a ValidationDetail
+has
+	a path,
+	a ruleId,
+	a ruleDescription,
+	a boolean as success,
+	a nullable string as message
+	.
 
 a Policy
 has
