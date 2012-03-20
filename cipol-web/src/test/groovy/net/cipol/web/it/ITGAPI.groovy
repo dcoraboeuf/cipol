@@ -6,6 +6,8 @@ import static org.junit.Assert.assertNull
 import static org.junit.Assert.assertTrue
 import static org.junit.Assert.fail
 
+import net.sf.json.JSONNull
+
 import groovyx.net.http.ContentType;
 import groovyx.net.http.HTTPBuilder;
 import groovyx.net.http.Method;
@@ -21,10 +23,10 @@ class ITGAPI {
 	@Before
 	void before() {
 		def itPort = System.properties['it.port']
-		println ("it.port = $itPort")
 		if (itPort == null || itPort == "") {
-			itPort = "8080"
+			itPort = "9999"
 		}
+		println ("it.port = $itPort")
 		def props = new Properties()
 		getClass().getResourceAsStream("/Project.properties").withStream {
 			stream -> props.load(stream)
@@ -59,9 +61,8 @@ class ITGAPI {
 			response.success = { resp, json ->
 				println("Response status : $resp.status")
 				println("Response content: $json")
-				assertFalse(json.valid);
-				assertEquals(1, json.messages.size());
-				assertTrue(json.messages[0].startsWith("[CORE-004]"));				
+				assertFalse(json.success);
+				assertEquals('[CORE-004] Policy "UID" is not defined.', json.message);
 			}
 		}
 	}	
@@ -75,8 +76,8 @@ class ITGAPI {
 			response.success = { resp, json ->
 				println("Response status : $resp.status")
 				println("Response content: $json")
-				assertTrue(json.valid);
-				assertEquals(0, json.messages.size());				
+				assertTrue(json.success);
+				assertTrue(JSONNull.getInstance() == json.message);				
 			}
 		}
 	}	

@@ -1,6 +1,5 @@
 package net.cipol.core;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -10,11 +9,10 @@ import net.cipol.api.PolicyService;
 import net.cipol.model.CommitInformation;
 import net.cipol.model.Policy;
 import net.cipol.model.RuleDefinition;
-import net.cipol.model.RuleExecutionResult;
 import net.cipol.model.RuleSet;
-import net.cipol.model.ValidationResult;
+import net.cipol.model.ValidationDetail;
+import net.cipol.model.ValidationReport;
 import net.cipol.model.VersionInformation;
-import net.sf.cipol.rule.RuleExecutionResultType;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -55,92 +53,77 @@ public class APICore implements APIService {
 	}
 	
 	@Override
-	public ValidationResult validate(String policyId,
+	public ValidationReport validate(String policyId,
 			CommitInformation information) {
 		logger.debug("[validate] Request for policy [{}]", policyId);
 		// Loads the policy definition
 		Policy policy = policyService.loadPolicy (policyId);
 		logger.debug("[validate] Applying policy [{}]", policy.getName());
 		// For each rule of the policy
-		ValidationResult validationResult = new ValidationResult();
+		ValidationReport validationReport = new ValidationReport();
 		List<RuleSet> rules = policy.getRules();
 		for (RuleSet ruleSet : rules) {
 			logger.debug("[validate] Getting rule set for path [{}]", ruleSet.getPath());
 			// Is this rule set appliable?
 			if (isPathAppliable(ruleSet.getPath(), information.getPaths())) {
 				// Applies this rule set
-				RuleExecutionResult result = applyRuleSet (ruleSet, information);
-				// Overall result
-				RuleExecutionResultType resultType = getResultType(result);
-				switch (resultType) {
-				case OK:
-					// Going on
+				boolean abort = applyRuleSet (validationReport, ruleSet, information);
+				// Aborting?
+				if (abort) {
+					logger.debug("[validate] Aborting after applying rule set for path [{}]", ruleSet.getPath());
 					break;
-				case TERMINATE:
-					// Done, exits the validation with a success
-					validationResult.setValid(true);
-					return validationResult;
-				case FAIL:
-					// Returns the validation result with a failure message
-					validationResult.setValid(false);
-					validationResult.setMessages(Collections.singletonList(result.getMessage()));
-					return validationResult;
-				default:
-					throw new IllegalStateException("Unknown result type: " + resultType);
 				}
 			}
 		}
-		// Result OK
-		validationResult.setValid(true);
-		return validationResult;
+		// Consolidation
+		consolidate(validationReport);
+		// Result
+		return validationReport;
 	}
 
-	protected RuleExecutionResultType getResultType(RuleExecutionResult result) {
-		if (result.isSuccess()) {
-			Boolean terminate = result.getTerminate();
-			if (terminate != null && terminate) {
-				return RuleExecutionResultType.TERMINATE;
-			} else {
-				return RuleExecutionResultType.OK;
+	protected void consolidate(ValidationReport validationReport) {
+		validationReport.setSuccess(true);
+		validationReport.setMessage(null);
+		List<ValidationDetail> details = validationReport.getDetails();
+		for (ValidationDetail detail : details) {
+			if (!detail.isSuccess()) {
+				validationReport.setSuccess(false);
+				validationReport.setMessage(detail.getMessage());
+				break;
 			}
-		} else {
-			return RuleExecutionResultType.FAIL;
 		}
 	}
 
-	protected RuleExecutionResult applyRuleSet(RuleSet ruleSet,
+	protected boolean applyRuleSet(ValidationReport validationReport, RuleSet ruleSet,
 			CommitInformation information) {
-		logger.debug("[validate] Applying rule set for path [{}]", ruleSet.getPath());
+		// Path
+		String ruleSetPath = ruleSet.getPath();
+		logger.debug("[validate] Applying rule set for path [{}]", ruleSetPath);
 		// For each rule
 		for (RuleDefinition ruleDefinition: ruleSet.getRules()) {
-			RuleExecutionResult result = applyRule (ruleDefinition, information);
-			RuleExecutionResultType resultType = getResultType(result);
-			switch (resultType) {
-			case OK:
-				// Going on
-				break;
-			case TERMINATE:
-			case FAIL:
-				// Terminates here
-				return result;
-			default:
-				throw new IllegalStateException("Unknown result type: " + resultType);
+			// Prepare the report detail
+			ValidationDetail detail = new ValidationDetail();
+			detail.setPath(ruleSetPath);
+			// Applies the rule
+			boolean abort = applyRule (detail, ruleDefinition, information);
+			if (abort) {
+				return true;
 			}
 		}
-		// OK
-		return ok();
+		// Ran OK
+		return false;
 	}
 
-	protected RuleExecutionResult ok() {
-		RuleExecutionResult result = new RuleExecutionResult();
-		result.setSuccess(true);
-		return result;
-	}
-
-	protected RuleExecutionResult applyRule(RuleDefinition ruleDefinition,
-			CommitInformation information) {
-		// FIXME Result
-		return ok();
+	protected boolean applyRule(ValidationDetail detail,
+			RuleDefinition ruleDefinition, CommitInformation information) {
+		// Logging
+		logger.debug("[validate] Applying rule [{}] for path [{}]", ruleDefinition.getRuleId(), detail.getPath());
+		// TODO Gets the rule
+		// TODO Applies the rule
+		// TODO Adds rule execution details into the report
+		// TODO Status -> fail or terminate ==> abort
+		// TODO OK
+		return false;
 	}
 
 	protected boolean isPathAppliable(final String path, List<String> paths) {

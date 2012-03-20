@@ -1,12 +1,12 @@
 package net.cipol.web.api.controller;
 
-import java.util.Collections;
 import java.util.Locale;
 
 import net.cipol.api.APIService;
 import net.cipol.model.CommitInformation;
-import net.cipol.model.ValidationResult;
+import net.cipol.model.ValidationReport;
 import net.cipol.model.VersionInformation;
+import net.cipol.model.support.ValidationReportSupport;
 import net.sf.jstring.LocalizableException;
 import net.sf.jstring.Strings;
 
@@ -37,7 +37,7 @@ public class APIController {
 	}
 	
 	@RequestMapping(value = "/validate/{policyId}", method = RequestMethod.POST)
-	public @ResponseBody ValidationResult validate(@PathVariable String policyId,
+	public @ResponseBody ValidationReport validate(@PathVariable String policyId,
 			@RequestBody CommitInformation information) {
 		try {
 			return api.validate(policyId, information);
@@ -45,10 +45,7 @@ public class APIController {
 			// TODO Obfuscate the error details
 			// - uses CodeException with a code that is sent to the end user
 			// - uses a UUID to 1) send to the user 2) trace in the logs
-			ValidationResult result = new ValidationResult();
-			result.setValid(false);
-			result.setMessages(Collections.singletonList(ex.getLocalizedMessage(strings, getLocale())));
-			return result;
+			return ValidationReportSupport.createErrorReport(ex.getLocalizedMessage(strings, getLocale()));
 		}
 	}
 

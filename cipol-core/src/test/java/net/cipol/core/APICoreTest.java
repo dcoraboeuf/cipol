@@ -2,6 +2,7 @@ package net.cipol.core;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -11,7 +12,7 @@ import java.io.File;
 import net.cipol.api.PolicyService;
 import net.cipol.model.CommitInformation;
 import net.cipol.model.Policy;
-import net.cipol.model.ValidationResult;
+import net.cipol.model.ValidationReport;
 import net.cipol.model.VersionInformation;
 
 import org.junit.Before;
@@ -50,11 +51,10 @@ public class APICoreTest {
 		policy.setUid("1");
 		policy.setName("Policy 1");
 		when(policyService.loadPolicy("1")).thenReturn(policy);
-		ValidationResult result = api.validate("1", new CommitInformation());
-		assertNotNull(result);
-		assertTrue(result.isValid());
-		assertNotNull(result.getMessages());
-		assertTrue(result.getMessages().isEmpty());
+		ValidationReport report = api.validate("1", new CommitInformation());
+		assertNotNull(report);
+		assertTrue(report.isSuccess());
+		assertNull(report.getMessage());
 	}
 
 }

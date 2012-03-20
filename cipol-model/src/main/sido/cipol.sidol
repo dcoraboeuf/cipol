@@ -11,15 +11,11 @@ has
 	a message,
 	a collection of string as paths
 	.
-
-a ValidationResult
-has
-	a boolean as valid,
-	a collection of string as messages
-	.
 	
 a ValidationReport
 has
+	a boolean as success,
+	a nullable string as message,
 	a collection of ValidationDetail as details
 	.
 
@@ -59,11 +55,3 @@ has
 	a name,
 	a value
 	.
-
-a RuleExecutionResult
-has
-	a boolean as success,
-	a nullable boolean as terminate,
-	a nullable string as message
-	.
-	

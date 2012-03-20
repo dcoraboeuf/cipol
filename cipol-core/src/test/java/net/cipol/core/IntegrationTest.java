@@ -1,6 +1,7 @@
 package net.cipol.core;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -8,7 +9,7 @@ import java.io.File;
 import net.cipol.api.APIService;
 import net.cipol.api.HomeService;
 import net.cipol.model.CommitInformation;
-import net.cipol.model.ValidationResult;
+import net.cipol.model.ValidationReport;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,11 +52,10 @@ public class IntegrationTest {
 	@Test
 	public void validate_bare() {
 		CommitInformation ci = new CommitInformation();
-		ValidationResult result = api.validate("bare", ci);
-		assertNotNull(result);
-		assertTrue(result.isValid());
-		assertNotNull(result.getMessages());
-		assertTrue(result.getMessages().isEmpty());
+		ValidationReport report = api.validate("bare", ci);
+		assertNotNull(report);
+		assertTrue(report.isSuccess());
+		assertNull(report.getMessage());
 	}
 
 }
