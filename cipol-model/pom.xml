@@ -12,6 +12,13 @@
 	
 	<artifactId>cipol-model</artifactId>
 	<name>CIPOL Model</name>
+	
+	<dependencies>
+		<dependency>
+			<groupId>net.sf.jstring</groupId>
+			<artifactId>jstring</artifactId>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>

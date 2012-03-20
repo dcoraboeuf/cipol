@@ -1,4 +1,4 @@
-package net.cipol.core;
+package net.cipol.model.support;
 
 import net.sf.jstring.LocalizableException;
 

@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 
 import net.cipol.api.APIService;
 import net.cipol.api.PolicyService;
+import net.cipol.api.RuleService;
 import net.cipol.model.CommitInformation;
 import net.cipol.model.Policy;
 import net.cipol.model.RuleDefinition;
@@ -13,6 +14,9 @@ import net.cipol.model.RuleSet;
 import net.cipol.model.ValidationDetail;
 import net.cipol.model.ValidationReport;
 import net.cipol.model.VersionInformation;
+import net.sf.cipol.rule.RuleExecution;
+import net.sf.cipol.rule.RuleExecutionResult;
+import net.sf.cipol.rule.RuleExecutionResultType;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -31,11 +35,13 @@ public class APICore implements APIService {
 
 	private final String versionNumber;
 	private final PolicyService policyService;
+	private final RuleService ruleService;
 	
 	@Autowired
-	public APICore(@Value("${app.version}") String versionNumber, PolicyService policyService) {
+	public APICore(@Value("${app.version}") String versionNumber, PolicyService policyService, RuleService ruleService) {
 		this.versionNumber = versionNumber;
 		this.policyService = policyService;
+		this.ruleService = ruleService;
 	}
 	
 	@PostConstruct
@@ -116,14 +122,21 @@ public class APICore implements APIService {
 
 	protected boolean applyRule(ValidationDetail detail,
 			RuleDefinition ruleDefinition, CommitInformation information) {
+		String ruleId = ruleDefinition.getRuleId();
 		// Logging
-		logger.debug("[validate] Applying rule [{}] for path [{}]", ruleDefinition.getRuleId(), detail.getPath());
-		// TODO Gets the rule
-		// TODO Applies the rule
-		// TODO Adds rule execution details into the report
-		// TODO Status -> fail or terminate ==> abort
-		// TODO OK
-		return false;
+		logger.debug("[validate] Applying rule [{}] for path [{}]", ruleId, detail.getPath());
+		// Gets the rule
+		RuleExecution rule = ruleService.getRule (ruleId, ruleDefinition.getParameters());
+		// Applies the rule
+		RuleExecutionResult result = rule.apply (information);
+		// Adds rule execution details into the report
+		RuleExecutionResultType executionType = result.getType();
+		detail.setRuleId(ruleId);
+		detail.setRuleDescription(rule.getDescription());
+		detail.setSuccess(executionType.success());
+		detail.setMessage(result.getMessage());
+		// Status -> fail or terminate ==> abort
+		return executionType.abort();
 	}
 
 	protected boolean isPathAppliable(final String path, List<String> paths) {

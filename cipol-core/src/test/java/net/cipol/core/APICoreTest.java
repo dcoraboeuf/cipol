@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import java.io.File;
 
 import net.cipol.api.PolicyService;
+import net.cipol.api.RuleService;
 import net.cipol.model.CommitInformation;
 import net.cipol.model.Policy;
 import net.cipol.model.ValidationReport;
@@ -22,13 +23,16 @@ public class APICoreTest {
 
 	private APICore api;
 	private PolicyService policyService;
+	private RuleService ruleService;
 
 	@Before
 	public void before() {
 		// Policy service
 		policyService = mock(PolicyService.class);
+		// Rule service
+		ruleService = mock(RuleService.class);
 		// API
-		api = new APICore("TEST", policyService);
+		api = new APICore("TEST", policyService, ruleService);
 	}
 
 	@Test
