@@ -1,6 +1,7 @@
 package net.cipol.core;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 
@@ -69,14 +70,20 @@ public class APICore implements APIService {
 		ValidationReport validationReport = new ValidationReport();
 		List<RuleSet> rules = policy.getRules();
 		for (RuleSet ruleSet : rules) {
-			logger.debug("[validate] Getting rule set for path [{}]", ruleSet.getPath());
+			// Path pattern
+			String ruleSetPath = ruleSet.getPath();
+			if (StringUtils.isBlank(ruleSetPath)) {
+				ruleSetPath = ".*";
+			}
+			Pattern ruleSetPattern = Pattern.compile(ruleSetPath);
+			logger.debug("[validate] Getting rule set for path [{}]", ruleSetPath);
 			// Is this rule set appliable?
-			if (isPathAppliable(ruleSet.getPath(), information.getPaths())) {
+			if (isPathAppliable(ruleSetPattern, information.getPaths())) {
 				// Applies this rule set
 				boolean abort = applyRuleSet (validationReport, ruleSet, information);
 				// Aborting?
 				if (abort) {
-					logger.debug("[validate] Aborting after applying rule set for path [{}]", ruleSet.getPath());
+					logger.debug("[validate] Aborting after applying rule set for path [{}]", ruleSetPath);
 					break;
 				}
 			}
@@ -144,12 +151,12 @@ public class APICore implements APIService {
 		return executionType.abort();
 	}
 
-	protected boolean isPathAppliable(final String path, List<String> paths) {
+	protected boolean isPathAppliable(final Pattern pathPattern, List<String> paths) {
 		String candidate = Iterables.find(paths, new Predicate<String>() {
 			
 			@Override
 			public boolean apply(String value) {
-				return StringUtils.startsWith(value, path);
+				return pathPattern.matcher(value).matches();
 			}
 
 		}, null);

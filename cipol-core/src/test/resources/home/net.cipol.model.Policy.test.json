@@ -3,17 +3,18 @@
 	"name": "Message",
 	"description": "Message length",
 	"rules": [{
-		"description": "Minimal message length",
-		"path": "/",
-		"rules": [{
-				"ruleId": "message",
-				"parameters": [{
-					"name": "maxlength",
-					"value": "10"
+			"description": "Minimal message length and authentication is required",
+			"path": ".*",
+			"rules": [{
+					"ruleId": "message",
+					"description": "Minimum length",
+					"parameters": [{
+							"name": "maxlength",
+							"value": "10"
+						}]
+				}, {
+					"ruleId": "authenticated",
+					"description": "Authentication is required"
 				}]
-			}, {
-				"ruleId": "authenticated"
-			}]
 		}]
-	}]
 }

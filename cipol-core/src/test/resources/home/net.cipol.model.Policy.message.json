@@ -4,7 +4,6 @@
 	"description": "Message length",
 	"rules": [{
 		"description": "Minimal message length",
-		"path": "/",
 		"rules": [{
 			"ruleId": "message",
 			"parameters": [{
