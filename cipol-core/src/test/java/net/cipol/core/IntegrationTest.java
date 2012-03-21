@@ -147,5 +147,41 @@ public class IntegrationTest {
 			assertEquals("[AUTHENTICATED-001] The authentication information is missing.", detail.getMessage());
 		}
 	}
+	
+	@Test
+	public void validate_test_authorization_nok() {
+		CommitInformation ci = new CommitInformation();
+		ci.setMessage("Long enough");
+		ci.setAuthor("lambda");
+		ci.addPaths("/README", "/pom.xml");
+		ValidationReport report = api.validate("test", ci);
+		assertNotNull(report);
+		assertFalse(report.isSuccess());
+		assertEquals("[AUTHORIZATION-001] Author \"lambda\" is not authorized.", report.getMessage());
+	}
+	
+	@Test
+	public void validate_test_authorization_ok_1() {
+		CommitInformation ci = new CommitInformation();
+		ci.setMessage("Long enough");
+		ci.setAuthor("admin");
+		ci.addPaths("/README", "/pom.xml");
+		ValidationReport report = api.validate("test", ci);
+		assertNotNull(report);
+		assertTrue(report.isSuccess());
+		assertNull(report.getMessage());
+	}
+	
+	@Test
+	public void validate_test_authorization_ok_2() {
+		CommitInformation ci = new CommitInformation();
+		ci.setMessage("Long enough");
+		ci.setAuthor("translator1");
+		ci.addPaths("/src/main/resources/META-INF/resources/core_fr.properties");
+		ValidationReport report = api.validate("test", ci);
+		assertNotNull(report);
+		assertTrue(report.isSuccess());
+		assertNull(report.getMessage());
+	}
 
 }

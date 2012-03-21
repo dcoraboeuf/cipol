@@ -22,6 +22,19 @@ public abstract class AbstractRule<T> implements Rule<T> {
 	}
 	
 	protected int getInt (Map<String, String> params, String name, boolean required, int defaultValue) {
+		String value = getString (params, name, required, null);
+		if (value == null) {
+			return defaultValue;
+		} else {
+			try {
+				return Integer.parseInt(value, 10);
+			} catch (NumberFormatException ex) {
+				throw new RuleParamNumberFormatException (ex, getId(), name, value);
+			}
+		}
+	}
+	
+	protected String getString (Map<String, String> params, String name, boolean required, String defaultValue) {
 		String value = params.get(name);
 		if (StringUtils.isBlank(value)) {
 			if (required) {
@@ -30,11 +43,7 @@ public abstract class AbstractRule<T> implements Rule<T> {
 				return defaultValue;
 			}
 		} else {
-			try {
-				return Integer.parseInt(value, 10);
-			} catch (NumberFormatException ex) {
-				throw new RuleParamNumberFormatException (ex, getId(), name, value);
-			}
+			return value;
 		}
 	}
 	

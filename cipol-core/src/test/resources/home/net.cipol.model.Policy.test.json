@@ -16,5 +16,27 @@
 					"ruleId": "authenticated",
 					"description": "Authentication is required"
 				}]
+		}, {
+			"description": "Root files are allowed only for administrators",
+			"path": "/*",
+			"rules": [{
+					"ruleId": "authorization",
+					"description": "Only administrators",
+					"parameters": [{
+							"name": "allowed",
+							"value": "admin"
+						}]
+				}]
+		}, {
+			"description": "Translation files allowed only for some people",
+			"path": "/src/main/resources/META-INF/resources/*.properties",
+			"rules": [{
+					"ruleId": "authorization",
+					"description": "Only translators",
+					"parameters": [{
+							"name": "allowed",
+							"value": "translator1,translator2"
+						}]
+				}]
 		}]
 }
