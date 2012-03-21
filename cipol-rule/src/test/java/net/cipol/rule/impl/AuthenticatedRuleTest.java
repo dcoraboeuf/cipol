@@ -3,6 +3,9 @@ package net.cipol.rule.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+
+import java.util.Collections;
+
 import net.cipol.model.CommitInformation;
 import net.cipol.rule.RuleExecutionResult;
 import net.cipol.rule.RuleExecutionResultType;
@@ -38,6 +41,13 @@ public class AuthenticatedRuleTest extends AbstractRuleTest {
 		AuthenticatedRule rule = new AuthenticatedRule();
 		String description = rule.getDescription(context, null);
 		assertEquals("An author must be provided.", description);
+	}
+	
+	@Test
+	public void options() {
+		AuthenticatedRule rule = new AuthenticatedRule();
+		Void options = rule.createOptions(Collections.<String,String>emptyMap());
+		assertNull(options);
 	}
 
 }
