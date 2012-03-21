@@ -1,7 +1,6 @@
 package net.cipol.core;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 
@@ -25,14 +24,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 @Service
 public class APICore implements APIService {
-	
+
 	private final Logger logger = LoggerFactory.getLogger(APIService.class);
+	
+	private final PathMatcher pathMatcher = new AntPathMatcher();
 
 	private final String versionNumber;
 	private final PolicyService policyService;
@@ -73,12 +76,11 @@ public class APICore implements APIService {
 			// Path pattern
 			String ruleSetPath = ruleSet.getPath();
 			if (StringUtils.isBlank(ruleSetPath)) {
-				ruleSetPath = ".*";
+				ruleSetPath = DEFAULT_PATH;
 			}
-			Pattern ruleSetPattern = Pattern.compile(ruleSetPath);
 			logger.debug("[validate] Getting rule set for path [{}]", ruleSetPath);
 			// Is this rule set appliable?
-			if (isPathAppliable(ruleSetPattern, information.getPaths())) {
+			if (isPathAppliable(ruleSetPath, information.getPaths())) {
 				// Applies this rule set
 				boolean abort = applyRuleSet (validationReport, ruleSet, information);
 				// Aborting?
@@ -151,12 +153,12 @@ public class APICore implements APIService {
 		return executionType.abort();
 	}
 
-	protected boolean isPathAppliable(final Pattern pathPattern, List<String> paths) {
+	protected boolean isPathAppliable(final String ruleSetPath, List<String> paths) {
 		String candidate = Iterables.find(paths, new Predicate<String>() {
 			
 			@Override
 			public boolean apply(String value) {
-				return pathPattern.matcher(value).matches();
+				return pathMatcher.match(ruleSetPath, value);
 			}
 
 		}, null);

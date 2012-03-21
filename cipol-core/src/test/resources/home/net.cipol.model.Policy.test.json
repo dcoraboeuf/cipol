@@ -4,7 +4,7 @@
 	"description": "Message length",
 	"rules": [{
 			"description": "Minimal message length and authentication is required",
-			"path": ".*",
+			"path": "/**",
 			"rules": [{
 					"ruleId": "message",
 					"description": "Minimum length",

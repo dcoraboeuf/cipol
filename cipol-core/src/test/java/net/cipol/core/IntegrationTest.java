@@ -86,7 +86,7 @@ public class IntegrationTest {
 			assertNotNull(detail);
 			assertEquals("message", detail.getRuleId());
 			assertEquals("The message must be at least 10 characters long.", detail.getRuleDescription());
-			assertEquals(".*", detail.getPath());
+			assertEquals("/**", detail.getPath());
 			assertFalse(detail.isSuccess());
 			assertEquals("[MESSAGE-001] Message must be at least 10 characters long.", detail.getMessage());
 		}
@@ -133,7 +133,7 @@ public class IntegrationTest {
 			assertNotNull(detail);
 			assertEquals("message", detail.getRuleId());
 			assertEquals("The message must be at least 10 characters long.", detail.getRuleDescription());
-			assertEquals(".*", detail.getPath());
+			assertEquals("/**", detail.getPath());
 			assertTrue(detail.isSuccess());
 			assertNull(detail.getMessage());
 		}
@@ -142,7 +142,7 @@ public class IntegrationTest {
 			assertNotNull(detail);
 			assertEquals("authenticated", detail.getRuleId());
 			assertEquals("An author must be provided.", detail.getRuleDescription());
-			assertEquals(".*", detail.getPath());
+			assertEquals("/**", detail.getPath());
 			assertFalse(detail.isSuccess());
 			assertEquals("[AUTHENTICATED-001] The authentication information is missing.", detail.getMessage());
 		}
