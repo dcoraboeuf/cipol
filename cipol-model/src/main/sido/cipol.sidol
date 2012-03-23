@@ -33,7 +33,14 @@ has
 	an uid,
 	a name,
 	a description,
+	a collection of Group as groups,
 	a collection of RuleSet as rules
+	.
+
+a Group
+has
+	a name,
+	a collection of string as members
 	.
 
 a RuleSet
