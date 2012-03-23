@@ -9,6 +9,7 @@ import net.cipol.api.APIService;
 import net.cipol.api.PolicyService;
 import net.cipol.api.RuleService;
 import net.cipol.model.CommitInformation;
+import net.cipol.model.Group;
 import net.cipol.model.Policy;
 import net.cipol.model.RuleDefinition;
 import net.cipol.model.RuleSet;
@@ -72,7 +73,7 @@ public class APICore implements APIService {
 			CommitInformation information) {
 		logger.debug("[validate] Request for policy [{}]", policyId);
 		// Loads the policy definition
-		Policy policy = policyService.loadPolicy (policyId);
+		final Policy policy = policyService.loadPolicy (policyId);
 		logger.debug("[validate] Applying policy [{}]", policy.getName());
 		// Execution context
 		final RuleExecutionContext context = new RuleExecutionContext() {
@@ -83,9 +84,14 @@ public class APICore implements APIService {
 			}
 			
 			@Override
-			public boolean isMemberOfGroup(String author, String group) {
-				// TODO Auto-generated method stub
-				return false;
+			public boolean isMemberOfGroup(final String author, final String group) {
+				List<Group> groups = policy.getGroups();
+				return Iterables.any(groups, new Predicate<Group>() {
+					@Override
+					public boolean apply(Group input) {
+						return StringUtils.equals(group, input.getName())
+								&& Iterables.contains(input.getMembers(), author);
+					}});
 			}
 		};
 		// For each rule of the policy

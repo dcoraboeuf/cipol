@@ -2,6 +2,10 @@
 	"uid": "message",
 	"name": "Message",
 	"description": "Message length",
+	"groups": [{
+			"name": "translators",
+			"members": ["translator1", "translator2"]
+		}],
 	"rules": [{
 			"description": "Minimal message length and authentication is required",
 			"path": "/**",
@@ -35,7 +39,7 @@
 					"description": "Only translators",
 					"parameters": [{
 							"name": "allowed",
-							"value": "translator1,translator2"
+							"value": "@translators"
 						}]
 				}]
 		}]
