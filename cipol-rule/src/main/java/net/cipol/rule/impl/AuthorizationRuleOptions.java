@@ -38,8 +38,12 @@ public class AuthorizationRuleOptions {
 		}
 	}
 
-	public boolean isAllowed(String author) {
-		return allowed.contains(author) && !disallowed.contains(author);
+	public Set<String> getAllowed() {
+		return allowed;
+	}
+
+	public Set<String> getDisallowed() {
+		return disallowed;
 	}
 
 }

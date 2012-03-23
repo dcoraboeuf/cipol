@@ -1,6 +1,7 @@
 package net.cipol.core;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 
@@ -15,8 +16,10 @@ import net.cipol.model.ValidationDetail;
 import net.cipol.model.ValidationReport;
 import net.cipol.model.VersionInformation;
 import net.cipol.rule.RuleExecution;
+import net.cipol.rule.RuleExecutionContext;
 import net.cipol.rule.RuleExecutionResult;
 import net.cipol.rule.RuleExecutionResultType;
+import net.sf.jstring.Strings;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -40,12 +43,14 @@ public class APICore implements APIService {
 	private final String versionNumber;
 	private final PolicyService policyService;
 	private final RuleService ruleService;
+	private final Strings strings;
 	
 	@Autowired
-	public APICore(@Value("${app.version}") String versionNumber, PolicyService policyService, RuleService ruleService) {
+	public APICore(@Value("${app.version}") String versionNumber, PolicyService policyService, RuleService ruleService, Strings strings) {
 		this.versionNumber = versionNumber;
 		this.policyService = policyService;
 		this.ruleService = ruleService;
+		this.strings = strings;
 	}
 	
 	@PostConstruct
@@ -69,6 +74,20 @@ public class APICore implements APIService {
 		// Loads the policy definition
 		Policy policy = policyService.loadPolicy (policyId);
 		logger.debug("[validate] Applying policy [{}]", policy.getName());
+		// Execution context
+		final RuleExecutionContext context = new RuleExecutionContext() {
+			
+			@Override
+			public String getMessage(String key, Object... parameters) {
+				return strings.get(getLocale(), key, parameters);
+			}
+			
+			@Override
+			public boolean isMemberOfGroup(String author, String group) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		};
 		// For each rule of the policy
 		ValidationReport validationReport = new ValidationReport();
 		List<RuleSet> rules = policy.getRules();
@@ -82,7 +101,7 @@ public class APICore implements APIService {
 			// Is this rule set appliable?
 			if (isPathAppliable(ruleSetPath, information.getPaths())) {
 				// Applies this rule set
-				boolean abort = applyRuleSet (validationReport, ruleSet, information);
+				boolean abort = applyRuleSet (context, validationReport, ruleSet, information);
 				// Aborting?
 				if (abort) {
 					logger.debug("[validate] Aborting after applying rule set for path [{}]", ruleSetPath);
@@ -94,6 +113,11 @@ public class APICore implements APIService {
 		consolidate(validationReport);
 		// Result
 		return validationReport;
+	}
+
+	protected Locale getLocale() {
+		// FIXME Uses a filter to set the locale (see APIController)
+		return Locale.ENGLISH;
 	}
 
 	protected void consolidate(ValidationReport validationReport) {
@@ -109,7 +133,7 @@ public class APICore implements APIService {
 		}
 	}
 
-	protected boolean applyRuleSet(ValidationReport validationReport, RuleSet ruleSet,
+	protected boolean applyRuleSet(RuleExecutionContext context, ValidationReport validationReport, RuleSet ruleSet,
 			CommitInformation information) {
 		// Path
 		String ruleSetPath = ruleSet.getPath();
@@ -120,7 +144,7 @@ public class APICore implements APIService {
 			ValidationDetail detail = new ValidationDetail();
 			detail.setPath(ruleSetPath);
 			// Applies the rule
-			boolean abort = applyRule (detail, ruleDefinition, information);
+			boolean abort = applyRule (context, detail, ruleDefinition, information);
 			// Adding the details
 			validationReport.addDetails(detail);
 			// Aborting the rules
@@ -132,13 +156,13 @@ public class APICore implements APIService {
 		return false;
 	}
 
-	protected boolean applyRule(ValidationDetail detail,
+	protected boolean applyRule(RuleExecutionContext context, ValidationDetail detail,
 			RuleDefinition ruleDefinition, CommitInformation information) {
 		String ruleId = ruleDefinition.getRuleId();
 		// Logging
 		logger.debug("[validate] Applying rule [{}] for path [{}]", ruleId, detail.getPath());
 		// Gets the rule
-		RuleExecution rule = ruleService.getRule (ruleId, ruleDefinition.getParameters());
+		RuleExecution rule = ruleService.getRule (context, ruleId, ruleDefinition.getParameters());
 		// Applies the rule
 		RuleExecutionResult result = rule.apply (information);
 		// Adds rule execution details into the report

@@ -3,15 +3,7 @@ package net.cipol.core;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.google.common.base.Function;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 
 import net.cipol.api.RuleService;
 import net.cipol.model.CommitInformation;
@@ -20,27 +12,31 @@ import net.cipol.rule.Rule;
 import net.cipol.rule.RuleExecution;
 import net.cipol.rule.RuleExecutionContext;
 import net.cipol.rule.RuleExecutionResult;
-import net.sf.jstring.Strings;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.google.common.base.Function;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 @Service
 public class RuleCoreService implements RuleService {
 	
 	private final Map<String, Rule<?>> ruleIndex;
-	private final Strings strings;
 	
 	@Autowired
-	public RuleCoreService(Collection<Rule<?>> rules, Strings strings) {
+	public RuleCoreService(Collection<Rule<?>> rules) {
 		ruleIndex = Maps.uniqueIndex(rules, new Function<Rule<?>, String>() {
 			@Override
 			public String apply(Rule<?> rule) {
 				return rule.getId();
 			}
 		});
-		this.strings = strings;
 	}
 
 	@Override
-	public <T> RuleExecution getRule(String ruleId, List<ParamValue> parameters) {
+	public <T> RuleExecution getRule(final RuleExecutionContext context, String ruleId, List<ParamValue> parameters) {
 		Map<String, String> params;
 		if (parameters != null) {
 			// Indexes the parameters
@@ -59,14 +55,6 @@ public class RuleCoreService implements RuleService {
 		} else {
 			params = Collections.emptyMap();
 		}
-		// Execution context
-		final RuleExecutionContext context = new RuleExecutionContext() {
-			
-			@Override
-			public String getMessage(String key, Object... parameters) {
-				return strings.get(getLocale(), key, parameters);
-			}
-		};
 		// Gets the rule itself
 		final Rule<T> rule = getRule(ruleId);
 		// Creates the options
@@ -84,11 +72,6 @@ public class RuleCoreService implements RuleService {
 				return rule.apply(context, options, information);
 			}
 		};
-	}
-
-	protected Locale getLocale() {
-		// FIXME Uses a filter to set the locale (see APIController)
-		return Locale.ENGLISH;
 	}
 
 	protected <T> Rule<T> getRule(String ruleId) {

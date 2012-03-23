@@ -20,6 +20,12 @@ public abstract class AbstractRuleTest {
 			public String getMessage(String key, Object... parameters) {
 				return strings.get(Locale.ENGLISH, key, parameters);
 			}
+			
+			@Override
+			public boolean isMemberOfGroup(String author, String group) {
+				// TODO Auto-generated method stub
+				return false;
+			}
 		};
 	}
 

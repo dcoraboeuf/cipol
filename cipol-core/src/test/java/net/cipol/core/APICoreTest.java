@@ -15,6 +15,7 @@ import net.cipol.model.CommitInformation;
 import net.cipol.model.Policy;
 import net.cipol.model.ValidationReport;
 import net.cipol.model.VersionInformation;
+import net.sf.jstring.Strings;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,8 +32,10 @@ public class APICoreTest {
 		policyService = mock(PolicyService.class);
 		// Rule service
 		ruleService = mock(RuleService.class);
+		// Strings
+		Strings strings = new Strings();
 		// API
-		api = new APICore("TEST", policyService, ruleService);
+		api = new APICore("TEST", policyService, ruleService, strings);
 	}
 
 	@Test

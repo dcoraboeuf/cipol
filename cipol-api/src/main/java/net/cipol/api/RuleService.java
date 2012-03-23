@@ -4,9 +4,10 @@ import java.util.List;
 
 import net.cipol.model.ParamValue;
 import net.cipol.rule.RuleExecution;
+import net.cipol.rule.RuleExecutionContext;
 
 public interface RuleService {
 
-	<T> RuleExecution getRule(String ruleId, List<ParamValue> parameters);
+	<T> RuleExecution getRule(RuleExecutionContext context, String ruleId, List<ParamValue> parameters);
 
 }
