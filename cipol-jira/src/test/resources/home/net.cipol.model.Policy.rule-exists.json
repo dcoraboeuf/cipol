@@ -1,0 +1,17 @@
+{
+	"uid": "rule-exists",
+	"name": "RuleExists",
+	"description": "Checking that a rule exists",
+	"rules": [{
+			"description": "Common rules",
+			"path": "/**",
+			"rules": [{
+					"ruleId": "jira-issue-exists",
+					"description": "An issue must exist",
+					"parameters": [{
+							"name": "jira-config-id",
+							"value": "mock"
+						}]
+				}]
+		}]
+}

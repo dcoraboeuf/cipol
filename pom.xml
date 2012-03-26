@@ -59,6 +59,7 @@
 		<module>cipol-core</module>
 		<module>cipol-rule</module>
 		<module>cipol-model</module>
+		<module>cipol-jira</module>
 	</modules>
 
 	<dependencyManagement>
