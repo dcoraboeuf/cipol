@@ -25,7 +25,7 @@ public class RuleExistsTest {
 	private APIService api;
 	
 	@Test
-	public void validate_jira_issue_exists_nok() {
+	public void jira_issue_exists_nok() {
 		CommitInformation ci = new CommitInformation();
 		ci.setMessage("Long enough");
 		ci.setAuthor("myself");
@@ -33,11 +33,11 @@ public class RuleExistsTest {
 		ValidationReport report = api.validate("rule-exists", ci);
 		assertNotNull(report);
 		assertFalse(report.isSuccess());
-		assertEquals("", report.getMessage());
+		assertEquals("[JIRA-001] No existing JIRA issue was found in the message", report.getMessage());
 	}
 	
 	@Test
-	public void validate_jira_issue_exists_ok() {
+	public void jira_issue_exists_ok() {
 		CommitInformation ci = new CommitInformation();
 		ci.setMessage("PROJ-455 Long enough");
 		ci.setAuthor("myself");
