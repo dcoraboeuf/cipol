@@ -1,2 +1,3 @@
-CIPOL_URL = "http://localhost:8080/cipol"
+CIPOL_HOST = "localhost:8080"
+CIPOL_PATH = "/cipol"
 CIPOL_POLICY = "xxx"
