@@ -3,14 +3,10 @@ import os
 
 import cipol_env
 from cipol_lib import cmd
+from cipol_svn import SVNLOOK
 
 import json
 import httplib
-
-# svn commands
-# FIXME Make those commands OS- and path- independant
-SVNLOOK="svnlook.exe"
-SVNADMIN="svnadmin.exe"
 
 # Gets the list of committed paths for a transaction, without regard
 # to the action
