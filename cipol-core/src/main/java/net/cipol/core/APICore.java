@@ -85,13 +85,7 @@ public class APICore implements APIService {
 			
 			@Override
 			public boolean isMemberOfGroup(final String author, final String group) {
-				List<Group> groups = policy.getGroups();
-				return Iterables.any(groups, new Predicate<Group>() {
-					@Override
-					public boolean apply(Group input) {
-						return StringUtils.equals(group, input.getName())
-								&& Iterables.contains(input.getMembers(), author);
-					}});
+				return isMemberOfPolicyGroup(policy, author, group);
 			}
 		};
 		// For each rule of the policy
@@ -193,6 +187,21 @@ public class APICore implements APIService {
 
 		}, null);
 		return candidate != null;
+	}
+
+	protected boolean isMemberOfPolicyGroup(final Policy policy,
+			final String author, final String group) {
+		// Policy groups
+		List<Group> groups = policy.getGroups();
+		boolean policyGroup = Iterables.any(groups, new Predicate<Group>() {
+			@Override
+			public boolean apply(Group input) {
+				return StringUtils.equals(group, input.getName())
+						&& Iterables.contains(input.getMembers(), author);
+			}});
+		// TODO Gets the global security groups
+		// OK
+		return policyGroup;
 	}
 
 }
