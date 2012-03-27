@@ -18,6 +18,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
+			<artifactId>cipol-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>cipol-rule</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -26,12 +31,6 @@
 		    <artifactId>groovy</artifactId>
 		</dependency>
 		<!-- Testing -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>cipol-api</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>cipol-core</artifactId>
