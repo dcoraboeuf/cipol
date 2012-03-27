@@ -97,7 +97,12 @@ public class APICore implements APIService {
 			if (StringUtils.isBlank(ruleSetPath)) {
 				ruleSetPath = DEFAULT_PATH;
 			}
-			logger.debug("[validate] Getting rule set for path [{}]", ruleSetPath);
+			// Disabled?
+			if (ruleSet.isDisabled()) {
+				logger.debug("[validate] Rule set for path [{}] is disabled", ruleSetPath);
+				continue;
+			}
+			logger.debug("[validate] Checking rule set for path [{}]", ruleSetPath);
 			// Is this rule set appliable?
 			if (isPathAppliable(ruleSetPath, information.getPaths())) {
 				// Applies this rule set
@@ -140,6 +145,11 @@ public class APICore implements APIService {
 		logger.debug("[validate] Applying rule set for path [{}]", ruleSetPath);
 		// For each rule
 		for (RuleDefinition ruleDefinition: ruleSet.getRules()) {
+			// Disabled?
+			if (ruleDefinition.isDisabled()) {
+				logger.debug("[validate] Rule [{}] for path [{}] is disabled", ruleDefinition.getRuleId(), ruleSet.getPath());
+				continue;
+			}
 			// Prepare the report detail
 			ValidationDetail detail = new ValidationDetail();
 			detail.setPath(ruleSetPath);

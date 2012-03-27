@@ -58,12 +58,9 @@ def validate (message, author, paths):
 			sys.stderr.write ("report = %s\n" % report)
 			# Interprets the data
 			if (report['success']):
-				return None
+				return ""
 			else:
 				return report['message']
 	finally:
 		conn.close()
-	
-	# OK
-	return "NOK"
 	

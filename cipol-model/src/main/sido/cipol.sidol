@@ -47,6 +47,7 @@ a RuleSet
 has
 	a path,
 	a description,
+	a boolean as disabled,
 	a collection of RuleDefinition as rules
 	.
 
@@ -54,6 +55,7 @@ a RuleDefinition
 has
 	a ruleId,
 	a nullable string as description,
+	a boolean as disabled,
 	a nullable collection of ParamValue as parameters
 	.
 

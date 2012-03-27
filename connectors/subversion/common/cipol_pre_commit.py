@@ -45,7 +45,7 @@ def main(repos, txn):
 
 	# Not empty message => NOK
 	if (validation != ""):
-		sys.stderr.write (validation);
+		sys.stderr.write ("Validation message: %s" % validation)
 		sys.exit(1)
 	else:
 		sys.exit(0)
