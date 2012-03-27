@@ -6,7 +6,7 @@ import net.cipol.model.VersionInformation;
 
 public interface APIService {
 	
-	String DEFAULT_PATH = "/**";
+	String DEFAULT_PATH = "**";
 	
 	VersionInformation getVersionInformation();
 	

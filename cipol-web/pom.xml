@@ -86,6 +86,13 @@
 			<artifactId>ant</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- Extensions -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>cipol-jira</artifactId>
+			<version>${project.version}</version>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 	
 	<build>

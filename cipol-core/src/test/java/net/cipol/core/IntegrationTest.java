@@ -96,7 +96,7 @@ public class IntegrationTest {
 	public void validate_on_message_ok() {
 		CommitInformation ci = new CommitInformation();
 		ci.setMessage("Long enough");
-		ci.addPaths("/README");
+		ci.addPaths("README");
 		ValidationReport report = api.validate("message", ci);
 		assertNotNull(report);
 		assertTrue(report.isSuccess());
