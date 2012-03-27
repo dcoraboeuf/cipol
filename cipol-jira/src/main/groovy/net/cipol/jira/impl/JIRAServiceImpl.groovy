@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Profile(["dev", "prod"])
 class JIRAServiceImpl implements JIRAService {
 	
-	final FileService fileService;
+	protected final FileService fileService;
 	
 	@Autowired
 	JIRAServiceImpl(FileService fileService) {
