@@ -21,15 +21,15 @@ public class MessageLengthRule extends AbstractRule<MessageLength> {
 	
 	@Override
 	public MessageLength createOptions(Map<String, String> parameters) {
-		return new MessageLength(getInt(parameters, "maxlength", true, 0));
+		return new MessageLength(getInt(parameters, MessageLength.MINLENGTH, true, 0));
 	}
 	
 	@Override
 	public RuleExecutionResult apply(RuleExecutionContext context,
 			MessageLength options, CommitInformation commitInformation) {
 		String message = commitInformation.getMessage();
-		if (StringUtils.length(message) < options.getMaxlength()) {
-			return fail(context, "message", options.getMaxlength());
+		if (StringUtils.length(message) < options.getMinlength()) {
+			return fail(context, "message", options.getMinlength());
 		} else {
 			return ok();
 		}
@@ -37,7 +37,7 @@ public class MessageLengthRule extends AbstractRule<MessageLength> {
 
 	@Override
 	public String getDescription(RuleExecutionContext context, MessageLength options) {
-		return getMessage(context, "description", options.getMaxlength());
+		return getMessage(context, "description", options.getMinlength());
 	}
 
 }

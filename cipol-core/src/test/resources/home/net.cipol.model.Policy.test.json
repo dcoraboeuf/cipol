@@ -13,7 +13,7 @@
 					"ruleId": "message",
 					"description": "Minimum length",
 					"parameters": [{
-							"name": "maxlength",
+							"name": "minlength",
 							"value": "10"
 						}]
 				}, {

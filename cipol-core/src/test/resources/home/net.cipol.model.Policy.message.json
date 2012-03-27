@@ -7,7 +7,7 @@
 		"rules": [{
 			"ruleId": "message",
 			"parameters": [{
-				"name": "maxlength",
+				"name": "minlength",
 				"value": "10"
 			}]
 		}]

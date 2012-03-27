@@ -54,15 +54,15 @@ public class MessageLengthTest extends AbstractRuleTest {
 	@Test(expected = RuleParamNumberFormatException.class)
 	public void options_wrong_format() {
 		MessageLengthRule rule = new MessageLengthRule();
-		rule.createOptions(Collections.singletonMap("maxlength", "1xx0"));
+		rule.createOptions(Collections.singletonMap("minlength", "1xx0"));
 	}
 	
 	@Test
 	public void options_ok() {
 		MessageLengthRule rule = new MessageLengthRule();
-		MessageLength options = rule.createOptions(Collections.singletonMap("maxlength", "10"));
+		MessageLength options = rule.createOptions(Collections.singletonMap("minlength", "10"));
 		assertNotNull(options);
-		assertEquals(10, options.getMaxlength());
+		assertEquals(10, options.getMinlength());
 	}
 
 }

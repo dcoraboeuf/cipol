@@ -1,15 +1,17 @@
 package net.cipol.rule.impl;
 
 public class MessageLength {
+	
+	public static final String MINLENGTH = "minlength";
 
-	private final int maxlength;
+	private final int minlength;
 
-	public MessageLength(int maxlength) {
-		this.maxlength = maxlength;
+	public MessageLength(int minlength) {
+		this.minlength = minlength;
 	}
 
-	public int getMaxlength() {
-		return maxlength;
+	public int getMinlength() {
+		return minlength;
 	}
 
 }
