@@ -1,5 +1,6 @@
 package net.cipol.jira.impl
 
+import net.cipol.CipolProfiles;
 import net.cipol.api.FileService;
 import net.cipol.jira.JIRAConfig;
 import net.cipol.jira.JIRAIssue;
@@ -14,7 +15,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 @Service
-@Profile(["test", "it"])
+@Profile([CipolProfiles.TEST, CipolProfiles.IT])
 class JIRATestService extends JIRAServiceImpl {
 	
 	@Autowired

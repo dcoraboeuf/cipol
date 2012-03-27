@@ -2,13 +2,14 @@ package net.cipol.core;
 
 import java.io.File;
 
+import net.cipol.CipolProfiles;
 import net.cipol.api.HomeService;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
-@Profile(value = { "it", "dev", "prod" })
+@Profile({ CipolProfiles.PROD, CipolProfiles.DEV, CipolProfiles.IT })
 public class HomeCore implements HomeService {
 
 	private final File home;
