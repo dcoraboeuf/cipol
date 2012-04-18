@@ -26,10 +26,6 @@
 			<artifactId>cipol-rule</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-		    <groupId>org.codehaus.groovy</groupId>
-		    <artifactId>groovy</artifactId>
-		</dependency>
 		<!-- Testing -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -64,25 +60,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
-	<build>
-		<plugins>
-			
-			<!-- Compiles with Groovy -->
-			<plugin>
-				<groupId>org.codehaus.gmaven</groupId>
-				<artifactId>gmaven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>groovy-compile</id>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			
-		</plugins>
-	</build>
 	
 </project>

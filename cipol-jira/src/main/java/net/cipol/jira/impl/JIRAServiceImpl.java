@@ -1,4 +1,4 @@
-package net.cipol.jira.impl
+package net.cipol.jira.impl;
 
 import net.cipol.CipolProfiles;
 import net.cipol.api.FileService;
@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
-@Profile([CipolProfiles.DEV, CipolProfiles.PROD])
-class JIRAServiceImpl implements JIRAService {
+@Profile({CipolProfiles.DEV, CipolProfiles.PROD})
+public class JIRAServiceImpl implements JIRAService {
 	
 	protected final FileService fileService;
 	
