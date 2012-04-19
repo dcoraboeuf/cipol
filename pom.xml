@@ -50,7 +50,7 @@
 	<properties>
 		<springVersion>3.1.1.RELEASE</springVersion>
 		<springSecurityVersion>3.1.0.RELEASE</springSecurityVersion>
-		<sidoVersion>1.0.0</sidoVersion>
+		<sidoVersion>1.1.0-SNAPSHOT</sidoVersion>
 	</properties>
 
 	<modules>

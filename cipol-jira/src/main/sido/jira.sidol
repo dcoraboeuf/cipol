@@ -1,0 +1,6 @@
+schema <net.cipol.jira.model> .
+
+an Issue
+has
+	a key
+	.
