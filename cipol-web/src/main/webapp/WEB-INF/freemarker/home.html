@@ -1,4 +1,12 @@
 <#include "/_layouts.html">
 <@layout_simple pageId="home" titleKey="home.title">
 	<p>Home</p>
+	<#list policies as policy>
+		<article class="policy">
+			<hgroup>
+				<a href="policy/${policy.uid}"><h1>${policy.name}</h1></a>
+				<h2>${policy.uid}</h2>
+			</hgroup>
+		</article>
+	</#list>	
 </@layout_simple>

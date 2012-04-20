@@ -27,12 +27,17 @@ has
 	a boolean as success,
 	a nullable string as message
 	.
-
-a Policy
+	
+a PolicySummary
 has
 	an uid,
 	a name,
-	a description,
+	a description
+	.
+
+a Policy
+is a PolicySummary
+and has
 	a collection of Group as groups,
 	a collection of RuleSet as rules
 	.

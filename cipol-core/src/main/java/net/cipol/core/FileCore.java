@@ -2,12 +2,20 @@ package net.cipol.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import net.cipol.api.FileService;
+import net.cipol.api.HomeService;
+
+import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
@@ -15,12 +23,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.common.base.Function;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-
-import net.cipol.api.FileService;
-import net.cipol.api.HomeService;
+import com.google.common.collect.Lists;
 
 @Service
 public class FileCore implements FileService {
@@ -51,6 +58,38 @@ public class FileCore implements FileService {
 		} finally {
 			lock.unlock();
 		}
+	}
+	
+	@Override
+	public <T> List<T> readAll(final Class<T> type) {
+		// Loads the IDs
+		List<String> ids = getIds (type);
+		// Reads each file
+		return Lists.transform(ids, new Function<String, T>() {
+			@Override
+			public T apply(String id) {
+				return read(type, id);
+			}
+		});
+	}
+	
+	protected List<String> getIds (final Class<?> type) {
+		String[] names = homeService.getHome().list(new WildcardFileFilter(getFileName(type, "*")));
+		return Lists.transform(Arrays.asList(names), new Function<String, String>(){
+			@Override
+			public String apply(String name) {
+				return extractIdFromFileName(type, name);
+			}
+		});
+	}
+
+	protected String extractIdFromFileName(Class<?> type, String name) {
+		Validate.notBlank(name, "Name must not be blank");
+		if (StringUtils.endsWith(name, ".json")) {
+			String basename = StringUtils.substringBefore(name, ".json");
+			return StringUtils.substringAfterLast(basename, ".");
+		}
+		throw new IllegalStateException("Cannot parse name " + name);
 	}
 
 	protected Lock getReadLock(Class<?> type, String id) {
@@ -90,7 +129,7 @@ public class FileCore implements FileService {
 		return homeService.getFile(fileName);
 	}
 
-	private String getFileName(Class<?> type, String id) {
+	protected String getFileName(Class<?> type, String id) {
 		return String.format("%s.%s.json", type.getName(), id);
 	}
 
