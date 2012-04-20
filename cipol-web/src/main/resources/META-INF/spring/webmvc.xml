@@ -20,7 +20,14 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	<!-- Freemarker config -->
 	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
 		<property name="templateLoaderPath" value="/WEB-INF/freemarker/" />
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="loc" value-ref="fnLoc" />
+			</map>
+		</property>
 	</bean>
+	
+	<bean id="fnLoc" class="net.cipol.web.support.fm.FnLoc" />
 
 	<!-- Freemarker views -->
 	<!-- FIXME Uses profiles for caching -->

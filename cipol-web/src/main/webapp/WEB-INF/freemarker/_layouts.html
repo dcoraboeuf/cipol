@@ -9,8 +9,7 @@
 		<head>
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 			<link rel="stylesheet" type="text/css" href="styles/ui.css" />
-			<#-- TODO Localization -->
-			<title>${titleKey}</title>
+			<title>${loc("${titleKey}")} - ${loc("app.title")} ${loc("app.version")}</title>
 	    </head>
 		<body>
 			<#nested>
@@ -21,8 +20,7 @@
 <#macro layout_simple pageId titleKey>
 	<@comment text="layout_simple" />
 	<@layout_base pageId="${pageId}" titleKey="${titleKey}">
-		<#-- TODO Localization -->
-		<p class="page-title">${titleKey}</p>
+		<p class="page-title">${loc("${titleKey}")}</p>
 		<#nested>
 	</@layout_base>
 </#macro>
