@@ -3,14 +3,14 @@ package net.cipol.jira.impl;
 import net.cipol.CipolProfiles;
 import net.cipol.api.FileService;
 import net.cipol.jira.JIRAConfig;
-import net.cipol.jira.support.IssueCollection;
+import net.cipol.jira.model.JIRAIssue;
+import net.cipol.jira.model.JIRAIssueCollection;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import com.atlassian.jira.rest.client.domain.Issue;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
@@ -24,13 +24,13 @@ class JIRATestService extends JIRAServiceImpl {
 	}
 	
 	@Override
-	public Issue getIssue(JIRAConfig jiraConfig, final String key) {
+	public JIRAIssue getIssue(JIRAConfig jiraConfig, final String key) {
 		// Loads issues for this config
-		IssueCollection issues = fileService.read(IssueCollection.class, jiraConfig.getId());
+		JIRAIssueCollection issues = fileService.read(JIRAIssueCollection.class, jiraConfig.getId());
 		// OK
-		return Iterables.find(issues.getIssues(), new Predicate<Issue>(){
+		return Iterables.find(issues.getIssues(), new Predicate<JIRAIssue>(){
 			@Override
-			public boolean apply(Issue issue) {
+			public boolean apply(JIRAIssue issue) {
 				return StringUtils.equals(key, issue.getKey());
 			}
 		}, null);

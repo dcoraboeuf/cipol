@@ -1,6 +1,11 @@
 schema <net.cipol.jira.model> .
 
-an Issue
+a JIRAIssue
 has
 	a key
+	.
+
+a JIRAIssueCollection
+has
+	a collection of JIRAIssue as issues
 	.

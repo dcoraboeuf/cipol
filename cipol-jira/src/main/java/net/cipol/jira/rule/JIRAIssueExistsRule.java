@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import net.cipol.jira.JIRAConfig;
 import net.cipol.jira.JIRAService;
+import net.cipol.jira.model.JIRAIssue;
 import net.cipol.model.CommitInformation;
 import net.cipol.rule.RuleExecutionContext;
 import net.cipol.rule.RuleExecutionResult;
@@ -15,8 +16,6 @@ import net.cipol.rule.support.AbstractRule;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.atlassian.jira.rest.client.domain.Issue;
 
 @Component
 public class JIRAIssueExistsRule extends AbstractRule<JIRAGenericRuleOptions> {
@@ -52,7 +51,7 @@ public class JIRAIssueExistsRule extends AbstractRule<JIRAGenericRuleOptions> {
 		Matcher matcher = ISSUE_PATTERN.matcher(commitInformation.getMessage());
 		// Finds all matches
 		int issueCount = 0;
-		List<Issue> issues = new ArrayList<Issue>();
+		List<JIRAIssue> issues = new ArrayList<JIRAIssue>();
 		while (matcher.find()) {
 			String project = matcher.group(1);
 			String number = matcher.group(2);
@@ -66,7 +65,7 @@ public class JIRAIssueExistsRule extends AbstractRule<JIRAGenericRuleOptions> {
 				}
 				// Gets the issue from JIRA
 				else {
-					Issue issue = jiraService.getIssue (jiraConfig, key);
+					JIRAIssue issue = jiraService.getIssue (jiraConfig, key);
 					// Adds to the list
 					if (issue != null) {
 						issues.add(issue);

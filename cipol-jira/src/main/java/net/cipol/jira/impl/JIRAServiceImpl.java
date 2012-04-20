@@ -9,6 +9,7 @@ import net.cipol.api.FileService;
 import net.cipol.jira.JIRAConfig;
 import net.cipol.jira.JIRAConnectionException;
 import net.cipol.jira.JIRAService;
+import net.cipol.jira.model.JIRAIssue;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -39,10 +40,13 @@ public class JIRAServiceImpl implements JIRAService {
 	}
 
 	@Override
-	public Issue getIssue(JIRAConfig jiraConfig, String key) {
+	public JIRAIssue getIssue(JIRAConfig jiraConfig, String key) {
 		JiraRestClient client = getClient(jiraConfig);
-		// Gets the issue
-		Issue issue = client.getIssueClient().getIssue(key, new NullProgressMonitor());
+		// Gets the issue from JIRA
+		Issue i = client.getIssueClient().getIssue(key, new NullProgressMonitor());
+		// Conversion
+		JIRAIssue issue = new JIRAIssue();
+		issue.setKey(i.getKey());
 		// OK
 		return issue;
 	}
@@ -79,7 +83,7 @@ public class JIRAServiceImpl implements JIRAService {
 		// Service
 		JIRAService service = new JIRAServiceImpl(null);
 		// Call
-		Issue issue = service.getIssue(config, key);
+		JIRAIssue issue = service.getIssue(config, key);
 		// Prints
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(issue));

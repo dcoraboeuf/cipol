@@ -1,11 +1,11 @@
 package net.cipol.jira;
 
-import com.atlassian.jira.rest.client.domain.Issue;
+import net.cipol.jira.model.JIRAIssue;
 
 public interface JIRAService {
 
 	JIRAConfig loadJIRAConfig(String jiraConfigId);
 
-	Issue getIssue(JIRAConfig jiraConfig, String key);
+	JIRAIssue getIssue(JIRAConfig jiraConfig, String key);
 
 }
