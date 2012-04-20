@@ -2,15 +2,15 @@
 <!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.0//EN" "http://tuckey.org/res/dtds/urlrewrite3.0.dtd">
 <urlrewrite default-match-type="wildcard">
 	<rule>
-		<from>/images/**</from>
+		<from>/ui/images/**</from>
 		<to>/images/$1</to>
 	</rule>
 	<rule>
-		<from>/scripts/**</from>
+		<from>/ui/scripts/**</from>
 		<to>/scripts/$1</to>
 	</rule>
 	<rule>
-		<from>/styles/**</from>
+		<from>/ui/styles/**</from>
 		<to>/styles/$1</to>
 	</rule>
 	<rule>
