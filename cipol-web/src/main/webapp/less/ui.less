@@ -1,0 +1,60 @@
+/* Constants */
+
+// Colors
+@title-color: #BBCCDD;
+@header-color: #DDEEFF;
+
+/* Commons */
+
+// Rounded corners
+.rounded {
+	border-radius: 15px;
+	padding: 5px 10px 5px 10px;
+}
+
+/* General */
+
+body {
+	font-family: sans-serif;
+}
+
+.page-title {
+	background-color: @title-color;
+	font-size: 200%;
+	.rounded;
+	margin-top: 5px;
+}
+
+nav {
+	background-color: @header-color;
+	.rounded;
+	margin-top: 5px;
+	a {
+		text-decoration: none;
+		color: black;
+	}
+}
+
+/* Home page */
+
+article.policy-summary {
+	background-color: @header-color;
+	.rounded;
+	font-size: 80%;
+	h1 {
+		display: inline;
+	}
+	h2 {
+		color: lightgrey;
+		padding-left: 10px;
+		display: inline;
+	}
+}
+
+/* Policy page */
+
+article.policy > header > h1 {
+	background-color: @header-color;
+	.rounded;
+}
+
