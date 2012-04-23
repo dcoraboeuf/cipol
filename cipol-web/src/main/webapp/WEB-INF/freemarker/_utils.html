@@ -2,3 +2,11 @@
 	<#-- TODO Optional output -->
 	<!-- ${text} -->
 </#macro>
+
+<#macro disabled value>
+	<#if value>
+		<span class="disabled">Disabled</span>
+	<#else>
+		<span class="disabled">Enabled</span>
+	</#if>
+</#macro>
