@@ -1,4 +1,41 @@
 <#include "/_layouts.html">
 <@layout_simple pageId="policy" titleKey="policy.title">
-	Policy
+	<article class="policy">
+		<header>
+			<h1>${policy.name}</h1>
+		</header>
+		<section class="form">
+			<table>
+				<tbody>
+					<tr>
+						<td class="label">
+							${loc("model.policy.uid")}
+						</td>
+						<td id="uid" class="value">
+							${policy.uid}
+						</td>
+					</tr>
+					<tr>
+						<td class="label">
+							${loc("model.policy.name")}
+						</td>
+						<td id="name" class="value">
+							${policy.name}
+						</td>
+					</tr>
+					<tr>
+						<td class="label">
+							${loc("model.policy.description")}
+						</td>
+						<td id="description" class="value">
+							${policy.description}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+	</article>
+	<nav>
+		<a href="ui/">${loc("general.cancel")}</a> 
+	</nav>
 </@layout_simple>

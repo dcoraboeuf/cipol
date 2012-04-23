@@ -1,28 +1,58 @@
+/* General */
+
 body {
 	font-family: sans-serif;
 }
 
 .page-title {
-	background-color: olive;
+	background-color: #BBCCDD;
 	font-size: 200%;
+	border-radius: 15px;
+	padding: 5px 10px 5px 10px;
+	margin-top: 5px;
 }
 
-article.policy {
+nav {
 	background-color: #DDEEFF;
 	border-radius: 15px;
-	padding-top: 10px;
-	padding-bottom: 5px;
-	padding-left: 10px;
-	padding-right: 10px;
+	padding: 5px 10px 5px 10px;
+	margin-top: 5px;
+}
+
+nav a {
+	text-decoration: none;
+	color: black;
+}
+
+/* Home page */
+
+article.policy-summary {
+	background-color: #DDEEFF;
+	border-radius: 15px;
+	padding: 5px 10px 5px 10px;
 	font-size: 80%;
 }
 
-article.policy h1 {
+article.policy-summary h1 {
 	display: inline;
 }
 
-article.policy h2 {
+article.policy-summary h2 {
 	color: lightgrey;
 	padding-left: 10px;
 	display: inline;
+}
+
+/* Policy page */
+
+article.policy > header > h1 {
+	background-color: #DDEEFF;
+	border-radius: 15px;
+	padding: 5px 10px 5px 10px;
+}
+
+article.policy section.form dt {
+}
+
+article.policy section.form dd {
 }
