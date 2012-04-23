@@ -2,8 +2,12 @@
 
 // Colors
 @base-color: #DDEEFF;
+@info-color: lightgrey;
 @header-color: @base-color;
 @title-color: darken(@header-color, 20%);
+@policy-group-member-color: lighten(@header-color, 5%);
+@policy-ruleset-color: lighten(@header-color, 5%);
+@policy-rule-color: lighten(@header-color, 5%);
 
 /* Commons */
 
@@ -17,6 +21,7 @@
 
 body {
 	font-family: sans-serif;
+	background-color: black;
 }
 
 .page-title {
@@ -36,6 +41,23 @@ nav {
 	}
 }
 
+.status {
+	.rounded;
+	color: yellow;
+	font-size: 50%;
+	vertical-align: middle;
+}
+
+.enabled {
+	background-color: lighten(green, 20%);
+	.status;
+}
+
+.disabled {
+	background-color: darken(red, 20%);
+	.status;
+}
+
 /* Home page */
 
 article.policy-summary {
@@ -46,7 +68,7 @@ article.policy-summary {
 		display: inline;
 	}
 	h2 {
-		color: lightgrey;
+		color: @info-color;
 		padding-left: 10px;
 		display: inline;
 	}
@@ -54,8 +76,76 @@ article.policy-summary {
 
 /* Policy page */
 
-article.policy > header > h1 {
-	background-color: @header-color;
+article.policy {
+	> header > h1 {
+		background-color: @header-color;
+		.rounded;
+	}
+	section.form {
+		.rounded;
+		background-color: white;
+	}
+}
+
+section.policy-section > header > h1 {
+	background-color: lighten(@header-color, 5%);
 	.rounded;
 }
 
+section.policy-groups {
+	> div {
+		padding: 10px;
+		.rounded;
+		background-color: @header-color;
+		dt {
+			margin-bottom: 5px;
+			margin-top: 5px;
+		}
+		dd {
+			display: inline;
+			background-color: @policy-group-member-color;
+			.rounded;
+		}
+	}
+}
+
+section.policy-ruleset {
+	margin-left: 20px;
+	> header {
+		.rounded;
+		background-color: @policy-ruleset-color;
+		> h1 {
+			display: inline;
+		}
+		> p {
+			display: inline;
+			color: @info-color;
+		}
+	}
+}
+
+section.policy-rule {
+	margin-left: 40px;
+	.rounded;
+	background-color: @policy-rule-color;
+	> header {
+		> h1 {
+			display: inline;
+		}
+		> p {
+			display: inline;
+		}
+	}
+	p.parameters {
+		font-size: 80%;
+		.param-name {
+			color: black;
+		}
+		.param-value {
+			color: red;
+		}
+	}
+	> p {
+		color: @info-color;
+	}
+}

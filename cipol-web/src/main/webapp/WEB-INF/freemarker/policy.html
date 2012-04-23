@@ -34,48 +34,54 @@
 				</tbody>
 			</table>
 		</section>
-		<section class="groups">
+		<section class="policy-section policy-groups">
 			<header>
 				<h1>Groups</h1>
 			</header>
-			<dl>
-				<#list policy.groups as group>
-					<dt>${group.name?html}</dt>
-					<#list group.members as member>
-						<dd>${member?html}</dd>
+			<div>
+				<dl>
+					<#list policy.groups as group>
+						<dt>${group.name?html}</dt>
+						<#list group.members as member>
+							<dd>${member?html}</dd>
+						</#list>
 					</#list>
-				</#list>
-			</dl>
+				</dl>
+			</div>
 		</section>
-		<section class="rules">
+		<section class="policy-section policy-rules">
 			<header>
 				<h1>Rules</h1>
 			</header>
 			<#list policy.rules as ruleset>
-				<section class="ruleset">
+				<section class="policy-ruleset">
 					<header>
 						<h1>${ruleset.path}</h1>
 						<p>${ruleset.description?html}</p>
 						<p><@disabled value=ruleset.disabled /></p>
 					</header>
 					<#list ruleset.rules as rule>
-						<section class="rule">
+						<section class="policy-rule">
 							<header>
 								<h1>${rule.ruleId?html}</h1>
 								<p><@disabled value=rule.disabled /></p>
 							</header>
 							<#if rule.parameters??>
-								<p>
+								<p class="parameters">
 									<#list rule.parameters as param>
 										<span class="param">
-											${param.name?html}
+											<span class="param-name">
+												${param.name?html}
+											</span>
 											=
-											${param.value?html}
+											<span class="param-value">
+												${param.value?html}
+											</span>
 										</span>
 									</#list>
 								</p>
 							</#if>
-							<p>${rule.description?html}</p>
+							<p class="description">${rule.description?html}</p>
 						</section>
 					</#list>
 				</section>
