@@ -1,4 +1,5 @@
 <#include "/_utils.html">
+<#import "/spring.ftl" as spring />
 
 <#macro layout_base pageId titleKey>
 	<@comment text="layout_base" />
@@ -7,6 +8,7 @@
 	<#-- TODO Language -->
 	<html lang="en">
 		<head>
+			<base href="<@spring.url relativeUrl="/" />" />
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 			<link rel="stylesheet" type="text/css" href="styles/ui.css" />
 			<title>${loc("${titleKey}")} - ${loc("app.title")} ${loc("app.version")}</title>
