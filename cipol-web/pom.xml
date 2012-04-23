@@ -130,6 +130,7 @@
 				<configuration>
 					<webApp>
 						<contextPath>/cipol</contextPath>
+						<defaultsDescriptor>src/test/resources/jetty/webdefault.xml</defaultsDescriptor>
 					</webApp>
 					<stopPort>9966</stopPort>
 					<stopKey>foo</stopKey>
