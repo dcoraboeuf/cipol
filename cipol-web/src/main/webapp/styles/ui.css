@@ -1,3 +1,7 @@
+body {
+	font-family: sans-serif;
+}
+
 .page-title {
 	background-color: olive;
 	font-size: 200%;
@@ -6,9 +10,19 @@
 article.policy {
 	background-color: #DDEEFF;
 	border-radius: 15px;
-	padding-top: 5px;
+	padding-top: 10px;
 	padding-bottom: 5px;
 	padding-left: 10px;
 	padding-right: 10px;
-	font-size: 50%;
+	font-size: 80%;
+}
+
+article.policy h1 {
+	display: inline;
+}
+
+article.policy h2 {
+	color: lightgrey;
+	padding-left: 10px;
+	display: inline;
 }
