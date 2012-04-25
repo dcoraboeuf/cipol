@@ -13,6 +13,12 @@
 @color-policy-section-fg: white;
 @color-policy-section-body-bg: lighten(@color-policy-section-bg, 10%);
 
+@color-policy-group-bg: darken(@color-policy-bg, 10%);
+@color-policy-group-fg: white;
+
+@color-policy-group-member-bg: @color-policy-bg;
+@color-policy-group-member-fg: black;
+
 /* General: tags */
 
 body {
@@ -99,5 +105,20 @@ article.policy {
 			margin-bottom: 5px;
 			background-color: @color-policy-section-body-bg;
 		}
+	}
+}
+
+section.policy-groups {
+	th {
+		text-align: left;
+		.rounded;
+		font-weight: normal;
+		background-color: @color-policy-group-bg;
+		color: @color-policy-group-fg;
+	}
+	td {
+		.rounded;
+		background-color: @color-policy-group-member-bg;
+		color: @color-policy-group-member-fg;
 	}
 }

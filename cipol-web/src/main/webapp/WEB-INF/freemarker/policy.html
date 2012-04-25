@@ -41,14 +41,20 @@
 				Groups
 			</header>
 			<div>
-				<dl>
-					<#list policy.groups as group>
-						<dt>${group.name?html}</dt>
-						<#list group.members as member>
-							<dd>${member?html}</dd>
+				<table>
+					<tbody>
+						<#list policy.groups as group>
+							<tr>
+								<th>
+									${group.name?html}
+								</th>
+								<#list group.members as member>
+									<td>${member?html}</td>
+								</#list>
+							</tr>
 						</#list>
-					</#list>
-				</dl>
+					</tbody>
+				</table>
 			</div>
 		</section>
 		<section class="policy policy-rules">
