@@ -3,7 +3,7 @@
 	<#list policies as policy>
 		<article class="policy-summary">
 			<header>
-				<a href="ui/policy/load/${policy.uid}"><h1>${policy.name?html}</h1></a>
+				<a href="ui/policy/load/${policy.uid}">${policy.name?html}</a>
 			</header>
 			<p>
 				<span class="info">${policy.description?html}</span>

@@ -1,10 +1,10 @@
 <#include "/_layouts.html">
 <@layout_simple pageId="policy" titleKey="policy.title">
 	<article class="policy">
-		<header>
-			<h1>${policy.name?html}</h1>
-		</header>
 		<section class="form">
+			<header>
+				<h1>${policy.name?html}</h1>
+			</header>
 			<table>
 				<tbody>
 					<tr>
@@ -88,7 +88,7 @@
 			</#list>
 		</section>
 	</article>
-	<nav class="page">
+	<nav>
 		<a href="ui/">${loc("general.cancel")}</a> 
 	</nav>
 </@layout_simple>

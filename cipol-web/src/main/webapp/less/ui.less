@@ -16,11 +16,6 @@ body {
 	background-color: white;
 }
 
-h1 {
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
 /* General: classes */
 
 .info {
@@ -49,12 +44,15 @@ h1 {
 /* Simple layout */
 
 article.page {
-	> header > h1 {
+	> header {
 		.rounded;
+		font-size: 150%;
+		font-weight: bold;
+		margin-bottom: 5px;
 		background-color: @color-page-title-bg;
 		color: @color-page-title-fg;
 	}
-	nav.page {
+	> section > nav {
 		.rounded;
 		background-color: @color-page-nav-bg;
 		position: fixed;
@@ -74,9 +72,17 @@ article.policy-summary {
 	.rounded;
 	background-color: @color-policy-bg;
 	> header {
+		font-size: 120%;
+		font-weight: bold;
 		> a {
 			color: @color-policy-fg;
 			text-decoration: none;
 		}
 	}
+}
+
+/* Policy page */
+
+article.policy {
+	
 }
