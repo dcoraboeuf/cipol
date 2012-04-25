@@ -3,6 +3,7 @@ package net.cipol.core;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -75,12 +76,16 @@ public class FileCore implements FileService {
 	
 	protected List<String> getIds (final Class<?> type) {
 		String[] names = homeService.getHome().list(new WildcardFileFilter(getFileName(type, "*")));
-		return Lists.transform(Arrays.asList(names), new Function<String, String>(){
-			@Override
-			public String apply(String name) {
-				return extractIdFromFileName(type, name);
-			}
-		});
+		if (names == null) {
+			return Collections.emptyList();
+		} else {
+			return Lists.transform(Arrays.asList(names), new Function<String, String>(){
+				@Override
+				public String apply(String name) {
+					return extractIdFromFileName(type, name);
+				}
+			});
+		}
 	}
 
 	protected String extractIdFromFileName(Class<?> type, String name) {
