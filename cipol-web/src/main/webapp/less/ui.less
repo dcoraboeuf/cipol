@@ -6,6 +6,9 @@
 @color-policy-bg: #9999FF;
 @color-policy-fg: white;
 
+@color-page-nav-bg: @color-page-title-bg;
+@color-page-nav-fg: @color-page-title-fg;
+
 /* General: tags */
 
 body {
@@ -50,6 +53,18 @@ article.page {
 		.rounded;
 		background-color: @color-page-title-bg;
 		color: @color-page-title-fg;
+	}
+	nav.page {
+		.rounded;
+		background-color: @color-page-nav-bg;
+		position: fixed;
+		bottom: 5px;
+		left: 5px;
+		right: 5px;
+		a {
+			text-decoration: none;
+			color: @color-page-nav-fg;
+		}
 	}
 }
 
