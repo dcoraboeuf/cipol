@@ -5,34 +5,36 @@
 			<header>
 				${policy.name?html}
 			</header>
-			<table>
-				<tbody>
-					<tr>
-						<td class="label">
-							${loc("model.policy.uid")}
-						</td>
-						<td id="uid" class="value">
-							${policy.uid}
-						</td>
-					</tr>
-					<tr>
-						<td class="label">
-							${loc("model.policy.name")}
-						</td>
-						<td id="name" class="value">
-							${policy.name?html}
-						</td>
-					</tr>
-					<tr>
-						<td class="label">
-							${loc("model.policy.description")}
-						</td>
-						<td id="description" class="value">
-							${policy.description?html}
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div>
+				<table>
+					<tbody>
+						<tr>
+							<td class="label">
+								${loc("model.policy.uid")}
+							</td>
+							<td id="uid" class="value">
+								${policy.uid}
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								${loc("model.policy.name")}
+							</td>
+							<td id="name" class="value">
+								${policy.name?html}
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								${loc("model.policy.description")}
+							</td>
+							<td id="description" class="value">
+								${policy.description?html}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</section>
 		<section class="policy policy-groups">
 			<header>
@@ -53,39 +55,41 @@
 			<header>
 				Rules
 			</header>
-			<#list policy.rules as ruleset>
-				<section class="policy-ruleset">
-					<header>
-						<h1>${ruleset.path}</h1>
-						<p>${ruleset.description?html}</p>
-						<p><@disabled value=ruleset.disabled /></p>
-					</header>
-					<#list ruleset.rules as rule>
-						<section class="policy-rule">
-							<header>
-								<h1>${rule.ruleId?html}</h1>
-								<p><@disabled value=rule.disabled /></p>
-							</header>
-							<#if rule.parameters??>
-								<p class="parameters">
-									<#list rule.parameters as param>
-										<span class="param">
-											<span class="param-name">
-												${param.name?html}
+				<div>
+				<#list policy.rules as ruleset>
+					<section class="policy-ruleset">
+						<header>
+							<h1>${ruleset.path}</h1>
+							<p>${ruleset.description?html}</p>
+							<p><@disabled value=ruleset.disabled /></p>
+						</header>
+						<#list ruleset.rules as rule>
+							<section class="policy-rule">
+								<header>
+									<h1>${rule.ruleId?html}</h1>
+									<p><@disabled value=rule.disabled /></p>
+								</header>
+								<#if rule.parameters??>
+									<p class="parameters">
+										<#list rule.parameters as param>
+											<span class="param">
+												<span class="param-name">
+													${param.name?html}
+												</span>
+												=
+												<span class="param-value">
+													${param.value?html}
+												</span>
 											</span>
-											=
-											<span class="param-value">
-												${param.value?html}
-											</span>
-										</span>
-									</#list>
-								</p>
-							</#if>
-							<p class="description">${rule.description?html}</p>
-						</section>
-					</#list>
-				</section>
-			</#list>
+										</#list>
+									</p>
+								</#if>
+								<p class="description">${rule.description?html}</p>
+							</section>
+						</#list>
+					</section>
+				</#list>
+			</div>
 		</section>
 	</article>
 	<nav>

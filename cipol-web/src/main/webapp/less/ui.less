@@ -11,6 +11,7 @@
 
 @color-policy-section-bg: @color-policy-bg;
 @color-policy-section-fg: white;
+@color-policy-section-body-bg: lighten(@color-policy-section-bg, 10%);
 
 /* General: tags */
 
@@ -92,6 +93,11 @@ article.policy {
 			.rounded;
 			background-color: @color-policy-section-bg;
 			color: @color-policy-section-fg;
+		}
+		> div {
+			.rounded;
+			margin-bottom: 5px;
+			background-color: @color-policy-section-body-bg;
 		}
 	}
 }
