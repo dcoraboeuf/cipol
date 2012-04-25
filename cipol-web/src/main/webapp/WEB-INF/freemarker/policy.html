@@ -1,9 +1,9 @@
 <#include "/_layouts.html">
 <@layout_simple pageId="policy" titleKey="policy.title">
 	<article class="policy">
-		<section class="form">
+		<section class="policy">
 			<header>
-				<h1>${policy.name?html}</h1>
+				${policy.name?html}
 			</header>
 			<table>
 				<tbody>
@@ -34,9 +34,9 @@
 				</tbody>
 			</table>
 		</section>
-		<section class="policy-section policy-groups">
+		<section class="policy policy-groups">
 			<header>
-				<h1>Groups</h1>
+				Groups
 			</header>
 			<div>
 				<dl>
@@ -49,9 +49,9 @@
 				</dl>
 			</div>
 		</section>
-		<section class="policy-section policy-rules">
+		<section class="policy policy-rules">
 			<header>
-				<h1>Rules</h1>
+				Rules
 			</header>
 			<#list policy.rules as ruleset>
 				<section class="policy-ruleset">

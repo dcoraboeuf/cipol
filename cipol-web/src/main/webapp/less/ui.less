@@ -3,11 +3,14 @@
 @color-page-title-bg: #55DD55;
 @color-page-title-fg: white;
 
+@color-page-nav-bg: @color-page-title-bg;
+@color-page-nav-fg: @color-page-title-fg;
+
 @color-policy-bg: #9999FF;
 @color-policy-fg: white;
 
-@color-page-nav-bg: @color-page-title-bg;
-@color-page-nav-fg: @color-page-title-fg;
+@color-policy-section-bg: @color-policy-bg;
+@color-policy-section-fg: white;
 
 /* General: tags */
 
@@ -84,5 +87,11 @@ article.policy-summary {
 /* Policy page */
 
 article.policy {
-	
+	section.policy {
+		> header {
+			.rounded;
+			background-color: @color-policy-section-bg;
+			color: @color-policy-section-fg;
+		}
+	}
 }
