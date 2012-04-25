@@ -2,11 +2,13 @@
 <@layout_simple pageId="home" titleKey="home.title">
 	<#list policies as policy>
 		<article class="policy-summary">
-			<hgroup>
-				<a href="ui/policy/load/${policy.uid}"><h1>${policy.name}</h1></a>
-				<h2>${policy.uid}</h2>
-			</hgroup>
-			<p>${policy.description}</p>
+			<header>
+				<a href="ui/policy/load/${policy.uid}"><h1>${policy.name?html}</h1></a>
+			</header>
+			<p>
+				<span class="info">${policy.description?html}</span>
+				<@uid value=policy.uid />
+			</p>
 		</article>
 	</#list>	
 </@layout_simple>

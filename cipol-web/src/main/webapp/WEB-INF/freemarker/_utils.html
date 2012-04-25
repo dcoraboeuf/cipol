@@ -3,6 +3,10 @@
 	<!-- ${text} -->
 </#macro>
 
+<#macro uid value>
+	<span class="macro-uid">[<span>${value}</span>]</span>
+</#macro>
+
 <#macro disabled value>
 	<#if value>
 		<span class="disabled">Disabled</span>
