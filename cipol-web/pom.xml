@@ -106,100 +106,115 @@
 				<filtering>true</filtering>
 			</testResource>
 		</testResources>
-		<plugins>
-			
-			<!-- Compiles the Groovy integration tests -->
-			<plugin>
-				<groupId>org.codehaus.gmaven</groupId>
-				<artifactId>gmaven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>groovy-compile</id>
-						<goals>
-                        	<!-- goal>generateTestStubs</goal -->
-							<goal>testCompile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			
-			<!-- Running w/ Jetty -->
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<configuration>
-					<webApp>
-						<contextPath>/cipol</contextPath>
-						<defaultsDescriptor>${project.basedir}/src/test/resources/jetty/webdefault.xml</defaultsDescriptor>
-					</webApp>
-					<stopPort>9966</stopPort>
-					<stopKey>foo</stopKey>
-					<systemProperties>
-						<systemProperty>
-							<name>spring.profiles.active</name>
-							<value>dev</value>
-						</systemProperty>
-					</systemProperties>
-				</configuration>
-				<!-- Integration tests with Jetty -->
-				<executions>
-					<execution>
-						<id>it-jetty-start</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<daemon>true</daemon>
-							<systemProperties>
-					            <systemProperty>
-						            <name>spring.profiles.active</name>
-						            <value>it</value>
-					            </systemProperty>
-					            <systemProperty>
-					            	<name>cipol.home</name>
-					            	<value>${project.basedir}/src/it/home</value>
-					            </systemProperty>
-							    <systemProperty>
-							    	<name>jetty.port</name>
-									<value>${it.port}</value>
-							    </systemProperty>
-					        </systemProperties>
-						</configuration>
-					</execution>
-					<execution>
-						<id>it-jetty-stop</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>stop</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			
-			<!-- Running integration tests -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-		        <executions>
-		          <execution>
-		            <goals>
-		              <goal>integration-test</goal>
-		              <goal>verify</goal>
-		            </goals>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
 					<configuration>
+						<webApp>
+							<contextPath>/cipol</contextPath>
+							<defaultsDescriptor>${project.basedir}/src/test/resources/jetty/webdefault.xml</defaultsDescriptor>
+						</webApp>
+						<stopPort>9966</stopPort>
+						<stopKey>foo</stopKey>
 						<systemProperties>
-							<property>
-								<name>it.port</name>
-								<value>${it.port}</value>
-							</property>
+							<systemProperty>
+								<name>spring.profiles.active</name>
+								<value>dev</value>
+							</systemProperty>
 						</systemProperties>
 					</configuration>
-		          </execution>
-		        </executions>
-			</plugin>
-			
-		</plugins>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
+	
+    <profiles>
+    	<profile>
+    		<id>integration-test</id>
+    		<build>
+    			<plugins>			
+			
+					<!-- Compiles the Groovy integration tests -->
+					<plugin>
+						<groupId>org.codehaus.gmaven</groupId>
+						<artifactId>gmaven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>groovy-compile</id>
+								<goals>
+		                        	<!-- goal>generateTestStubs</goal -->
+									<goal>testCompile</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					
+					<!-- Running w/ Jetty -->
+					<plugin>
+						<groupId>org.mortbay.jetty</groupId>
+						<artifactId>jetty-maven-plugin</artifactId>
+						<!-- Integration tests with Jetty -->
+						<executions>
+							<execution>
+								<id>it-jetty-start</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<daemon>true</daemon>
+									<systemProperties>
+							            <systemProperty>
+								            <name>spring.profiles.active</name>
+								            <value>it</value>
+							            </systemProperty>
+							            <systemProperty>
+							            	<name>cipol.home</name>
+							            	<value>${project.basedir}/src/it/home</value>
+							            </systemProperty>
+									    <systemProperty>
+									    	<name>jetty.port</name>
+											<value>${it.port}</value>
+									    </systemProperty>
+							        </systemProperties>
+								</configuration>
+							</execution>
+							<execution>
+								<id>it-jetty-stop</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					
+					<!-- Running integration tests -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+				        <executions>
+				          <execution>
+				            <goals>
+				              <goal>integration-test</goal>
+				              <goal>verify</goal>
+				            </goals>
+							<configuration>
+								<systemProperties>
+									<property>
+										<name>it.port</name>
+										<value>${it.port}</value>
+									</property>
+								</systemProperties>
+							</configuration>
+				          </execution>
+				        </executions>
+					</plugin>
+    			</plugins>
+    		</build>
+    	</profile>
+    </profiles>
 	
 </project>
