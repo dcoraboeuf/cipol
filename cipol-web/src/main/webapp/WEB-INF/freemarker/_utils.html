@@ -14,3 +14,16 @@
 		<span class="macro-enabled">Enabled</span>
 	</#if>
 </#macro>
+
+
+<#macro parameter p>	
+	<span class="param">
+		<span class="param-name">
+			${p.name?html}
+		</span>
+		=
+		<span class="param-value">
+			${p.value?html}
+		</span>
+	</span>
+</#macro>

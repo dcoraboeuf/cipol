@@ -80,15 +80,7 @@
 									<#if rule.parameters??>
 										<div class="parameters">
 											<#list rule.parameters as param>
-												<span class="param">
-													<span class="param-name">
-														${param.name?html}
-													</span>
-													=
-													<span class="param-value">
-														${param.value?html}
-													</span>
-												</span>
+												<@parameter p=param />
 											</#list>
 										</div>
 									</#if>
