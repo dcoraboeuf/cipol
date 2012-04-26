@@ -19,6 +19,19 @@
 @color-policy-group-member-bg: @color-policy-bg;
 @color-policy-group-member-fg: black;
 
+@color-policy-ruleset-header-bg: yellow;
+@color-policy-ruleset-path-bg: black;
+@color-policy-ruleset-path-fg: white;
+@color-policy-ruleset-body-bg: lighten(@color-policy-section-body-bg, 5%);
+
+/* Commons */
+
+// Rounded corners
+.rounded (@radius: 10px) {
+	border-radius: @radius;
+	padding: 5px @radius 5px @radius;
+}
+
 /* General: tags */
 
 body {
@@ -43,12 +56,22 @@ body {
 	}
 }
 
-/* Commons */
+.macro-status {
+	.rounded(8px);
+	color: white;
+	font-weight: bold;
+	font-size: 50%;
+	vertical-align: middle;
+}
 
-// Rounded corners
-.rounded (@radius: 10px) {
-	border-radius: @radius;
-	padding: 5px @radius 5px @radius;
+.macro-enabled {
+	.macro-status;
+	background-color: #00AA00;
+}
+
+.macro-disabled {
+	.macro-status;
+	background-color: #AA0000;
 }
 
 /* Simple layout */
@@ -120,5 +143,23 @@ section.policy-groups {
 		.rounded;
 		background-color: @color-policy-group-member-bg;
 		color: @color-policy-group-member-fg;
+	}
+}
+
+section.policy-ruleset {
+	> header {
+		.rounded;
+		background-color: @color-policy-ruleset-header-bg;
+		span.policy-ruleset-path {
+			.rounded (5px);
+			padding: 2px 5px 2px 5px;
+			margin: 5px 5px 5px 0px;
+			background-color: @color-policy-ruleset-path-bg;
+			color: @color-policy-ruleset-path-fg;
+		}
+	}
+	> div {
+		.rounded;
+		background-color: @color-policy-ruleset-body-bg;
 	}
 }

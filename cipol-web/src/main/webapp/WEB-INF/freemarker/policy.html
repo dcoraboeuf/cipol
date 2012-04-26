@@ -65,34 +65,36 @@
 				<#list policy.rules as ruleset>
 					<section class="policy-ruleset">
 						<header>
-							<h1>${ruleset.path}</h1>
-							<p>${ruleset.description?html}</p>
-							<p><@disabled value=ruleset.disabled /></p>
+							<span class="policy-ruleset-path">${ruleset.path}</span>
+							<span class="policy-ruleset-description">${ruleset.description?html}</span>
+							<@disabled value=ruleset.disabled />
 						</header>
-						<#list ruleset.rules as rule>
-							<section class="policy-rule">
-								<header>
-									<h1>${rule.ruleId?html}</h1>
-									<p><@disabled value=rule.disabled /></p>
-								</header>
-								<#if rule.parameters??>
-									<p class="parameters">
-										<#list rule.parameters as param>
-											<span class="param">
-												<span class="param-name">
-													${param.name?html}
+						<div>
+							<#list ruleset.rules as rule>
+								<section class="policy-rule">
+									<header>
+										<h1>${rule.ruleId?html}</h1>
+										<p><@disabled value=rule.disabled /></p>
+									</header>
+									<#if rule.parameters??>
+										<p class="parameters">
+											<#list rule.parameters as param>
+												<span class="param">
+													<span class="param-name">
+														${param.name?html}
+													</span>
+													=
+													<span class="param-value">
+														${param.value?html}
+													</span>
 												</span>
-												=
-												<span class="param-value">
-													${param.value?html}
-												</span>
-											</span>
-										</#list>
-									</p>
-								</#if>
-								<p class="description">${rule.description?html}</p>
-							</section>
-						</#list>
+											</#list>
+										</p>
+									</#if>
+									<p class="description">${rule.description?html}</p>
+								</section>
+							</#list>
+						</div>
 					</section>
 				</#list>
 			</div>
