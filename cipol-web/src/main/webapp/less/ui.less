@@ -24,12 +24,24 @@
 @color-policy-ruleset-path-fg: white;
 @color-policy-ruleset-body-bg: lighten(@color-policy-section-body-bg, 5%);
 
+@color-policy-rule-header-bg: khaki;
+@color-policy-rule-name-bg: brown;
+@color-policy-rule-name-fg: white;
+@color-policy-rule-parameters-bg: lighten(@color-policy-rule-header-bg, 10%);
+
 /* Commons */
 
 // Rounded corners
 .rounded (@radius: 10px) {
 	border-radius: @radius;
 	padding: 5px @radius 5px @radius;
+}
+
+// Policy ID
+.policy-id {
+	.rounded (5px);
+	padding: 2px 5px 2px 5px;
+	margin: 5px 5px 5px 0px;
 }
 
 /* General: tags */
@@ -151,15 +163,36 @@ section.policy-ruleset {
 		.rounded;
 		background-color: @color-policy-ruleset-header-bg;
 		span.policy-ruleset-path {
-			.rounded (5px);
-			padding: 2px 5px 2px 5px;
-			margin: 5px 5px 5px 0px;
+			.policy-id;
 			background-color: @color-policy-ruleset-path-bg;
 			color: @color-policy-ruleset-path-fg;
+		}
+		span.policy-ruleset-description {
+			.info;
 		}
 	}
 	> div {
 		.rounded;
 		background-color: @color-policy-ruleset-body-bg;
+	}
+}
+
+section.policy-rule {
+	> header {
+		.rounded;
+		background-color: @color-policy-rule-header-bg;
+		span.policy-rule-name {
+			.policy-id;
+			background-color: @color-policy-rule-name-bg;
+			color: @color-policy-rule-name-fg;
+		}
+		span.policy-rule-description {
+			.info;
+		}
+	}
+	> div {
+		.rounded;
+		background-color: @color-policy-rule-parameters-bg;
+		margin-bottom: 5px;
 	}
 }

@@ -73,11 +73,12 @@
 							<#list ruleset.rules as rule>
 								<section class="policy-rule">
 									<header>
-										<h1>${rule.ruleId?html}</h1>
-										<p><@disabled value=rule.disabled /></p>
+										<span class="policy-rule-name">${rule.ruleId?html}</span>
+										<span class="policy-rule-description">${rule.description?html}</span>
+										<@disabled value=rule.disabled />
 									</header>
 									<#if rule.parameters??>
-										<p class="parameters">
+										<div class="parameters">
 											<#list rule.parameters as param>
 												<span class="param">
 													<span class="param-name">
@@ -89,9 +90,8 @@
 													</span>
 												</span>
 											</#list>
-										</p>
+										</div>
 									</#if>
-									<p class="description">${rule.description?html}</p>
 								</section>
 							</#list>
 						</div>
