@@ -1,0 +1,20 @@
+<#macro form_text_field id label value editable>
+	<#if editable>
+		<#assign valueClass = "macro-form-value macro-form-value-editable" >
+	<#else>
+		<#assign valueClass = "macro-form-value" >
+	</#if>
+	<tr>
+		<td class="macro-form-label">
+			${label}
+		</td>
+		<td id="macro-form-cell-${id}" class="${valueClass}">
+			${value?html}
+		</td>
+		<#if editable>
+			<td>
+				<img class="action" src="images/pencil.png" />
+			</td>
+		</#if>
+	</tr>
+</#macro>

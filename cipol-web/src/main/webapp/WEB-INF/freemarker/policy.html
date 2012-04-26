@@ -1,4 +1,5 @@
 <#include "/_layouts.html">
+<#include "/_forms.html">
 <@layout_simple pageId="policy" titleKey="policy.title">
 	<article class="policy">
 		<section class="policy">
@@ -8,30 +9,24 @@
 			<div>
 				<table>
 					<tbody>
-						<tr>
-							<td class="label">
-								${loc("model.policy.uid")}
-							</td>
-							<td id="uid" class="value">
-								${policy.uid}
-							</td>
-						</tr>
-						<tr>
-							<td class="label">
-								${loc("model.policy.name")}
-							</td>
-							<td id="name" class="value">
-								${policy.name?html}
-							</td>
-						</tr>
-						<tr>
-							<td class="label">
-								${loc("model.policy.description")}
-							</td>
-							<td id="description" class="value">
-								${policy.description?html}
-							</td>
-						</tr>
+						<@form_text_field
+							id="uid"
+							label=loc("model.policy.uid")
+							value=policy.uid
+							editable=false
+							/>
+						<@form_text_field
+							id="name"
+							label=loc("model.policy.name")
+							value=policy.name
+							editable=true
+							/>
+						<@form_text_field
+							id="description"
+							label=loc("model.policy.description")
+							value=policy.description
+							editable=true
+							/>
 					</tbody>
 				</table>
 			</div>
