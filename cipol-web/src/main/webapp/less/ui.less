@@ -86,6 +86,18 @@ body {
 	background-color: #AA0000;
 }
 
+.macro-param {
+	.rounded;
+	background-color: white;
+	font-size: 80%;
+	.macro-param-name {
+		color: gray;
+	}
+	.macro-param-value {
+		font-weight: bold;
+	}
+}
+
 /* Simple layout */
 
 article.page {
@@ -194,5 +206,6 @@ section.policy-rule {
 		.rounded;
 		background-color: @color-policy-rule-parameters-bg;
 		margin-bottom: 5px;
+		padding: 5px;
 	}
 }
