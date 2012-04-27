@@ -13,7 +13,7 @@
 		</td>
 		<#if editable>
 			<td>
-				<img class="action" src="images/pencil.png" />
+				<img onclick="Forms.text_field_edit('${id?web_safe}');" class="action" src="images/pencil.png" />
 			</td>
 		</#if>
 	</tr>
