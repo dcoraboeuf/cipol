@@ -1,5 +1,5 @@
 <#include "/_layouts.html">
-<@layout_simple pageId="home" titleKey="home.title">
+<@layout_simple pageId="home" titleKey="home.title" forms=true>
 	<#list policies as policy>
 		<article class="policy-summary">
 			<header>
@@ -11,4 +11,12 @@
 			</p>
 		</article>
 	</#list>	
+	<footer>
+		<@form_create
+			action="ui/policy/create"
+			text="Create new policy"
+			name="name"
+			/>
+		</form>
+	</footer>
 </@layout_simple>
