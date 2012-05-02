@@ -1,4 +1,4 @@
-package net.cipol.web.api.controller;
+package net.cipol.web.ui.controller;
 
 import net.cipol.api.PolicyService;
 import net.cipol.model.Policy;
