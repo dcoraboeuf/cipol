@@ -60,6 +60,7 @@
 		<module>cipol-rule</module>
 		<module>cipol-model</module>
 		<module>cipol-jira</module>
+		<module>cipol-test</module>
 	</modules>
 
 	<dependencyManagement>
