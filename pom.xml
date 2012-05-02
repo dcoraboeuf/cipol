@@ -130,6 +130,11 @@
 			    <version>1.0</version>
 			</dependency>
 			<dependency>
+				<groupId>org.dbunit</groupId>
+				<artifactId>dbunit</artifactId>
+				<version>2.4.8</version>
+			</dependency>
+			<dependency>
 				<groupId>net.sf.jstring</groupId>
 				<artifactId>jstring</artifactId>
 				<version>1.10</version>
