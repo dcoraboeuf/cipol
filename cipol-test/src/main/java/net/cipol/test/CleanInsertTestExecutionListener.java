@@ -1,6 +1,5 @@
 package net.cipol.test;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ public class CleanInsertTestExecutionListener implements TestExecutionListener {
 
 	@Override
 	public void beforeTestClass(TestContext testContext) throws Exception {
-		System.setProperty("svnexplorer.home", new File("target/work/home").getAbsolutePath());
 	}
 
 	@Override
@@ -76,6 +74,7 @@ public class CleanInsertTestExecutionListener implements TestExecutionListener {
 					}
 				}
 			}
+			dbConn.getConnection().commit();
 			DBUnitHelper.setConnection(dbConn);
 		} else {
 			LOG.info("{} does not have any data set, no data injection", testContext.getClass().getName());

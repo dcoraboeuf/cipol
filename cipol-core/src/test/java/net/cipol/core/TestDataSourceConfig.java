@@ -17,7 +17,7 @@ public class TestDataSourceConfig {
 	public DataSource dataSource() {
 		BasicDataSource ds = new BasicDataSource();
 		ds.setDriverClassName("org.h2.Driver");
-		ds.setUrl("jdbc:h2:file:target/work/db/test;AUTOCOMMIT=OFF");
+		ds.setUrl("jdbc:h2:file:target/work/db/test;AUTOCOMMIT=OFF;MVCC=true");
 		ds.setUsername("sa");
 		ds.setPassword("");
 		ds.setDefaultAutoCommit(false);
