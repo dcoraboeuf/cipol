@@ -6,9 +6,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import java.io.File;
-
 import net.cipol.api.PolicyService;
 import net.cipol.api.RuleService;
 import net.cipol.model.CommitInformation;
@@ -45,10 +42,10 @@ public class APICoreTest {
 		assertEquals("TEST", version.getVersionNumber());
 	}
 
-	@Test(expected = CannotFindFileException.class)
+	@Test(expected = PolicyNotFoundException.class)
 	public void validate_no_policy() {
 		when(policyService.loadPolicy("0")).thenThrow(
-				new CannotFindFileException(new File("."), ""));
+				new PolicyNotFoundException("0"));
 		api.validate("0", new CommitInformation());
 	}
 
