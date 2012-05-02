@@ -16,6 +16,16 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	<!-- Interceptors -->
 
 	<!-- Exception handler -->
+	
+	<!-- Main view handler -->
+	<bean id="viewResolver" class="net.cipol.web.ui.support.UIViewResolver">
+		<constructor-arg ref="delegateViewResolver" />
+		<constructor-arg value="default" />
+		<constructor-arg>
+			<map>
+			</map>
+		</constructor-arg>
+	</bean>
 
 	<!-- Freemarker config -->
 	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
@@ -31,7 +41,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 
 	<!-- Freemarker views -->
 	<!-- FIXME Uses profiles for caching -->
-	<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+	<bean id="delegateViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 		<property name="cache" value="false" />
 		<property name="prefix" value="" />
 		<property name="suffix" value=".html" />
