@@ -1,49 +1,63 @@
 package net.cipol.core;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
-import net.cipol.api.FileService;
+import javax.sql.DataSource;
+
 import net.cipol.api.PolicyService;
 import net.cipol.model.Policy;
 import net.cipol.model.PolicySummary;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
-
 @Service
-public class PolicyCore implements PolicyService {
-
-	private final FileService fileService;
+public class PolicyCore extends AbstractDaoService implements PolicyService {
 
 	@Autowired
-	public PolicyCore(FileService fileService) {
-		this.fileService = fileService;
+	public PolicyCore(DataSource dataSource) {
+		super(dataSource);
 	}
 
 	@Override
 	@Cacheable("policy")
 	public Policy loadPolicy(String policyId) {
 		try {
-			return fileService.read(Policy.class, policyId);
-		} catch (CannotFindFileException ex) {
+			return getNamedParameterJdbcTemplate().queryForObject("select * from POLICY where uid = :uid", Collections.singletonMap("uid", policyId), new RowMapper<Policy>() {
+				@Override
+				public Policy mapRow(ResultSet rs, int i)
+						throws SQLException {
+					Policy policy = new Policy();
+					policy.setUid(rs.getString("uid"));
+					policy.setName(rs.getString("name"));
+					policy.setDescription(rs.getString("description"));
+					// FIXME Policy groups
+					// FIXME Policy rulesets
+					return policy;
+				}
+			});
+		} catch (EmptyResultDataAccessException ex) {
 			throw new PolicyNotFoundException(policyId);
 		}
 	}
 	
 	@Override
 	public List<PolicySummary> listPolicies() {
-		return Lists.transform(fileService.readAll(Policy.class), new Function<Policy, PolicySummary>() {
+		return getJdbcTemplate().query("select * from POLICY", new RowMapper<PolicySummary>(){
 			@Override
-			public PolicySummary apply(Policy policy) {
-				PolicySummary summary = new PolicySummary();
-				summary.setUid(policy.getUid());
-				summary.setName(policy.getName());
-				summary.setDescription(policy.getDescription());
-				return summary;
+			public PolicySummary mapRow(ResultSet rs, int i)
+					throws SQLException {
+				PolicySummary policy = new PolicySummary();
+				policy.setUid(rs.getString("uid"));
+				policy.setName(rs.getString("name"));
+				policy.setDescription(rs.getString("description"));
+				return policy;
 			}
 		});
 	}
