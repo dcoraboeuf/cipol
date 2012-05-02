@@ -1,5 +1,10 @@
 <dataset>
 
 	<POLICY uid="bare" name="Bare" description="Bare policy" />
+	
+	<POLICY uid="rulenotfound" name="Rule not found" description="Defines a policy with a rule that is not defined" />
+	<RULESET id="100" policy="rulenotfound" path="**"  disabled="false" />
+	<RULEDEF id="10000" ruleset="100" ruleid="notfound" disabled="false" />
+	
 
 </dataset>
