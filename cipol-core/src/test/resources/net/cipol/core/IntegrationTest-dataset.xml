@@ -3,8 +3,20 @@
 	<POLICY uid="bare" name="Bare" description="Bare policy" />
 	
 	<POLICY uid="rulenotfound" name="Rule not found" description="Defines a policy with a rule that is not defined" />
-	<RULESET id="100" policy="rulenotfound" path="**"  disabled="false" />
-	<RULEDEF id="10000" ruleset="100" ruleid="rulenotfound" disabled="false" />
+		<RULESET id="100" policy="rulenotfound" path="**"  disabled="false" />
+			<RULEDEF id="10000" ruleset="100" ruleid="rulenotfound" disabled="false" />
+	
+	<POLICY uid="test" name="Test" description="Test policy" />
+		<RULESET policy="test" id="200" path="**" description="Minimal message length and authentication is required" disabled="false" />
+			<RULEDEF ruleset="200" id="20000" ruleid="message" description="Minimum length" disabled="false" />
+				<PARAM category="RULEDEF" reference="20000" id="2000000" name="minlength" value="10" />
+			<RULEDEF ruleset="200" id="20001" ruleid="authenticated" description="Authentication is required" disabled="false" />
+		<RULESET policy="test" id="201" path="*" description="Root files are allowed only for administrators" disabled="false" />
+			<RULEDEF ruleset="201" id="20100" ruleid="authorization" description="Only administrators" disabled="false" />
+				<PARAM category="RULEDEF" reference="20100" id="2010000" name="allowed" value="admin" />
+		<RULESET policy="test" id="202" path="src/main/resources/META-INF/resources/*.properties" description="Translation files allowed only for some people" disabled="false" />
+			<RULEDEF ruleset="202" id="20200" ruleid="authorization" description="Only translators" disabled="false" />
+				<PARAM category="RULEDEF" reference="20200" id="2020000" name="allowed" value="@translators" />
 	
 
 </dataset>

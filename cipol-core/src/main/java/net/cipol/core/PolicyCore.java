@@ -8,6 +8,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import net.cipol.api.PolicyService;
+import net.cipol.model.ParamValue;
 import net.cipol.model.Policy;
 import net.cipol.model.PolicySummary;
 import net.cipol.model.RuleDefinition;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,7 +59,7 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 									o.setPath(rs.getString("path"));
 									o.setDescription(rs.getString("description"));
 									o.setDisabled(rs.getBoolean("disabled"));
-									// FIXME Rules
+									// Rules
 									List<RuleDefinition> ruleDefinitions = t.query (
 											SQL.RULEDEF_FIND_BY_RULESET,
 											Collections.singletonMap("rulesetid", rs.getInt("id")),
@@ -71,11 +73,32 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 													o.setRuleId(rs.getString("ruleId"));
 													o.setDescription(rs.getString("description"));
 													o.setDisabled(rs.getBoolean("disabled"));
-													// FIXME Rule parameters
+													// Rule parameters
+													// TODO Uses a common mapper
+													List<ParamValue> params = t.query (
+															SQL.PARAM_FIND_BY_CATEGORY_AND_REFERENCE,
+															new MapSqlParameterSource()
+																.addValue("category", "RULEDEF")
+																.addValue("reference", rs.getInt("id")),
+															new RowMapper<ParamValue>() {
+																@Override
+																public ParamValue mapRow(
+																		ResultSet rs,
+																		int i)
+																		throws SQLException {
+																	ParamValue o = new ParamValue();
+																	o.setName(rs.getString("name"));
+																	o.setValue(rs.getString("value"));
+																	return o;
+																}
+															});
+													o.setParameters(params);
+													// OK
 													return o;
 												}
 											});
 									o.setRules(ruleDefinitions);
+									// OK
 									return o;
 								}
 							});
