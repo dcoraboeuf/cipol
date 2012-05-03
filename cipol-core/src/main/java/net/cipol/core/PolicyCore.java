@@ -29,7 +29,7 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 	@Cacheable("policy")
 	public Policy loadPolicy(String policyId) {
 		try {
-			return getNamedParameterJdbcTemplate().queryForObject("select * from POLICY where uid = :uid", Collections.singletonMap("uid", policyId), new RowMapper<Policy>() {
+			return getNamedParameterJdbcTemplate().queryForObject(SQL.POLICY_FIND_BY_UID, Collections.singletonMap("uid", policyId), new RowMapper<Policy>() {
 				@Override
 				public Policy mapRow(ResultSet rs, int i)
 						throws SQLException {
@@ -49,7 +49,7 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 	
 	@Override
 	public List<PolicySummary> listPolicies() {
-		return getJdbcTemplate().query("select * from POLICY", new RowMapper<PolicySummary>(){
+		return getJdbcTemplate().query(SQL.POLICY_FIND_ALL, new RowMapper<PolicySummary>(){
 			@Override
 			public PolicySummary mapRow(ResultSet rs, int i)
 					throws SQLException {
