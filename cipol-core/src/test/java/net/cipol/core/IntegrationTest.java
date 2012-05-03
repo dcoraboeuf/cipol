@@ -6,11 +6,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
 import java.util.List;
 
 import net.cipol.api.APIService;
-import net.cipol.api.HomeService;
 import net.cipol.model.CommitInformation;
 import net.cipol.model.ValidationDetail;
 import net.cipol.model.ValidationReport;
@@ -23,21 +21,10 @@ public class IntegrationTest extends AbstractIntegrationTest {
 	@Autowired
 	private APIService api;
 
-	@Autowired
-	private HomeService homeService;
-
 	@Test
 	public void check() {
 		// Configuration OK
 		assertNotNull(api);
-		assertNotNull(homeService);
-	}
-
-	@Test
-	public void home() {
-		File file = homeService.getFile("net.cipol.model.Policy.bare.json");
-		assertNotNull(file);
-		assertTrue(file.exists());
 	}
 	
 	@Test(expected = PolicyNotFoundException.class)
