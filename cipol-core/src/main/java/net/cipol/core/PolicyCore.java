@@ -10,12 +10,16 @@ import javax.sql.DataSource;
 import net.cipol.api.PolicyService;
 import net.cipol.model.Policy;
 import net.cipol.model.PolicySummary;
+import net.cipol.model.RuleDefinition;
+import net.cipol.model.RuleSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PolicyCore extends AbstractDaoService implements PolicyService {
@@ -27,21 +31,61 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 
 	@Override
 	@Cacheable("policy")
-	public Policy loadPolicy(String policyId) {
+	@Transactional(readOnly = true)
+	public Policy loadPolicy(final String policyId) {
 		try {
-			return getNamedParameterJdbcTemplate().queryForObject(SQL.POLICY_FIND_BY_UID, Collections.singletonMap("uid", policyId), new RowMapper<Policy>() {
+			// TODO Uses external mappers that use a named-parameter JDBC template
+			final NamedParameterJdbcTemplate t = getNamedParameterJdbcTemplate();
+			// Gets the policy
+			Policy policy = t.queryForObject(SQL.POLICY_FIND_BY_UID, Collections.singletonMap("uid", policyId), new RowMapper<Policy>() {
 				@Override
 				public Policy mapRow(ResultSet rs, int i)
 						throws SQLException {
 					Policy policy = new Policy();
-					policy.setUid(rs.getString("uid"));
+					policy.setUid(policyId);
 					policy.setName(rs.getString("name"));
 					policy.setDescription(rs.getString("description"));
 					// FIXME Policy groups
-					// FIXME Policy rulesets
+					// Policy rulesets
+					List<RuleSet> rulesets = t.query(SQL.RULESET_FIND_BY_POLICY,
+							Collections.singletonMap("uid", policyId),
+							new RowMapper<RuleSet>() {
+								@Override
+								public RuleSet mapRow(ResultSet rs, int i)
+										throws SQLException {
+									RuleSet o = new RuleSet();
+									o.setPath(rs.getString("path"));
+									o.setDescription(rs.getString("description"));
+									o.setDisabled(rs.getBoolean("disabled"));
+									// FIXME Rules
+									List<RuleDefinition> ruleDefinitions = t.query (
+											SQL.RULEDEF_FIND_BY_RULESET,
+											Collections.singletonMap("rulesetid", rs.getInt("id")),
+											new RowMapper<RuleDefinition>() {
+												@Override
+												public RuleDefinition mapRow(
+														ResultSet rs,
+														int i)
+														throws SQLException {
+													RuleDefinition o = new RuleDefinition();
+													o.setRuleId(rs.getString("ruleId"));
+													o.setDescription(rs.getString("description"));
+													o.setDisabled(rs.getBoolean("disabled"));
+													// FIXME Rule parameters
+													return o;
+												}
+											});
+									o.setRules(ruleDefinitions);
+									return o;
+								}
+							});
+					policy.setRules(rulesets);
+					// OK
 					return policy;
 				}
 			});
+			// OK
+			return policy;
 		} catch (EmptyResultDataAccessException ex) {
 			throw new PolicyNotFoundException(policyId);
 		}

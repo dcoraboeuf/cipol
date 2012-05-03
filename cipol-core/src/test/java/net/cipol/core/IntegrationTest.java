@@ -45,7 +45,7 @@ public class IntegrationTest extends AbstractIntegrationTest {
 	@Test(expected = RuleNotFoundException.class)
 	public void validate_rule_not_found() {
 		CommitInformation ci = new CommitInformation();
-		ci.addPaths("/");
+		ci.addPaths("test");
 		api.validate("rulenotfound", ci);
 	}
 	
