@@ -14,4 +14,6 @@ public interface SQL {
 	
 	String GROUP_FIND_BY_CATEGORY_AND_REFERENCE = "select * from GROUPS where category = :category and reference = :reference order by name";
 
+	String INSTANCE_FIND_BY_CATEGORY_AND_REFERENCE = "select * from INSTANCE where category = :category and reference = :reference";
+
 }

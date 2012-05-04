@@ -1,0 +1,6 @@
+<dataset>
+	
+	<INSTANCE id="100" category="net.cipol.core.test.Config1" reference="1" />
+		<PARAM id="10000" category="net.cipol.core.test.Config1" reference="1" name="name" value="My name" />
+	
+</dataset>

@@ -135,6 +135,7 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
 	public List<PolicySummary> listPolicies() {
 		return getJdbcTemplate().query(SQL.POLICY_FIND_ALL, new RowMapper<PolicySummary>(){
 			@Override
