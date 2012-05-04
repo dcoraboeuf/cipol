@@ -1,4 +1,7 @@
 <dataset>
+
+	<INSTANCE id="200" category="net.cipol.jira.model.JIRAIssue" reference="PROJ-455" />
+		<PARAM category="net.cipol.jira.model.JIRAIssue" reference="PROJ-455" id="20000" name="key" value="PROJ-455" />
 	
 	<POLICY uid="rule-exists" name="Test" description="Test policy" />
 		<RULESET policy="rule-exists" id="100" path="**" description="Common rules" disabled="false" />

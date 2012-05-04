@@ -4,8 +4,3 @@ a JIRAIssue
 has
 	a key
 	.
-
-a JIRAIssueCollection
-has
-	a collection of JIRAIssue as issues
-	.
