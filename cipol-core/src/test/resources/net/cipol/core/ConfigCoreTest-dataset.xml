@@ -2,5 +2,10 @@
 	
 	<INSTANCE id="100" category="net.cipol.core.test.Config1" reference="1" />
 		<PARAM id="10000" category="net.cipol.core.test.Config1" reference="1" name="name" value="My name" />
+	<INSTANCE id="101" category="net.cipol.core.test.Config1" reference="2" />
+		<PARAM id="10100" category="net.cipol.core.test.Config1" reference="2" name="name" value="My second name" />
+	<INSTANCE id="102" category="net.cipol.core.test.Config2" reference="1" />
+		<PARAM id="10200" category="net.cipol.core.test.Config2" reference="1" name="name" value="My name" />
+		<PARAM id="10201" category="net.cipol.core.test.Config2" reference="1" name="url" value="http://github.com" />
 	
 </dataset>

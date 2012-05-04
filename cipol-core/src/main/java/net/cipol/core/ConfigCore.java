@@ -12,6 +12,7 @@ import net.cipol.model.ParamValue;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -34,10 +35,14 @@ public class ConfigCore extends AbstractDaoService implements ConfigService {
 		// Category
 		String category = actualType.getName();
 		// Loads the instance (just checking the existence)
-		t.queryForMap(SQL.INSTANCE_FIND_BY_CATEGORY_AND_REFERENCE, 
+		try {
+			t.queryForMap(SQL.INSTANCE_FIND_BY_CATEGORY_AND_REFERENCE, 
 								new MapSqlParameterSource()
 									.addValue("category", category)
 									.addValue("reference", reference));
+		} catch (EmptyResultDataAccessException ex) {
+			return null;
+		}
 		// Loads the parameters
 		// TODO Uses the mapper for parameters
 		List<ParamValue> params = t.query (
