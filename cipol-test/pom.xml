@@ -17,6 +17,17 @@
 	
 
 	<dependencies>
+		<!-- CIPOL -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>cipol-model</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- DBCP -->
+		<dependency>
+		    <groupId>commons-dbcp</groupId>
+		    <artifactId>commons-dbcp</artifactId>
+		</dependency>
 		<!-- DBUnit -->
 		<dependency>
 			<groupId>org.dbunit</groupId>
@@ -31,6 +42,10 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
 		</dependency>
 		<!-- Spring tests -->
 		<dependency>

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import net.cipol.api.PolicyService;
 import net.cipol.model.Policy;
+import net.cipol.test.AbstractIntegrationTest;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

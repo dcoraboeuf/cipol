@@ -5,7 +5,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import net.cipol.CipolProfiles;
-import net.cipol.api.FileService;
+import net.cipol.api.ConfigService;
 import net.cipol.jira.JIRAConfig;
 import net.cipol.jira.JIRAConnectionException;
 import net.cipol.jira.JIRAService;
@@ -27,16 +27,16 @@ import com.atlassian.jira.rest.client.internal.jersey.JerseyJiraRestClientFactor
 @Profile({CipolProfiles.DEV, CipolProfiles.PROD})
 public class JIRAServiceImpl implements JIRAService {
 	
-	protected final FileService fileService;
-	
+	protected final ConfigService configService;
+		
 	@Autowired
-	public JIRAServiceImpl(FileService fileService) {
-		this.fileService = fileService;
+	public JIRAServiceImpl(ConfigService configService) {
+		this.configService = configService;
 	}
 
 	@Override
 	public JIRAConfig loadJIRAConfig(String jiraConfigId) {
-		return fileService.read (JIRAConfig.class, jiraConfigId);
+		return configService.loadConfig(JIRAConfig.class, jiraConfigId);
 	}
 
 	@Override

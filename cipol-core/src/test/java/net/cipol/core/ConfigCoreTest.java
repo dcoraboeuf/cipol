@@ -7,6 +7,7 @@ import net.cipol.api.ConfigService;
 import net.cipol.core.test.Config1;
 import net.cipol.core.test.Config2;
 import net.cipol.core.test.Config3;
+import net.cipol.test.AbstractIntegrationTest;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

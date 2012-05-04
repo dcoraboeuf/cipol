@@ -1,4 +1,4 @@
-package net.cipol.core;
+package net.cipol.test;
 
 import javax.sql.DataSource;
 

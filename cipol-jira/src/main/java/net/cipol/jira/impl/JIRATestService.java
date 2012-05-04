@@ -1,7 +1,7 @@
 package net.cipol.jira.impl;
 
 import net.cipol.CipolProfiles;
-import net.cipol.api.FileService;
+import net.cipol.api.ConfigService;
 import net.cipol.jira.JIRAConfig;
 import net.cipol.jira.model.JIRAIssue;
 import net.cipol.jira.model.JIRAIssueCollection;
@@ -19,14 +19,14 @@ import com.google.common.collect.Iterables;
 class JIRATestService extends JIRAServiceImpl {
 	
 	@Autowired
-	JIRATestService(FileService fileService) {
-		super(fileService);
+	JIRATestService(ConfigService configService) {
+		super(configService);
 	}
-	
+
 	@Override
 	public JIRAIssue getIssue(JIRAConfig jiraConfig, final String key) {
 		// Loads issues for this config
-		JIRAIssueCollection issues = fileService.read(JIRAIssueCollection.class, jiraConfig.getId());
+		JIRAIssueCollection issues = configService.loadConfig(JIRAIssueCollection.class, jiraConfig.getId());
 		// OK
 		return Iterables.find(issues.getIssues(), new Predicate<JIRAIssue>(){
 			@Override

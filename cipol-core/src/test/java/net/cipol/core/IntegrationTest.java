@@ -12,6 +12,7 @@ import net.cipol.api.APIService;
 import net.cipol.model.CommitInformation;
 import net.cipol.model.ValidationDetail;
 import net.cipol.model.ValidationReport;
+import net.cipol.test.AbstractIntegrationTest;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
