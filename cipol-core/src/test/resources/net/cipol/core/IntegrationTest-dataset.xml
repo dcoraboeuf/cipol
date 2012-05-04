@@ -18,5 +18,10 @@
 			<RULEDEF ruleset="202" id="20200" ruleid="authorization" description="Only translators" disabled="false" />
 				<PARAM category="RULEDEF" reference="20200" id="2020000" name="allowed" value="@translators" />
 	
+	<POLICY uid="message" name="Message" description="Message policy" />
+		<RULESET policy="message" id="300" path="**" description="Minimal message length" disabled="false" />
+			<RULEDEF ruleset="300" id="30000" ruleid="message" description="Minimum length" disabled="false" />
+				<PARAM category="RULEDEF" reference="30000" id="3000000" name="minlength" value="10" />
+	
 
 </dataset>

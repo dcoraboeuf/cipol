@@ -53,8 +53,8 @@ public class IntegrationTest extends AbstractIntegrationTest {
 	public void validate_on_message_nok() {
 		CommitInformation ci = new CommitInformation();
 		ci.setMessage("Too short");
-		ci.addPaths("/README");
-		ValidationReport report = api.validate("test", ci);
+		ci.addPaths("README");
+		ValidationReport report = api.validate("message", ci);
 		assertNotNull(report);
 		assertFalse(report.isSuccess());
 		assertEquals("[MESSAGE-001] Message must be at least 10 characters long.", report.getMessage());
@@ -66,7 +66,7 @@ public class IntegrationTest extends AbstractIntegrationTest {
 			assertNotNull(detail);
 			assertEquals("message", detail.getRuleId());
 			assertEquals("The message must be at least 10 characters long.", detail.getRuleDescription());
-			assertEquals("/**", detail.getPath());
+			assertEquals("**", detail.getPath());
 			assertFalse(detail.isSuccess());
 			assertEquals("[MESSAGE-001] Message must be at least 10 characters long.", detail.getMessage());
 		}
@@ -89,7 +89,7 @@ public class IntegrationTest extends AbstractIntegrationTest {
 			assertNotNull(detail);
 			assertEquals("message", detail.getRuleId());
 			assertEquals("The message must be at least 10 characters long.", detail.getRuleDescription());
-			assertEquals("", detail.getPath());
+			assertEquals("**", detail.getPath());
 			assertTrue(detail.isSuccess());
 			assertNull(detail.getMessage());
 		}
@@ -100,7 +100,7 @@ public class IntegrationTest extends AbstractIntegrationTest {
 		CommitInformation ci = new CommitInformation();
 		ci.setMessage("Long enough");
 		ci.setAuthor("");
-		ci.addPaths("/doc/index.html");
+		ci.addPaths("doc/index.html");
 		ValidationReport report = api.validate("test", ci);
 		assertNotNull(report);
 		assertFalse(report.isSuccess());
@@ -113,7 +113,7 @@ public class IntegrationTest extends AbstractIntegrationTest {
 			assertNotNull(detail);
 			assertEquals("message", detail.getRuleId());
 			assertEquals("The message must be at least 10 characters long.", detail.getRuleDescription());
-			assertEquals("/**", detail.getPath());
+			assertEquals("**", detail.getPath());
 			assertTrue(detail.isSuccess());
 			assertNull(detail.getMessage());
 		}
@@ -122,7 +122,7 @@ public class IntegrationTest extends AbstractIntegrationTest {
 			assertNotNull(detail);
 			assertEquals("authenticated", detail.getRuleId());
 			assertEquals("An author must be provided.", detail.getRuleDescription());
-			assertEquals("/**", detail.getPath());
+			assertEquals("**", detail.getPath());
 			assertFalse(detail.isSuccess());
 			assertEquals("[AUTHENTICATED-001] The authentication information is missing.", detail.getMessage());
 		}
@@ -133,7 +133,7 @@ public class IntegrationTest extends AbstractIntegrationTest {
 		CommitInformation ci = new CommitInformation();
 		ci.setMessage("Long enough");
 		ci.setAuthor("lambda");
-		ci.addPaths("/README", "/pom.xml");
+		ci.addPaths("README", "pom.xml");
 		ValidationReport report = api.validate("test", ci);
 		assertNotNull(report);
 		assertFalse(report.isSuccess());
@@ -145,7 +145,7 @@ public class IntegrationTest extends AbstractIntegrationTest {
 		CommitInformation ci = new CommitInformation();
 		ci.setMessage("Long enough");
 		ci.setAuthor("admin");
-		ci.addPaths("/README", "/pom.xml");
+		ci.addPaths("README", "pom.xml");
 		ValidationReport report = api.validate("test", ci);
 		assertNotNull(report);
 		assertTrue(report.isSuccess());
@@ -157,7 +157,7 @@ public class IntegrationTest extends AbstractIntegrationTest {
 		CommitInformation ci = new CommitInformation();
 		ci.setMessage("Long enough");
 		ci.setAuthor("translator1");
-		ci.addPaths("/src/main/resources/META-INF/resources/core_fr.properties");
+		ci.addPaths("src/main/resources/META-INF/resources/core_fr.properties");
 		ValidationReport report = api.validate("test", ci);
 		assertNotNull(report);
 		assertTrue(report.isSuccess());
