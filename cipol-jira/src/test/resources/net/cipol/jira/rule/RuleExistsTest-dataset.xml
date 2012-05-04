@@ -1,2 +1,8 @@
 <dataset>
+	
+	<POLICY uid="rule-exists" name="Test" description="Test policy" />
+		<RULESET policy="rule-exists" id="100" path="**" description="Common rules" disabled="false" />
+			<RULEDEF ruleset="100" id="10000" ruleid="jira-issue-exists" description="An issue must exist" disabled="false" />
+				<PARAM category="RULEDEF" reference="10000" id="1000000" name="jira-config-id" value="mock" />
+
 </dataset>
