@@ -6,9 +6,9 @@
 	</form>
 </#macro>
 
-<#macro form_text_field id label value editable>
+<#macro form_text_field id label value editable maxlength=200 size=30>
 	<#if editable>
-		<#assign valueClass = "macro-form-value macro-form-value-editable" >
+		<#assign valueClass = "macro-form-editable" >
 	<#else>
 		<#assign valueClass = "macro-form-value" >
 	</#if>
@@ -16,8 +16,8 @@
 		<td class="macro-form-label">
 			${label}
 		</td>
-		<td id="macro-form-cell-${id}" class="${valueClass}">
-			${value?html}
+		<td id="macro-form-cell-${id}" class="${valueClass}" value="${value?html}">
+			<input id="macro-form-input-${id}" class="${valueClass}" type="text" readonly="readonly" value="${value?html}" maxlength="${maxlength}" size="${size}" />
 		</td>
 		<#if editable>
 			<td>

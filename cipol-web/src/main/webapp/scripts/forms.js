@@ -1,5 +1,7 @@
 var Forms = new function () {
 	
+	var dh = Ext.DomHelper;
+	
 	function field_invalidate (el) {
 		el.addClass('macro-form-error');
 	}
@@ -15,8 +17,9 @@ var Forms = new function () {
 		}
 	}
 	
-	function text_field_edit () {
-		
+	function text_field_edit (id) {
+		var input = Ext.fly('macro-form-input-' + id);
+		input.dom.removeAttribute("readonly");
 	}
 	
 	return {
