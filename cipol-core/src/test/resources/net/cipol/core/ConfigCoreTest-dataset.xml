@@ -7,5 +7,15 @@
 	<INSTANCE id="102" category="net.cipol.core.test.Config2" reference="1" />
 		<PARAM id="10200" category="net.cipol.core.test.Config2" reference="1" name="name" value="My name" />
 		<PARAM id="10201" category="net.cipol.core.test.Config2" reference="1" name="url" value="http://github.com" />
+	<INSTANCE id="103" category="net.cipol.core.test.Config3" reference="1" />
+		<PARAM id="10300" category="net.cipol.core.test.Config3" reference="1" name="name" value="My name" />
+		<PARAM id="10301" category="net.cipol.core.test.Config3" reference="1" name="url" value="http://github.com" />
+		<PARAM id="10302" category="net.cipol.core.test.Config3" reference="1" name="disabled" value="false" />
+		<PARAM id="10303" category="net.cipol.core.test.Config3" reference="1" name="hits" value="10" />
+	<INSTANCE id="104" category="net.cipol.core.test.Config3" reference="2" />
+		<PARAM id="10400" category="net.cipol.core.test.Config3" reference="2" name="name" value="My name" />
+		<PARAM id="10401" category="net.cipol.core.test.Config3" reference="2" name="url" value="http://github.com" />
+		<PARAM id="10402" category="net.cipol.core.test.Config3" reference="2" name="disabled" value="true" />
+		<PARAM id="10403" category="net.cipol.core.test.Config3" reference="2" name="hits" value="100" />
 	
 </dataset>
