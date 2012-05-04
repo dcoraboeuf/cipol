@@ -2,18 +2,21 @@ package net.cipol.core;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import net.cipol.api.PolicyService;
+import net.cipol.model.Group;
 import net.cipol.model.ParamValue;
 import net.cipol.model.Policy;
 import net.cipol.model.PolicySummary;
 import net.cipol.model.RuleDefinition;
 import net.cipol.model.RuleSet;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -47,7 +50,24 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 					policy.setUid(policyId);
 					policy.setName(rs.getString("name"));
 					policy.setDescription(rs.getString("description"));
-					// FIXME Policy groups
+					// Policy groups
+					List<Group> groups = t.query(SQL.GROUP_FIND_BY_CATEGORY_AND_REFERENCE,
+								new MapSqlParameterSource()
+									.addValue("category", "POLICY")
+									.addValue("reference", policyId),
+								new RowMapper<Group>() {
+									@Override
+									public Group mapRow(ResultSet rs, int arg1)
+											throws SQLException {
+										Group o = new Group();
+										o.setName(rs.getString("name"));
+										List<String> members = Arrays.asList(StringUtils.split(rs.getString("members"), ","));
+										o.setMembers(members);
+										return o;
+									}
+								}
+							);
+					policy.setGroups(groups);
 					// Policy rulesets
 					List<RuleSet> rulesets = t.query(SQL.RULESET_FIND_BY_POLICY,
 							Collections.singletonMap("uid", policyId),

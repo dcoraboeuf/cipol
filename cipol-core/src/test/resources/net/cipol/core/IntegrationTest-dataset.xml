@@ -7,6 +7,7 @@
 			<RULEDEF id="10000" ruleset="100" ruleid="rulenotfound" disabled="false" />
 	
 	<POLICY uid="test" name="Test" description="Test policy" />
+		<GROUPS id="200" category="POLICY" reference="test" name="translators" members="translator1,translator2" />
 		<RULESET policy="test" id="200" path="**" description="Minimal message length and authentication is required" disabled="false" />
 			<RULEDEF ruleset="200" id="20000" ruleid="message" description="Minimum length" disabled="false" />
 				<PARAM category="RULEDEF" reference="20000" id="2000000" name="minlength" value="10" />
