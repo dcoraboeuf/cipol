@@ -1,0 +1,7 @@
+-- Clean-up
+DELETE FROM POLICY WHERE UID = 'xxx';
+DELETE FROM GROUPS WHERE CATEGORY = 'POLICY' AND REFERENCE = 'xxx';
+
+INSERT INTO POLICY (UID, NAME, DESCRIPTION) VALUES ('xxx', 'My policy', 'Commit policy for xxx project');
+INSERT INTO GROUPS (CATEGORY, REFERENCE, NAME, MEMBERS) VALUES ('POLICY', 'xxx', 'group1', 'member1,member3');
+INSERT INTO GROUPS (CATEGORY, REFERENCE, NAME, MEMBERS) VALUES ('POLICY', 'xxx', 'group2', 'member1,member2,member4');
