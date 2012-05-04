@@ -23,7 +23,7 @@ public class DataSourceConfig {
 	public DataSource dataSource() {
 		BasicDataSource ds = new BasicDataSource();
 		ds.setDriverClassName("org.h2.Driver");
-		ds.setUrl(String.format("jdbc:h2:file:%s/db/data;AUTOCOMMIT=OFF", homeService.getHome().getAbsolutePath()));
+		ds.setUrl(String.format("jdbc:h2:file:%s/db/data;AUTOCOMMIT=OFF;MVCC=true", homeService.getHome().getAbsolutePath()));
 		ds.setUsername("sa");
 		ds.setPassword("");
 		ds.setDefaultAutoCommit(false);
