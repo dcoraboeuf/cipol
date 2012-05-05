@@ -133,6 +133,14 @@
     <profiles>
     	<profile>
     		<id>integration-test</id>
+			<dependencies>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>cipol-test</artifactId>
+					<version>${project.version}</version>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
     		<build>
     			<plugins>			
 			
