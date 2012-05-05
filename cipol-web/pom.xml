@@ -142,6 +142,16 @@
 				</dependency>
 			</dependencies>
     		<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+					<resource>
+						<directory>src/it</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
     			<plugins>			
 			
 					<!-- Compiles the Groovy integration tests -->
@@ -180,7 +190,11 @@
 							            </systemProperty>
 							            <systemProperty>
 							            	<name>cipol.home</name>
-							            	<value>${project.basedir}/src/it/home</value>
+							            	<value>${project.basedir}/target/work</value>
+							            </systemProperty>
+							            <systemProperty>
+							            	<name>dbinit.post</name>
+							            	<value>/it.sql</value>
 							            </systemProperty>
 									    <systemProperty>
 									    	<name>jetty.port</name>
