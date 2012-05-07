@@ -16,6 +16,7 @@ import net.cipol.model.Policy;
 import net.cipol.model.PolicySummary;
 import net.cipol.model.RuleDefinition;
 import net.cipol.model.RuleSet;
+import net.cipol.security.CipolRole;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +39,7 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 	
 	@Override
 	@Transactional
+	@Secured(CipolRole.ADMIN)
 	public String createPolicy(String name) {
 		// Creates an UUID
 		String uid = UUID.randomUUID().toString();
@@ -51,6 +54,7 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 	
 	@Override
 	@Transactional
+	@Secured(CipolRole.ADMIN)
 	public void deletePolicy(String uid) {
 		getNamedParameterJdbcTemplate().update(SQL.POLICY_DELETE, Collections.singletonMap("uid", uid));
 		// FIXME Delete dependencies (using triggers)
@@ -59,6 +63,7 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 	@Override
 	@Cacheable("policy")
 	@Transactional(readOnly = true)
+	@Secured(CipolRole.ANONYMOUS)
 	public Policy loadPolicy(final String policyId) {
 		try {
 			// TODO Uses external mappers that use a named-parameter JDBC template
@@ -158,6 +163,7 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 	
 	@Override
 	@Transactional(readOnly = true)
+	@Secured(CipolRole.USER)
 	public List<PolicySummary> listPolicies() {
 		return getJdbcTemplate().query(SQL.POLICY_FIND_ALL, new RowMapper<PolicySummary>(){
 			@Override

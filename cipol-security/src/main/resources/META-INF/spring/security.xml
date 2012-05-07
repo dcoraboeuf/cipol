@@ -11,17 +11,10 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
     <authentication-manager>
         <authentication-provider ref="cipolAuthProvider" />
     </authentication-manager>
-
-    <global-method-security secured-annotations="enabled">
-    </global-method-security>
     
-    <!--
-    <global-method-security secured-annotations="enabled" access-decision-manager-ref="myAccessDecisionManager">
-    </global-method-security>
-   	-->
+    <global-method-security secured-annotations="enabled" access-decision-manager-ref="cipolAccessDecisionManager" />
     
-    <!--
-    <beans:bean id="myAccessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+    <beans:bean id="cipolAccessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
     	<beans:constructor-arg>
     		<beans:list>
     			<beans:bean class="org.springframework.security.access.vote.RoleHierarchyVoter">
@@ -29,10 +22,8 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 						<beans:bean class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
 							<beans:property name="hierarchy">
 								<beans:value>
-									ROLE_ADMIN > ROLE_TRANS
-									ROLE_TRANS > ROLE_REVIEWER
-									ROLE_REVIEWER > ROLE_CONTRIBUTOR
-									ROLE_CONTRIBUTOR > ROLE_USER
+									ROLE_ADMIN > ROLE_USER
+									ROLE_USER > IS_AUTHENTICATED_ANONYMOUSLY
 								</beans:value>
 							</beans:property>
 						</beans:bean>
@@ -42,7 +33,6 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
     		</beans:list>
     	</beans:constructor-arg>
     </beans:bean>
-    -->
 
 	<!--
 	
