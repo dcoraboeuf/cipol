@@ -12,6 +12,15 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
         <authentication-provider ref="cipolAuthProvider" />
     </authentication-manager>
     
+    <beans:bean id="cipolAuthProvider" class="net.cipol.security.core.CipolAuthProvider">
+    	<beans:constructor-arg>
+    		<beans:map>
+    			<beans:entry key="default" value-ref="defaultCipolAuthProvider" />
+    		</beans:map>
+    	</beans:constructor-arg>
+    	<beans:constructor-arg ref="authProviderCore" />
+    </beans:bean>
+    
     <global-method-security secured-annotations="enabled" access-decision-manager-ref="cipolAccessDecisionManager" />
     
     <beans:bean id="cipolAccessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
