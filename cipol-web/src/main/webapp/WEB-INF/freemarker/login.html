@@ -1,0 +1,26 @@
+<#include "/_layouts.html">
+<@layout_simple pageId="login" titleKey="login.title">
+	<form action="j_spring_security_check" method="POST">
+		<table>
+			<tbody>
+				<tr>
+					<th>${loc("login.user")}</th>
+					<td>
+						<input id="user" name="j_username" type="text" maxlength="80" size="16" />
+					</td>
+				</tr>
+				<tr>
+					<th>${loc("login.password")}</th>
+					<td>
+						<input id="password" name="j_password" type="password" maxlength="80" size="16" />
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<td>
+					<input type="submit" value="${loc("login.submit")}" />
+				</td>
+			</tfoot>
+		</table>
+	</form>
+</@layout_simple>
