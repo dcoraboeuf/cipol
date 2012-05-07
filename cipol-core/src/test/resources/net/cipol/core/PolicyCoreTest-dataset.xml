@@ -1,5 +1,5 @@
 <dataset>
 
-	<POLICY uid="1" name="Test" description="Test policy" />
+	<POLICY uid="100" name="Test" description="Test policy" />
 
 </dataset>

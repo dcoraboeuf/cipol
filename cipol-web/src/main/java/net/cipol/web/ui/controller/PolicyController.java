@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/ui/policy")
@@ -28,6 +31,14 @@ public class PolicyController {
 		model.addAttribute("policy", policy);
 		// OK
 		return "policy";
+	}
+	
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public View create(@RequestParam String name) {
+		// Creates the policy
+		String uid = policyService.createPolicy(name);
+		// Redirects to the policy page
+		return new RedirectView("/ui/policy/load/" + uid, true, false, false);
 	}
 
 }

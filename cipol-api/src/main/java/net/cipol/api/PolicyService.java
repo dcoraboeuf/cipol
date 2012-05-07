@@ -11,4 +11,6 @@ public interface PolicyService {
 
 	List<PolicySummary> listPolicies();
 
+	String createPolicy(String name);
+
 }

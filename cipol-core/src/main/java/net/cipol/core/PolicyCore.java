@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import javax.sql.DataSource;
 
@@ -32,6 +33,20 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 	@Autowired
 	public PolicyCore(DataSource dataSource) {
 		super(dataSource);
+	}
+	
+	@Override
+	@Transactional
+	public String createPolicy(String name) {
+		// Creates an UUID
+		String uid = UUID.randomUUID().toString();
+		// Inserts the record
+		getNamedParameterJdbcTemplate().update(SQL.POLICY_CREATE,
+				new MapSqlParameterSource()
+					.addValue("uid", uid)
+					.addValue("name", name));
+		// OK
+		return uid;
 	}
 
 	@Override

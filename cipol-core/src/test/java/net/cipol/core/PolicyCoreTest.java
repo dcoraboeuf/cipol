@@ -8,6 +8,7 @@ import net.cipol.test.AbstractIntegrationTest;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 public class PolicyCoreTest extends AbstractIntegrationTest {
 	
@@ -20,10 +21,20 @@ public class PolicyCoreTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
+	public void create() {
+		String uid = policyService.createPolicy("Created policy");
+		assertNotNull(uid);
+		Policy policy = policyService.loadPolicy(uid);
+		assertEquals(uid, policy.getUid());
+		assertEquals("Created policy", policy.getName());
+		assertEquals("", policy.getDescription());
+	}
+	
+	@Test
 	public void load() {
-		Policy policy = policyService.loadPolicy("1");
+		Policy policy = policyService.loadPolicy("100");
 		assertNotNull(policy);
-		assertEquals("1", policy.getUid());
+		assertEquals("100", policy.getUid());
 		assertEquals("Test", policy.getName());
 		assertEquals("Test policy", policy.getDescription());
 	}
