@@ -28,6 +28,11 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
+			<artifactId>cipol-security</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>cipol-core</artifactId>
 			<version>${project.version}</version>
 			<scope>runtime</scope>

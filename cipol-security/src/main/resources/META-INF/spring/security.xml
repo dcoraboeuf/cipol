@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+	
+    <authentication-manager>
+        <authentication-provider ref="cipolAuthProvider" />
+    </authentication-manager>
+
+    <global-method-security secured-annotations="enabled">
+    </global-method-security>
+    
+    <!--
+    <global-method-security secured-annotations="enabled" access-decision-manager-ref="myAccessDecisionManager">
+    </global-method-security>
+   	-->
+    
+    <!--
+    <beans:bean id="myAccessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+    	<beans:constructor-arg>
+    		<beans:list>
+    			<beans:bean class="org.springframework.security.access.vote.RoleHierarchyVoter">
+    				<beans:constructor-arg>
+						<beans:bean class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+							<beans:property name="hierarchy">
+								<beans:value>
+									ROLE_ADMIN > ROLE_TRANS
+									ROLE_TRANS > ROLE_REVIEWER
+									ROLE_REVIEWER > ROLE_CONTRIBUTOR
+									ROLE_CONTRIBUTOR > ROLE_USER
+								</beans:value>
+							</beans:property>
+						</beans:bean>
+					</beans:constructor-arg>
+    			</beans:bean>
+    			<beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+    		</beans:list>
+    	</beans:constructor-arg>
+    </beans:bean>
+    -->
+
+	<!--
+	
+	    <beans:bean id="ldapContextSource"
+	          class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
+	        <beans:constructor-arg value="ldap://${ldap.host}:${ldap.port}"/>
+	        <beans:property name="userDn" value="${ldap.user}" />
+	        <beans:property name="password" value="${ldap.password}" />
+	    </beans:bean>
+	
+	    <beans:bean id="ldapAuthProvider"
+	          class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
+	        <beans:constructor-arg>
+	            <beans:bean class="org.springframework.security.ldap.authentication.BindAuthenticator">
+	                <beans:constructor-arg ref="ldapContextSource"/>
+	                <beans:property name="userSearch">
+	                    <beans:bean class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
+	                        <beans:constructor-arg value="${ldap.search.base}" />
+	                        <beans:constructor-arg value="${ldap.search.filter}" />
+	                        <beans:constructor-arg ref="ldapContextSource" />
+	                        <beans:property name="searchSubtree" value="true" />
+	                    </beans:bean>
+	                </beans:property>
+	            </beans:bean>
+	        </beans:constructor-arg>
+	        <beans:constructor-arg>
+	            <beans:bean class="be.isabel.releng.translations.tools.web.security.MyAuthoritiesPopulator">
+	            </beans:bean>
+	        </beans:constructor-arg>
+	    </beans:bean>
+	
+	    <authentication-manager>
+	        <authentication-provider ref="ldapAuthProvider" />
+	    </authentication-manager>
+    
+    </beans:beans>
+
+	<beans:beans profile="dev,test">
+
+		<authentication-manager>
+			<authentication-provider>
+				<user-service>
+					<user name="admin" password="test" authorities="ROLE_ADMIN" />
+					<user name="translator" password="test" authorities="ROLE_TRANS" />
+					<user name="reviewer" password="test" authorities="ROLE_REVIEWER" />
+					<user name="contributor" password="test" authorities="ROLE_CONTRIBUTOR" />
+					<user name="user1" password="test" authorities="ROLE_USER" />
+					<user name="user2" password="test" authorities="ROLE_USER" />
+				</user-service>
+			</authentication-provider>
+		</authentication-manager>
+    
+    </beans:beans>
+    
+    -->
+
+</beans:beans>
