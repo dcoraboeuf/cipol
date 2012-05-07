@@ -48,6 +48,13 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 		// OK
 		return uid;
 	}
+	
+	@Override
+	@Transactional
+	public void deletePolicy(String uid) {
+		getNamedParameterJdbcTemplate().update(SQL.POLICY_DELETE, Collections.singletonMap("uid", uid));
+		// FIXME Delete dependencies (using triggers)
+	}
 
 	@Override
 	@Cacheable("policy")

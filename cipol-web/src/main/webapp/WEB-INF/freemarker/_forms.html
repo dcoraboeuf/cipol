@@ -6,6 +6,10 @@
 	</form>
 </#macro>
 
+<#macro form_delete action text=loc("general.delete") prompt=loc("general.delete.prompt")>
+	<a href="${action}" onclick="return Common.confirm('${prompt?web_safe}')">${text}</a>
+</#macro>
+
 <#macro form_text_field id label value editable maxlength=200 size=30>
 	<#if editable>
 		<#assign valueClass = "macro-form-editable" >

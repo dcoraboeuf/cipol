@@ -13,4 +13,6 @@ public interface PolicyService {
 
 	String createPolicy(String name);
 
+	void deletePolicy(String uid);
+
 }

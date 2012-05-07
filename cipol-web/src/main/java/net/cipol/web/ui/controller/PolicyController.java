@@ -40,5 +40,13 @@ public class PolicyController {
 		// Redirects to the policy page
 		return new RedirectView("/ui/policy/load/" + uid, true, false, false);
 	}
+	
+	@RequestMapping(value = "/delete/{uid}", method = RequestMethod.GET)
+	public View delete(@PathVariable String uid) {
+		// Deletes the policy
+		policyService.deletePolicy(uid);
+		// Redirects to the home page
+		return new RedirectView("/ui/", true, false, false);
+	}
 
 }
