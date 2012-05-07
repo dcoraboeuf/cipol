@@ -1,5 +1,18 @@
 <dataset>
 
 	<POLICY uid="100" name="Test" description="Test policy" />
+	
+	<POLICY uid="200" name="Deletion test" description="Policy to delete" />
+		<GROUPS id="200" category="POLICY" reference="200" name="translators" members="translator1,translator2" />
+		<RULESET policy="200" id="200" path="**" description="Minimal message length and authentication is required" disabled="false" />
+			<RULEDEF ruleset="200" id="20000" ruleid="message" description="Minimum length" disabled="false" />
+				<PARAM category="RULEDEF" reference="20000" id="2000000" name="minlength" value="10" />
+			<RULEDEF ruleset="200" id="20001" ruleid="authenticated" description="Authentication is required" disabled="false" />
+		<RULESET policy="200" id="201" path="*" description="Root files are allowed only for administrators" disabled="false" />
+			<RULEDEF ruleset="201" id="20100" ruleid="authorization" description="Only administrators" disabled="false" />
+				<PARAM category="RULEDEF" reference="20100" id="2010000" name="allowed" value="admin" />
+		<RULESET policy="200" id="202" path="src/main/resources/META-INF/resources/*.properties" description="Translation files allowed only for some people" disabled="false" />
+			<RULEDEF ruleset="202" id="20200" ruleid="authorization" description="Only translators" disabled="false" />
+				<PARAM category="RULEDEF" reference="20200" id="2020000" name="allowed" value="@translators" />
 
 </dataset>
