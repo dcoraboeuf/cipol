@@ -22,9 +22,44 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ConfigCore extends AbstractDaoService implements ConfigService {
 
+	private static final class ParamRowMapper implements RowMapper<ParamValue> {
+		@Override
+		public ParamValue mapRow(
+				ResultSet rs,
+				int i)
+				throws SQLException {
+			ParamValue o = new ParamValue();
+			o.setName(rs.getString("name"));
+			o.setValue(rs.getString("value"));
+			return o;
+		}
+	}
+
 	@Autowired
 	public ConfigCore(DataSource dataSource) {
 		super(dataSource);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public String loadParameter(Class<?> type, String reference, String name,
+			boolean required, String defaultValue) {
+		final NamedParameterJdbcTemplate t = getNamedParameterJdbcTemplate();
+		// Category
+		String category = type.getName();
+		// Query
+		try {
+			ParamValue paramValue = t.queryForObject (SQL.PARAM_FIND_BY_CATEGORY_AND_REFERENCE, new MapSqlParameterSource()
+						.addValue("category", category)
+						.addValue("reference", reference), new ParamRowMapper());
+			return paramValue.getValue();
+		} catch (EmptyResultDataAccessException ex) {
+			if (required) {
+				throw new ParameterRequiredException (category, reference, name);
+			} else {
+				return defaultValue;
+			}
+		}
 	}
 
 	@Override
@@ -50,18 +85,7 @@ public class ConfigCore extends AbstractDaoService implements ConfigService {
 				new MapSqlParameterSource()
 					.addValue("category", category)
 					.addValue("reference", reference),
-				new RowMapper<ParamValue>() {
-					@Override
-					public ParamValue mapRow(
-							ResultSet rs,
-							int i)
-							throws SQLException {
-						ParamValue o = new ParamValue();
-						o.setName(rs.getString("name"));
-						o.setValue(rs.getString("value"));
-						return o;
-					}
-				});
+				new ParamRowMapper());
 		// Creates the instance
 		BeanWrapper wrapper = new BeanWrapperImpl(actualType);
 		for (ParamValue paramValue : params) {

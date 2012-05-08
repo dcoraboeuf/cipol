@@ -1,26 +1,28 @@
 package net.cipol.core;
 
-import javax.sql.DataSource;
+import net.cipol.api.ConfigService;
+import net.cipol.model.GeneralConfiguration;
+import net.cipol.security.CipolAuthProviderSelector;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import net.cipol.security.CipolAuthProviderSelector;
-
 @Service
-public class AuthProviderCore extends AbstractDaoService implements CipolAuthProviderSelector {
+public class AuthProviderCore implements CipolAuthProviderSelector {
+	
+	private final ConfigService configService;
 
 	@Autowired
-	public AuthProviderCore(DataSource dataSource) {
-		super(dataSource);
+	public AuthProviderCore(ConfigService configService) {
+		this.configService = configService;
 	}
 	
 	@Override
 	@Cacheable("selectedAuthProviderId")
 	public String getSelectedAuthProviderId() {
-		// FIXME Reads from the database
-		return "default";
+		// Loads parameter
+		return configService.loadParameter (GeneralConfiguration.class, "0", "authProviderId", false, "default");
 	}
 
 }

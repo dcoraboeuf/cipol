@@ -4,6 +4,11 @@ a VersionInformation
 has
 	a versionNumber
 	.
+	
+a GeneralConfiguration
+has
+	a authProviderId
+	.
 
 a CommitInformation
 has
