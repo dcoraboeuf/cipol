@@ -49,4 +49,11 @@ public class PolicyController {
 		return new RedirectView("/ui/", true, false, false);
 	}
 
+	@RequestMapping(value = "/update/{uid}", method = RequestMethod.POST)
+	public void update (@PathVariable String uid, @RequestParam String fieldName, @RequestParam String value) {
+		// Update
+		policyService.updatePolicy (uid, fieldName, value);
+		// FIXME Returns an acknowledgment
+	}
+
 }

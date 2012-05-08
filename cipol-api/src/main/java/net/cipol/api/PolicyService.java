@@ -15,4 +15,6 @@ public interface PolicyService {
 
 	void deletePolicy(String uid);
 
+	void updatePolicy(String uid, String fieldName, String value);
+
 }

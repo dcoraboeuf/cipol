@@ -18,7 +18,12 @@ import net.cipol.model.RuleDefinition;
 import net.cipol.model.RuleSet;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
@@ -29,6 +34,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PolicyCore extends AbstractDaoService implements PolicyService {
+	
+	private final Logger log = LoggerFactory.getLogger(PolicyService.class);
 
 	@Autowired
 	public PolicyCore(DataSource dataSource) {
@@ -51,15 +58,36 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 	
 	@Override
 	@Transactional
+	@CacheEvict("policy")
 	public void deletePolicy(String uid) {
+		log.debug("Deleting policy {}", uid);
 		getNamedParameterJdbcTemplate().update(SQL.POLICY_DELETE, Collections.singletonMap("uid", uid));
-		// FIXME Delete dependencies (using triggers)
+	}
+	
+	@Override
+	@Transactional
+	@CacheEvict("policy")
+	public void updatePolicy(String uid, String fieldName, String value) {
+		log.debug("Update policy {} with {} = {}", new Object[] {uid, fieldName, value});
+		// Loads the policy
+		Policy policy = loadPolicy(uid);
+		// Update
+		BeanWrapper wrapper = new BeanWrapperImpl(policy);
+		wrapper.setPropertyValue(fieldName, value);
+		// Update the policy
+		getNamedParameterJdbcTemplate().update(
+				SQL.POLICY_UPDATE,
+				new MapSqlParameterSource()
+					.addValue("uid", uid)
+					.addValue("name", policy.getName())
+					.addValue("description", policy.getDescription()));
 	}
 
 	@Override
 	@Cacheable("policy")
 	@Transactional(readOnly = true)
 	public Policy loadPolicy(final String policyId) {
+		log.debug("Loading policy {}", policyId);
 		try {
 			// TODO Uses external mappers that use a named-parameter JDBC template
 			final NamedParameterJdbcTemplate t = getNamedParameterJdbcTemplate();
