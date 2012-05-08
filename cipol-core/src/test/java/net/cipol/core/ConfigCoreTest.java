@@ -3,12 +3,18 @@ package net.cipol.core;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+
+import java.sql.SQLException;
+
 import net.cipol.api.ConfigService;
 import net.cipol.core.test.Config1;
 import net.cipol.core.test.Config2;
 import net.cipol.core.test.Config3;
+import net.cipol.model.GeneralConfiguration;
 import net.cipol.test.AbstractIntegrationTest;
 
+import org.dbunit.dataset.DataSetException;
+import org.dbunit.dataset.ITable;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -63,6 +69,31 @@ public class ConfigCoreTest extends AbstractIntegrationTest {
 		assertEquals("http://github.com", config.getUrl());
 		assertEquals(true, config.isDisabled());
 		assertEquals(100, config.getHits());
+	}
+	
+	@Test
+	public void general_default_value() {
+		String value = configService.loadGeneralParameter("test", false, "My default value");
+		assertEquals("My default value", value);
+	}
+	
+	@Test(expected = GeneralParameterRequiredException.class)
+	public void general_required() {
+		configService.loadGeneralParameter("test", true, null);
+	}
+	
+	@Test
+	public void general_load_change_reload() throws DataSetException, SQLException {
+		String value = configService.loadGeneralParameter("name", false, "My name");
+		assertEquals("My name", value);
+		configService.saveGeneralParameter("name", "My new name");
+		value = configService.loadGeneralParameter("name", false, "My name");
+		assertEquals("My new name", value);
+		// Checks the param table
+		ITable params = getTable("PARAMS", "select * from param where category = '%s' and reference = '0' and name = 'name'", GeneralConfiguration.class.getName());
+		assertEquals(1, params.getRowCount());
+		assertEquals("name", params.getValue(0, "name"));
+		assertEquals("My new name", params.getValue(0, "value"));
 	}
 
 }

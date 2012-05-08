@@ -8,8 +8,11 @@ import javax.sql.DataSource;
 
 import net.cipol.api.ConfigService;
 import net.cipol.model.GeneralConfiguration;
+import net.cipol.model.Instance;
 import net.cipol.model.ParamValue;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ConfigCore extends AbstractDaoService implements ConfigService {
+
+	private static final Logger log = LoggerFactory.getLogger(ConfigService.class);
 
 	private static final class ParamRowMapper implements RowMapper<ParamValue> {
 		@Override
@@ -41,10 +46,57 @@ public class ConfigCore extends AbstractDaoService implements ConfigService {
 		super(dataSource);
 	}
 	
+	protected MapSqlParameterSource categoryReference (String category, String reference) {
+		return new MapSqlParameterSource()
+			.addValue("category", category)
+			.addValue("reference", reference);
+	}
+	
 	@Override
 	@Transactional(readOnly = true)
 	public String loadGeneralParameter(String name, boolean required, String defaultValue) {
-		return loadParameter(GeneralConfiguration.class, "0", name, required, defaultValue);
+		try {
+			return loadParameter(GeneralConfiguration.class, "0", name, required, defaultValue);
+		} catch (ParameterRequiredException ex) {
+			throw new GeneralParameterRequiredException(name);
+		}
+	}
+	
+	@Override
+	@Transactional
+	public void saveGeneralParameter(String name, String value) {
+		saveParameter(GeneralConfiguration.class, "0", name, value);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public void saveParameter(Class<?> type, String reference, String name, String value) {
+		final NamedParameterJdbcTemplate t = getNamedParameterJdbcTemplate();
+		// Category
+		String category = type.getName();
+		log.debug("Saving parameter {}@{} {}={}", new Object[]{category, reference, name, value});
+		MapSqlParameterSource paramsSqlSource = categoryReference(category, reference).addValue("name", name).addValue("value", value);
+		// Checks the instance is created
+		try {
+			t.queryForObject (SQL.INSTANCE_FIND_BY_CATEGORY_AND_REFERENCE,
+					paramsSqlSource,
+					new RowMapper<Instance>() {
+						@Override
+						public Instance mapRow(ResultSet rs, int i)
+								throws SQLException {
+							Instance o = new Instance();
+							o.setCategory(rs.getString("category"));
+							o.setReference(rs.getString("reference"));
+							return o;
+						}});
+		} catch (EmptyResultDataAccessException ex) {
+			// We need to create the instance
+			t.update(SQL.INSTANCE_CREATE, paramsSqlSource);
+		}
+		// Clears any existing parameter first
+		t.update (SQL.PARAM_REMOVE, paramsSqlSource);
+		// Saves the parameter
+		t.update (SQL.PARAM_INSERT, paramsSqlSource);		
 	}
 	
 	@Override

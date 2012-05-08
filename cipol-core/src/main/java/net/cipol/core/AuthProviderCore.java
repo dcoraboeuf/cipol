@@ -4,6 +4,7 @@ import net.cipol.api.ConfigService;
 import net.cipol.security.CipolAuthProviderSelector;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,12 @@ public class AuthProviderCore implements CipolAuthProviderSelector {
 	@Autowired
 	public AuthProviderCore(ConfigService configService) {
 		this.configService = configService;
+	}
+	
+	@Override
+	@CacheEvict("selectedAuthProviderId")
+	public void setSelectedAuthProvidedId(String id) {
+		configService.saveGeneralParameter("authProviderId", id);
 	}
 	
 	@Override

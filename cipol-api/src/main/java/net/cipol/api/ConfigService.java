@@ -8,4 +8,8 @@ public interface ConfigService {
 
 	String loadGeneralParameter(String name, boolean required, String defaultValue);
 
+	void saveGeneralParameter(String name, String value);
+
+	void saveParameter(Class<?> type, String reference, String name, String value);
+
 }

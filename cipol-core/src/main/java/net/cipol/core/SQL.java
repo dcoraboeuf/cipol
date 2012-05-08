@@ -16,8 +16,14 @@ public interface SQL {
 	
 	String PARAM_FIND_BY_CATEGORY_AND_REFERENCE = "select * from PARAM where category = :category and reference = :reference order by name, id";
 	
+	String PARAM_REMOVE = "delete from PARAM where category = :category and reference = :reference and name = :name";
+	
+	String PARAM_INSERT = "insert into PARAM (category, reference, name, value) values (:category, :reference, :name, :value)";
+	
 	String GROUP_FIND_BY_CATEGORY_AND_REFERENCE = "select * from GROUPS where category = :category and reference = :reference order by name";
 
 	String INSTANCE_FIND_BY_CATEGORY_AND_REFERENCE = "select * from INSTANCE where category = :category and reference = :reference";
+	
+	String INSTANCE_CREATE = "insert into INSTANCE (category, reference) values (:category, :reference)";
 
 }
