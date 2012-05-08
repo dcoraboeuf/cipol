@@ -1,7 +1,6 @@
 package net.cipol.core;
 
 import net.cipol.api.ConfigService;
-import net.cipol.model.GeneralConfiguration;
 import net.cipol.security.CipolAuthProviderSelector;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class AuthProviderCore implements CipolAuthProviderSelector {
 	@Cacheable("selectedAuthProviderId")
 	public String getSelectedAuthProviderId() {
 		// Loads parameter
-		return configService.loadParameter (GeneralConfiguration.class, "0", "authProviderId", false, "default");
+		return configService.loadGeneralParameter ("authProviderId", false, "default");
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import net.cipol.api.ConfigService;
+import net.cipol.model.GeneralConfiguration;
 import net.cipol.model.ParamValue;
 
 import org.springframework.beans.BeanWrapper;
@@ -38,6 +39,12 @@ public class ConfigCore extends AbstractDaoService implements ConfigService {
 	@Autowired
 	public ConfigCore(DataSource dataSource) {
 		super(dataSource);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public String loadGeneralParameter(String name, boolean required, String defaultValue) {
+		return loadParameter(GeneralConfiguration.class, "0", name, required, defaultValue);
 	}
 	
 	@Override

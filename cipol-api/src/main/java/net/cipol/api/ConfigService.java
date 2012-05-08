@@ -6,4 +6,6 @@ public interface ConfigService {
 
 	String loadParameter(Class<?> type, String reference, String name, boolean required, String defaultValue);
 
+	String loadGeneralParameter(String name, boolean required, String defaultValue);
+
 }
