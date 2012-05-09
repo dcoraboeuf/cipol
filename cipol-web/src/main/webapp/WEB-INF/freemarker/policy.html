@@ -11,6 +11,7 @@
 						<@form_text_field
 							id="uid"
 							label=loc("model.policy.uid")
+							size=40
 							value=policy.uid
 							editable=false
 							/>
@@ -24,6 +25,7 @@
 						<@form_text_field
 							id="description"
 							label=loc("model.policy.description")
+							size=40
 							value=policy.description
 							editable=true
 							action="ui/policy/update/${policy.uid}"
