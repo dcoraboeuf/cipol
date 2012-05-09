@@ -82,6 +82,7 @@ var Forms = new function () {
 		var input = Ext.get('macro-form-input-' + id);
 		// Delete any additional class
 		input.removeClass("macro-form-disabled");
+		input.removeClass("macro-form-edited");
 		// Disables the text field for edition
 		input.dom.setAttribute("readonly", "readonly");
 		// Enables the edit action button
@@ -96,6 +97,9 @@ var Forms = new function () {
 		// Enables the text field for edition
 		var input = Ext.get('macro-form-input-' + id);
 		input.dom.removeAttribute("readonly");
+		
+		// Activates the edit state
+		input.addClass("macro-form-edited");
 		
 		// Registers event on ENTER
 		input.on('keypress', function (e) {
