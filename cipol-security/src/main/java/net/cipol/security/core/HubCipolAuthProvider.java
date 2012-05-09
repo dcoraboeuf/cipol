@@ -34,6 +34,12 @@ public class HubCipolAuthProvider implements AuthenticationProvider {
 				return provider.getId();
 			}
 		});
+		// Logging
+		logger.info("List of authentication providers:");
+		for (CipolAuthenticationProvider provider : providers) {
+			logger.info("[{}] {}", provider.getId(), provider);
+		}
+		// OK
 		this.authProviderSelector = authProviderSelector;
 	}
 
