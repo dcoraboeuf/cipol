@@ -1,6 +1,7 @@
 package net.cipol.web.ui.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -19,12 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/ui/policy")
 public class PolicyController {
+	
+	private static final View HOME = new RedirectView("/ui/", true, false, false);
 	
 	private final PolicyService policyService;
 	
@@ -36,6 +40,20 @@ public class PolicyController {
 	@RequestMapping(value = "/import", method = RequestMethod.GET)
 	public String importForm () {
 		return "import";
+	}
+
+	@RequestMapping(value = "/import", method = RequestMethod.POST)
+	public View importUpload (@RequestParam MultipartFile file, @RequestParam String name) throws IOException {
+		// Reads the policy from the file
+		InputStream in = file.getInputStream();
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			Policy policy = mapper.readValue(in, Policy.class);
+			String uid = policyService.importPolicy (policy, name);
+			return policyView(uid);
+		} finally {
+			in.close();
+		}
 	}
 
 	@RequestMapping(value = "/export/{uid}", method = RequestMethod.GET)
@@ -74,6 +92,10 @@ public class PolicyController {
 		// Creates the policy
 		String uid = policyService.createPolicy(name);
 		// Redirects to the policy page
+		return policyView(uid);
+	}
+
+	protected RedirectView policyView(String uid) {
 		return new RedirectView("/ui/policy/load/" + uid, true, false, false);
 	}
 	
@@ -82,7 +104,7 @@ public class PolicyController {
 		// Deletes the policy
 		policyService.deletePolicy(uid);
 		// Redirects to the home page
-		return new RedirectView("/ui/", true, false, false);
+		return HOME;
 	}
 
 	@RequestMapping(value = "/update/{uid}", method = RequestMethod.POST)

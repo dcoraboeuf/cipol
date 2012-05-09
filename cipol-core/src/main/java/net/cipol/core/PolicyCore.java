@@ -48,6 +48,22 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 	@Override
 	@Transactional
 	@Secured(CipolRole.ADMIN)
+	public String importPolicy(Policy policy, String proposedName) {
+		// Actual name
+		String name = StringUtils.isNotBlank(proposedName) ? StringUtils.trim(proposedName) : policy.getName();
+		// Creates the policy
+		String uid = createPolicy(name);
+		// Description
+		updatePolicy(uid, PolicyField.DESCRIPTION, policy.getDescription());
+		// FIXME Groups
+		// FIXME Rules
+		// OK
+		return uid;
+	}
+	
+	@Override
+	@Transactional
+	@Secured(CipolRole.ADMIN)
 	public String createPolicy(String name) {
 		// Creates an UUID
 		String uid = UUID.randomUUID().toString();

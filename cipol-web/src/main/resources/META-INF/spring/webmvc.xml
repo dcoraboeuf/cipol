@@ -17,6 +17,12 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 
 	<!-- Exception handler -->
 
+    <!-- Upload configuration -->
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="500000"/>
+    </bean>
+
 	<!-- Freemarker config -->
 	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
 		<property name="templateLoaderPath" value="/WEB-INF/freemarker/" />

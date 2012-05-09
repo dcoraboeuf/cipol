@@ -18,4 +18,6 @@ public interface PolicyService {
 
 	void updatePolicy(String uid, PolicyField field, String value);
 
+	String importPolicy(Policy policy, String name);
+
 }
