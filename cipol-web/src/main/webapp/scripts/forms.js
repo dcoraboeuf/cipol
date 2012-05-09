@@ -2,6 +2,25 @@ var Forms = new function () {
 	
 	var dh = Ext.DomHelper;
 	
+	function action_state (id, state) {
+		if ("edit" == state) {
+			Ext.fly('macro-form-action-edit-' + id).addClass('action-hidden');
+			Ext.fly('macro-form-action-accept-' + id).removeClass('action-hidden');
+			Ext.fly('macro-form-action-cancel-' + id).removeClass('action-hidden');
+			Ext.fly('macro-form-action-wait-' + id).addClass('action-hidden');
+		} else if ("wait" == state) {
+			Ext.fly('macro-form-action-edit-' + id).addClass('action-hidden');
+			Ext.fly('macro-form-action-accept-' + id).addClass('action-hidden');
+			Ext.fly('macro-form-action-cancel-' + id).addClass('action-hidden');
+			Ext.fly('macro-form-action-wait-' + id).removeClass('action-hidden');
+		} else {
+			Ext.fly('macro-form-action-edit-' + id).removeClass('action-hidden');
+			Ext.fly('macro-form-action-accept-' + id).addClass('action-hidden');
+			Ext.fly('macro-form-action-cancel-' + id).addClass('action-hidden');
+			Ext.fly('macro-form-action-wait-' + id).addClass('action-hidden');
+		}
+	}
+	
 	function field_invalidate (el) {
 		el.addClass('macro-form-error');
 	}
@@ -64,12 +83,13 @@ var Forms = new function () {
 		// Disables the text field for edition
 		input.dom.setAttribute("readonly", "readonly");
 		// Enables the edit action button
-		Ext.fly('macro-form-action-edit-' + id).removeClass('action-hidden');
-		Ext.fly('macro-form-action-accept-' + id).addClass('action-hidden');
-		Ext.fly('macro-form-action-cancel-' + id).addClass('action-hidden');
+		action_state(id, "idle");
 	}
 	
 	function text_field_edit (id) {
+		
+		// Changes the state of the actions
+		action_state(id, "edit");
 		
 		// Enables the text field for edition
 		var input = Ext.get('macro-form-input-' + id);
@@ -85,20 +105,15 @@ var Forms = new function () {
 		// Requires the focus
 		input.focus();
 		input.dom.select();
-		
-		// Hides the edit action button
-		Ext.fly('macro-form-action-edit-' + id).addClass('action-hidden');
 
 		// Validation button
 		var acceptButton = Ext.get('macro-form-action-accept-' + id);
-		acceptButton.removeClass('action-hidden');
 		acceptButton.on('click', function () {
 			text_field_accept(id);
 		});
 		
 		// Cancel button
 		var cancelButton = Ext.get('macro-form-action-cancel-' + id);
-		cancelButton.removeClass('action-hidden');
 		cancelButton.on('click', function () {
 			text_field_cancel(id);
 		});
