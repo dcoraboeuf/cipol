@@ -25,11 +25,15 @@ var Forms = new function () {
 		var oldValue = input.dom.getAttribute("oldvalue");
 		var value = input.dom.value;
 		if (oldValue != value) {
-			// FIXME AJAX call
+			// Disables the field
+			input.dom.readonly = "readonly";
+			input.addClass("macro-form-disabled");
+			// AJAX call
 			Ext.Ajax.request({
 				form: 'macro-form-' + id,
 				failure: function () {
 					alert('Could not update the value');
+					input.removeClass("macro-form-disabled");
 				},
 				success: function () {
 					// Updates the old value to the new one
@@ -55,6 +59,8 @@ var Forms = new function () {
 	
 	function text_field_restore (id) {
 		var input = Ext.get('macro-form-input-' + id);
+		// Delete any additional class
+		input.removeClass("macro-form-disabled");
 		// Disables the text field for edition
 		input.dom.setAttribute("readonly", "readonly");
 		// Enables the edit action button
