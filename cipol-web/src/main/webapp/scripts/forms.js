@@ -21,10 +21,27 @@ var Forms = new function () {
 		var input = Ext.get('macro-form-input-' + id);
 		var form = Ext.get('macro-form-' + id);
 		var action = form.dom.action;
-		alert(action);
-		// FIXME AJAX call
-		// Restore
-		text_field_restore(id);
+		// Gets the old value
+		var oldValue = input.dom.getAttribute("oldvalue");
+		var value = input.dom.value;
+		if (oldValue != value) {
+			// FIXME AJAX call
+			Ext.Ajax.request({
+				form: 'macro-form-' + id,
+				failure: function () {
+					alert('Could not update the value');
+				},
+				success: function () {
+					// Updates the old value to the new one
+					input.dom.setAttribute("oldvalue", value);
+					// Restore
+					text_field_restore(id);
+				}
+			});
+		} else {
+			// Restore
+			text_field_restore(id);			
+		}
 	}
 	
 	function text_field_cancel (id) {
