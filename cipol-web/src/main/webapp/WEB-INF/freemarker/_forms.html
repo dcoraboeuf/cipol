@@ -10,24 +10,26 @@
 	<a href="${action}" onclick="return Common.confirm('${prompt?web_safe}')">${text}</a>
 </#macro>
 
-<#macro form_text_field id label value editable maxlength=200 size=30>
-	<#if editable>
-		<#assign valueClass = "macro-form-editable" >
-	<#else>
-		<#assign valueClass = "macro-form-value" >
-	</#if>
+<#macro form_text_field id label value editable maxlength=200 size=30 action="">
 	<tr>
 		<td class="macro-form-label">
 			${label}
 		</td>
-		<td id="macro-form-cell-${id}" class="${valueClass}" value="${value?html}">
-			<input id="macro-form-input-${id}" class="${valueClass}" type="text" readonly="readonly" value="${value?html}" oldvalue="${value?html}" maxlength="${maxlength}" size="${size}" />
-		</td>
 		<#if editable>
+			<td id="macro-form-cell-${id?html}" class="macro-form-editable">
+				<form id="macro-form-${id?html}" action="${action}" method="post" style="display:inline;" onsubmit="return false;">
+					<input id="macro-form-field-${id?html}" name="fieldName" type="hidden" value="${id}" />
+					<input id="macro-form-input-${id?html}" class="macro-form-editable" name="value" type="text" readonly="readonly" value="${value?html}" oldvalue="${value?html}" maxlength="${maxlength}" size="${size}" />
+				</form>
+			</td>
 			<td>
 				<img id="macro-form-action-edit-${id?html}" onclick="Forms.text_field_edit('${id?web_safe}');" class="action" src="images/pencil.png" tabindex="-1" />
 				<img id="macro-form-action-accept-${id?html}" class="action action-hidden" src="images/accept.png" tabindex="-1" />
 				<img id="macro-form-action-cancel-${id?html}" class="action action-hidden" src="images/cancel.png" tabindex="-1" />
+			</td>
+		<#else>
+			<td class="macro-form-value">
+				<input class="macro-form-value" name="value" type="text" readonly="readonly" value="${value?html}" maxlength="${maxlength}" size="${size}" />
 			</td>
 		</#if>
 	</tr>

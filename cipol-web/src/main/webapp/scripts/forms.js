@@ -19,6 +19,9 @@ var Forms = new function () {
 	
 	function text_field_accept (id) {
 		var input = Ext.get('macro-form-input-' + id);
+		var form = Ext.get('macro-form-' + id);
+		var action = form.dom.action;
+		alert(action);
 		// FIXME AJAX call
 		// Restore
 		text_field_restore(id);
