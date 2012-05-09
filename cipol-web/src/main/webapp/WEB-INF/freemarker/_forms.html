@@ -6,6 +6,10 @@
 	</form>
 </#macro>
 
+<#macro form_link action text tip>
+	<a href="${action}" title="${loc("${tip}")?html}">${loc("${text}")?html}</a>
+</#macro>
+
 <#macro form_delete action text=loc("general.delete") prompt=loc("general.delete.prompt")>
 	<a href="${action}" onclick="return Common.confirm('${prompt?web_safe}')">${text}</a>
 </#macro>

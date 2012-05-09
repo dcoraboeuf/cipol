@@ -89,7 +89,7 @@
 		</section>
 	</article>
 	<nav>
-		<a href="ui/">${loc("general.cancel")}</a>
+		<@form_link action="ui/" text="general.cancel" tip="policy.cancel.tip" />
 		<@form_delete action="ui/policy/delete/${policy.uid}" prompt=loc("policy.delete.prompt") />
 	</nav>
 </@layout_simple>
