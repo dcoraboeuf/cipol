@@ -1,10 +1,16 @@
 package net.cipol.web.ui.controller;
 
+import java.io.IOException;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import net.cipol.api.PolicyService;
 import net.cipol.model.Policy;
 import net.cipol.model.support.PolicyField;
 
 import org.apache.commons.lang3.StringUtils;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +31,28 @@ public class PolicyController {
 	@Autowired
 	public PolicyController(PolicyService policyService) {
 		this.policyService = policyService;
+	}
+
+	@RequestMapping(value = "/export/{uid}", method = RequestMethod.GET)
+	public void export (HttpServletResponse response, @PathVariable String uid) throws IOException {
+		// Loads the policy
+		Policy policy = policyService.loadPolicy(uid);
+		// JSON generation
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(policy);
+		// JSON as UTF-8
+		byte[] utf8 = json.getBytes("UTF-8");
+		// Exports as JSON
+    	response.setContentType("text/json");
+    	response.addHeader("Content-Disposition", String.format("attachment; filename=\"policy-%s-%s.json\"", uid, policy.getName()));
+    	response.setContentLength(utf8.length);
+    	// Gets the output
+    	ServletOutputStream out = response.getOutputStream();
+    	// Writes to the output
+    	out.write(utf8);
+    	out.flush();
+    	out.close();
+    	// No response (already handled)
 	}
 
 	@RequestMapping(value = "/load/{uid}", method = RequestMethod.GET)
