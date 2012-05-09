@@ -19,8 +19,17 @@ var Forms = new function () {
 	
 	function text_field_edit (id) {
 		// Enables the text field for edition
-		var input = Ext.fly('macro-form-input-' + id);
+		var input = Ext.get('macro-form-input-' + id);
 		input.dom.removeAttribute("readonly");
+		// Registers event on ENTER
+		input.on('keypress', function (e) {
+			if (e.getCharCode() == 13) {
+				text_field_accept(id);
+			}
+		});
+		// Requires the focus
+		input.focus();
+		input.dom.select();
 		// Disables the edit action button
 		Ext.fly('macro-form-action-edit-' + id).addClass('action-hidden');
 		// Enables the validation / cancel buttons
