@@ -1,17 +1,21 @@
 <#macro comment text>
 	<#-- TODO Optional output -->
-	<!-- ${text} -->
+	<!-- ${text?html} -->
 </#macro>
 
 <#macro uid value>
-	<span class="macro-uid">[<span>${value}</span>]</span>
+	<span class="macro-uid">[<span>${value?html}</span>]</span>
+</#macro>
+
+<#macro lh key>
+	${loc("${key}")?html}
 </#macro>
 
 <#macro disabled value>
 	<#if value>
-		<span class="macro-disabled">Disabled</span>
+		<span class="macro-disabled"><@lh key="general.disabled" /></span>
 	<#else>
-		<span class="macro-enabled">Enabled</span>
+		<span class="macro-enabled"><@lh key="general.enabled" /></span>
 	</#if>
 </#macro>
 
