@@ -7,9 +7,11 @@
 	<span class="macro-uid">[<span>${value?html}</span>]</span>
 </#macro>
 
-<#macro lh key>
-	${loc("${key}")?html}
-</#macro>
+<#macro lh key>${loc("${key}")?html}</#macro>
+
+<#macro ljs key>${loc("${key}")?js_string}</#macro>
+
+<#macro ljsh key>${loc("${key}")?js_string?html}</#macro>
 
 <#macro disabled value>
 	<#if value>

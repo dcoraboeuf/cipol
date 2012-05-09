@@ -7,11 +7,15 @@
 </#macro>
 
 <#macro form_link action text tip>
-	<a href="${action}" title="${loc("${tip}")?html}">${loc("${text}")?html}</a>
+	<a href="${action}" title="<@lh key=tip/>"><@lh key=text/></a>
 </#macro>
 
-<#macro form_delete action text=loc("general.delete") prompt=loc("general.delete.prompt")>
-	<a href="${action}" onclick="return Common.confirm('${prompt?web_safe}')">${text}</a>
+<#macro form_delete action text="general.delete" prompt="general.delete.prompt" tip="general.delete.tip">
+	<a
+		href="${action?html}"
+		onclick="return Common.confirm('<@ljsh key=prompt />')"
+		title="<@lh key=tip />"
+		><@lh key=text /></a>
 </#macro>
 
 <#macro form_text_field id label value editable maxlength=200 size=30 action="">
