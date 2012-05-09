@@ -21,13 +21,13 @@
 			${label}
 		</td>
 		<td id="macro-form-cell-${id}" class="${valueClass}" value="${value?html}">
-			<input id="macro-form-input-${id}" class="${valueClass}" type="text" readonly="readonly" value="${value?html}" maxlength="${maxlength}" size="${size}" />
+			<input id="macro-form-input-${id}" class="${valueClass}" type="text" readonly="readonly" value="${value?html}" oldvalue="${value?html}" maxlength="${maxlength}" size="${size}" />
 		</td>
 		<#if editable>
 			<td>
-				<img id="macro-form-action-edit-${id?html}" onclick="Forms.text_field_edit('${id?web_safe}');" class="action" src="images/pencil.png" />
-				<img id="macro-form-action-accept-${id?html}" class="action action-hidden" src="images/accept.png" />
-				<img id="macro-form-action-cancel-${id?html}" class="action action-hidden" src="images/cancel.png" />
+				<img id="macro-form-action-edit-${id?html}" onclick="Forms.text_field_edit('${id?web_safe}');" class="action" src="images/pencil.png" tabindex="-1" />
+				<img id="macro-form-action-accept-${id?html}" class="action action-hidden" src="images/accept.png" tabindex="-1" />
+				<img id="macro-form-action-cancel-${id?html}" class="action action-hidden" src="images/cancel.png" tabindex="-1" />
 			</td>
 		</#if>
 	</tr>
