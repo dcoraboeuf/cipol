@@ -1,25 +1,39 @@
 package net.cipol.security.core;
 
+import java.util.Collection;
 import java.util.Map;
 
 import net.cipol.security.CipolAuthProviderSelector;
+import net.cipol.security.CipolAuthenticationProvider;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.stereotype.Component;
 
-public class CipolAuthProvider implements AuthenticationProvider {
+import com.google.common.base.Function;
+import com.google.common.collect.Maps;
 
-	private final Logger logger = LoggerFactory.getLogger(CipolAuthProvider.class);
+@Component
+public class HubCipolAuthProvider implements AuthenticationProvider {
+
+	private final Logger logger = LoggerFactory.getLogger(HubCipolAuthProvider.class);
 	
-	private final Map<String, AuthenticationProvider> providers;
+	private final Map<String, CipolAuthenticationProvider> providers;
 	private final CipolAuthProviderSelector authProviderSelector;
 	
-	public CipolAuthProvider(Map<String, AuthenticationProvider> providers, CipolAuthProviderSelector authProviderSelector) {
-		this.providers = providers;
+	@Autowired
+	public HubCipolAuthProvider(Collection<CipolAuthenticationProvider> providers, CipolAuthProviderSelector authProviderSelector) {
+		this.providers = Maps.uniqueIndex(providers, new Function<CipolAuthenticationProvider, String>() {
+			@Override
+			public String apply(CipolAuthenticationProvider provider) {
+				return provider.getId();
+			}
+		});
 		this.authProviderSelector = authProviderSelector;
 	}
 

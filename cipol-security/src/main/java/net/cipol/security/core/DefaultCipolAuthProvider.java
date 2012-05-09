@@ -1,8 +1,8 @@
 package net.cipol.security.core;
 
+import net.cipol.security.CipolAuthenticationProvider;
 import net.cipol.security.CipolRole;
 
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -10,7 +10,12 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DefaultCipolAuthProvider implements AuthenticationProvider {
+public class DefaultCipolAuthProvider implements CipolAuthenticationProvider {
+	
+	@Override
+	public String getId() {
+		return "default";
+	}
 
 	@Override
 	public Authentication authenticate(Authentication authentication)
