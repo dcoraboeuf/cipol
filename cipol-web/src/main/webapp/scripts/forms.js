@@ -47,12 +47,14 @@ var Forms = new function () {
 			// Disables the field
 			input.dom.readonly = "readonly";
 			input.addClass("macro-form-disabled");
+			action_state(id, "wait");
 			// AJAX call
 			Ext.Ajax.request({
 				form: 'macro-form-' + id,
 				failure: function () {
 					alert('Could not update the value');
 					input.removeClass("macro-form-disabled");
+					action_state(id, "edit");
 				},
 				success: function () {
 					// Updates the old value to the new one
