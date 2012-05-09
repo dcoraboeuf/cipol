@@ -17,11 +17,24 @@ var Forms = new function () {
 		}
 	}
 	
+	function text_field_accept (id) {
+		var input = Ext.get('macro-form-input-' + id);
+		// FIXME AJAX call
+		// Restore
+		text_field_restore(id);
+	}
+	
 	function text_field_cancel (id) {
 		var input = Ext.get('macro-form-input-' + id);
 		// Restores the old value
 		var oldValue = input.dom.getAttribute("oldvalue");
 		input.dom.value = oldValue;
+		// Restore
+		text_field_restore(id);
+	}
+	
+	function text_field_restore (id) {
+		var input = Ext.get('macro-form-input-' + id);
 		// Disables the text field for edition
 		input.dom.setAttribute("readonly", "readonly");
 		// Enables the edit action button
