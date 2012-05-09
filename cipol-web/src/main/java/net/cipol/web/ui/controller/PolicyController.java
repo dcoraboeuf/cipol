@@ -33,6 +33,11 @@ public class PolicyController {
 		this.policyService = policyService;
 	}
 
+	@RequestMapping(value = "/import", method = RequestMethod.GET)
+	public String importForm () {
+		return "import";
+	}
+
 	@RequestMapping(value = "/export/{uid}", method = RequestMethod.GET)
 	public void export (HttpServletResponse response, @PathVariable String uid) throws IOException {
 		// Loads the policy
