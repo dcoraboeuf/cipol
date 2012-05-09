@@ -1,5 +1,28 @@
 <#include "/_layouts.html">
 <@layout_simple pageId="import" titleKey="policy.import.title" forms=true>
+	<form action="ui/policy/import" method="post" enctype="multipart/form-data">		
+		<table>
+			<tbody>
+				<tr>
+					<td>
+						<label for="import-file"><@lh key="policy.import.file" /></label>
+						<input id="import-file" name="file" type="file" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="import-name"><@lh key="policy.import.name" /></label>
+						<input id="import-name" name="name" type="text" maxlength="40" size="40" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input id="import-submit" value="Submit" type="submit" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
 	<nav>
 		<@form_link action="ui/" text="general.cancel" tip="policy.cancel.tip" />
 	</nav>
