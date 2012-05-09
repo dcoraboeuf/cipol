@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.cipol.model.Policy;
 import net.cipol.model.PolicySummary;
+import net.cipol.model.support.PolicyField;
 
 public interface PolicyService {
 
@@ -15,6 +16,6 @@ public interface PolicyService {
 
 	void deletePolicy(String uid);
 
-	void updatePolicy(String uid, String fieldName, String value);
+	void updatePolicy(String uid, PolicyField field, String value);
 
 }

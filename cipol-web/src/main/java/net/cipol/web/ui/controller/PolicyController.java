@@ -2,7 +2,9 @@ package net.cipol.web.ui.controller;
 
 import net.cipol.api.PolicyService;
 import net.cipol.model.Policy;
+import net.cipol.model.support.PolicyField;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,7 +54,7 @@ public class PolicyController {
 	@RequestMapping(value = "/update/{uid}", method = RequestMethod.POST)
 	public void update (@PathVariable String uid, @RequestParam String fieldName, @RequestParam String value) {
 		// Update
-		policyService.updatePolicy (uid, fieldName, value);
+		policyService.updatePolicy (uid, PolicyField.valueOf(StringUtils.upperCase(fieldName)), value);
 		// FIXME Returns an acknowledgment
 	}
 

@@ -16,6 +16,7 @@ import net.cipol.model.Policy;
 import net.cipol.model.PolicySummary;
 import net.cipol.model.RuleDefinition;
 import net.cipol.model.RuleSet;
+import net.cipol.model.support.PolicyField;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -67,13 +68,13 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 	@Override
 	@Transactional
 	@CacheEvict("policy")
-	public void updatePolicy(String uid, String fieldName, String value) {
-		log.debug("Update policy {} with {} = {}", new Object[] {uid, fieldName, value});
+	public void updatePolicy(String uid, PolicyField field, String value) {
+		log.debug("Update policy {} with {} = {}", new Object[] {uid, field, value});
 		// Loads the policy
 		Policy policy = loadPolicy(uid);
 		// Update
 		BeanWrapper wrapper = new BeanWrapperImpl(policy);
-		wrapper.setPropertyValue(fieldName, value);
+		wrapper.setPropertyValue(field.getPropertyName(), value);
 		// Update the policy
 		getNamedParameterJdbcTemplate().update(
 				SQL.POLICY_UPDATE,
