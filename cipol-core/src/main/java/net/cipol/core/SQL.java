@@ -10,6 +10,8 @@ public interface SQL {
 	
 	String POLICY_FIND_BY_UID = "select * from POLICY where uid = :uid";
 	
+	String POLICY_UPDATE = "update POLICY set name = :name, description = :description where uid = :uid";
+	
 	String RULESET_FIND_BY_POLICY = "select * from RULESET where policy = :uid order by id";
 	
 	String RULEDEF_FIND_BY_RULESET = "select * from RULEDEF where ruleset = :rulesetid order by id";

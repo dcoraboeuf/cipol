@@ -19,12 +19,14 @@
 							label=loc("model.policy.name")
 							value=policy.name
 							editable=true
+							action="ui/policy/update/${policy.uid}"
 							/>
 						<@form_text_field
 							id="description"
 							label=loc("model.policy.description")
 							value=policy.description
 							editable=true
+							action="ui/policy/update/${policy.uid}"
 							/>
 					</tbody>
 				</table>
