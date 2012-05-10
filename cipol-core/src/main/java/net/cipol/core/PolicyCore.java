@@ -88,6 +88,7 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 	@Override
 	@Transactional
 	@CacheEvict("policy")
+	@Secured(CipolRole.ADMIN)
 	public void updatePolicy(String uid, PolicyField field, String value) {
 		log.debug("Update policy {} with {} = {}", new Object[] {uid, field, value});
 		// Loads the policy

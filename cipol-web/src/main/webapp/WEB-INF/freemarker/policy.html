@@ -13,13 +13,12 @@
 							label=loc("model.policy.uid")
 							size=40
 							value=policy.uid
-							editable=false
 							/>
 						<@form_text_field
 							id="name"
 							label=loc("model.policy.name")
 							value=policy.name
-							editable=true
+							editable=rolecheck("ROLE_ADMIN")
 							action="ui/policy/update/${policy.uid}"
 							/>
 						<@form_text_field
@@ -27,7 +26,7 @@
 							label=loc("model.policy.description")
 							size=40
 							value=policy.description
-							editable=true
+							editable=rolecheck("ROLE_ADMIN")
 							action="ui/policy/update/${policy.uid}"
 							/>
 					</tbody>
