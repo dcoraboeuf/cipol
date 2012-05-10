@@ -33,3 +33,13 @@
 		</span>
 	</span>
 </#macro>
+
+<#macro authcheck role="">
+	<#if role != "">
+		<#if rolecheck(role)>
+			<#nested/>
+		</#if>
+	<#else>
+		<#nested/>
+	</#if>
+</#macro>

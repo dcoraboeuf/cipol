@@ -6,16 +6,20 @@
 	</form>
 </#macro>
 
-<#macro form_link action text tip>
-	<a href="${action}" title="<@lh key=tip/>"><@lh key=text/></a>
+<#macro form_link action text tip role="">
+	<@authcheck role=role>
+		<a href="${action}" title="<@lh key=tip/>"><@lh key=text/></a>
+	</@authcheck>
 </#macro>
 
-<#macro form_delete action text="general.delete" prompt="general.delete.prompt" tip="general.delete.tip">
-	<a
-		href="${action?html}"
-		onclick="return Common.confirm('<@ljsh key=prompt />')"
-		title="<@lh key=tip />"
-		><@lh key=text /></a>
+<#macro form_delete action text="general.delete" prompt="general.delete.prompt" tip="general.delete.tip" role="">
+	<@authcheck role=role>
+		<a
+			href="${action?html}"
+			onclick="return Common.confirm('<@ljsh key=prompt />')"
+			title="<@lh key=tip />"
+			><@lh key=text /></a>
+	</@authcheck>
 </#macro>
 
 <#macro form_text_field id label value editable maxlength=200 size=30 action="">

@@ -93,6 +93,6 @@
 	<nav>
 		<@form_link action="ui/" text="general.cancel" tip="policy.cancel.tip" />
 		<@form_link action="ui/policy/export/${policy.uid}" text="policy.export" tip="policy.export.tip" />
-		<@form_delete action="ui/policy/delete/${policy.uid}" prompt="policy.delete.prompt" tip="policy.delete.tip" />
+		<@form_delete action="ui/policy/delete/${policy.uid}" prompt="policy.delete.prompt" tip="policy.delete.tip" role="ROLE_ADMIN" />
 	</nav>
 </@layout_simple>
