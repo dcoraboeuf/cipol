@@ -75,20 +75,24 @@ body {
 
 .macro-status {
 	.rounded(8px);
-	color: white;
 	font-weight: bold;
 	font-size: 50%;
 	vertical-align: middle;
 }
 
+@macro-enabled-color: #88EE88;
+@macro-disabled-color: #EE8888;
+
 .macro-enabled {
 	.macro-status;
-	background-color: #00AA00;
+	background-color: lighten(@macro-enabled-color, 50%);
+	color: @macro-enabled-color;
 }
 
 .macro-disabled {
 	.macro-status;
-	background-color: #AA0000;
+	background-color: lighten(@macro-disabled-color, 50%);
+	color: @macro-disabled-color;
 }
 
 .macro-param {
