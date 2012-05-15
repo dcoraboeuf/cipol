@@ -1,33 +1,30 @@
 /* Theme */
 
-@color-page-title-bg: #55DD55;
+@color-page-title-bg: lightgrey;
 @color-page-title-fg: white;
 
 @color-page-nav-bg: @color-page-title-bg;
 @color-page-nav-fg: @color-page-title-fg;
 
-@color-policy-bg: #9999FF;
-@color-policy-fg: white;
+@color-policy-bg: lighten(@color-page-title-bg, 10%);
+@color-policy-border: gray;
+@color-policy-fg: black;
 
-@color-policy-section-bg: @color-policy-bg;
-@color-policy-section-fg: white;
-@color-policy-section-body-bg: lighten(@color-policy-section-bg, 10%);
+@color-policy-section-bg: white;
+@color-policy-section-fg: gray;
+@color-policy-section-body-bg: white;
 
 @color-policy-group-bg: darken(@color-policy-bg, 10%);
-@color-policy-group-fg: white;
+@color-policy-group-fg: black;
 
 @color-policy-group-member-bg: @color-policy-bg;
 @color-policy-group-member-fg: black;
 
-@color-policy-ruleset-header-bg: yellow;
-@color-policy-ruleset-path-bg: black;
-@color-policy-ruleset-path-fg: white;
-@color-policy-ruleset-body-bg: lighten(@color-policy-section-body-bg, 5%);
+@color-policy-ruleset-bg: @color-policy-bg;
+@color-policy-ruleset-fg: black;
 
-@color-policy-rule-header-bg: khaki;
-@color-policy-rule-name-bg: brown;
-@color-policy-rule-name-fg: white;
-@color-policy-rule-parameters-bg: lighten(@color-policy-rule-header-bg, 10%);
+@color-policy-rule-bg: darken(@color-policy-ruleset-bg, 15%);
+@color-policy-rule-fg: black;
 
 /* Commons */
 
@@ -78,32 +75,24 @@ body {
 
 .macro-status {
 	.rounded(8px);
-	color: white;
 	font-weight: bold;
 	font-size: 50%;
 	vertical-align: middle;
 }
 
+@macro-enabled-color: #88EE88;
+@macro-disabled-color: #EE8888;
+
 .macro-enabled {
 	.macro-status;
-	background-color: #00AA00;
+	background-color: lighten(@macro-enabled-color, 50%);
+	color: @macro-enabled-color;
 }
 
 .macro-disabled {
 	.macro-status;
-	background-color: #AA0000;
-}
-
-.macro-param {
-	.rounded;
-	background-color: white;
-	font-size: 80%;
-	.macro-param-name {
-		color: gray;
-	}
-	.macro-param-value {
-		font-weight: bold;
-	}
+	background-color: lighten(@macro-disabled-color, 50%);
+	color: @macro-disabled-color;
 }
 
 .macro-form-error {
@@ -159,12 +148,28 @@ article.page {
 	}
 }
 
+nav form {
+	color: @color-page-nav-fg;
+	display: inline;
+	input[type="submit"] {
+		color: @color-page-nav-fg;
+		border: none;
+		background: transparent;
+		text-decoration: underline;
+		font-size: inherit;
+		.action;
+	}
+}
+
 /* Home page */
 
 article.policy-summary {
+	float: left;
 	.rounded;
 	background-color: @color-policy-bg;
+	border: solid 2px @color-policy-border;
 	margin-bottom: 5px;
+	margin-right: 5px;
 	> header {
 		font-size: 120%;
 		font-weight: bold;
@@ -172,6 +177,9 @@ article.policy-summary {
 			color: @color-policy-fg;
 			text-decoration: none;
 		}
+	}
+	span.info {
+		color: lighten(@color-policy-fg, 50%);
 	}
 }
 
@@ -183,6 +191,8 @@ article.policy {
 			.rounded;
 			background-color: @color-policy-section-bg;
 			color: @color-policy-section-fg;
+			font-style: italic;
+			border-bottom: solid 2px @color-policy-section-fg;
 		}
 		> div {
 			.rounded;
@@ -196,7 +206,7 @@ section.policy-groups {
 	th {
 		text-align: left;
 		.rounded;
-		font-weight: normal;
+		font-weight: bold;
 		background-color: @color-policy-group-bg;
 		color: @color-policy-group-fg;
 	}
@@ -208,41 +218,38 @@ section.policy-groups {
 }
 
 section.policy-ruleset {
-	> header {
-		.rounded;
-		background-color: @color-policy-ruleset-header-bg;
-		span.policy-ruleset-path {
-			.policy-id;
-			background-color: @color-policy-ruleset-path-bg;
-			color: @color-policy-ruleset-path-fg;
-		}
-		span.policy-ruleset-description {
-			.info;
-		}
+	.rounded;
+	margin-bottom: 5px;
+	background-color: @color-policy-ruleset-bg;
+	color: @color-policy-ruleset-fg;
+	.policy-ruleset-path {
+		font-weight: bold;
+		text-decoration: underline;
 	}
-	> div {
-		.rounded;
-		background-color: @color-policy-ruleset-body-bg;
+	.policy-ruleset-description {
+		.info;
 	}
 }
 
+div.policy-ruleset-dd {
+	cursor: move;
+	width: 16px;
+	height: 16px;
+	float: left;
+	margin-right: 5px;
+	background-image: url('../images/grip.png');
+}
+
+
 section.policy-rule {
-	> header {
-		.rounded;
-		background-color: @color-policy-rule-header-bg;
-		span.policy-rule-name {
-			.policy-id;
-			background-color: @color-policy-rule-name-bg;
-			color: @color-policy-rule-name-fg;
-		}
-		span.policy-rule-description {
-			.info;
-		}
+	.rounded;
+	margin-top: 5px;
+	background-color: @color-policy-rule-bg;
+	color: @color-policy-rule-fg;
+	.policy-rule-name {
+		font-weight: bold;
 	}
-	> div {
-		.rounded;
-		background-color: @color-policy-rule-parameters-bg;
-		margin-bottom: 5px;
-		padding: 5px;
+	.policy-rule-description {
+		.info;
 	}
 }

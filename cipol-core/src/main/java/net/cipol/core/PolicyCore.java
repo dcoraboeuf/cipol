@@ -149,6 +149,7 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 								public RuleSet mapRow(ResultSet rs, int i)
 										throws SQLException {
 									RuleSet o = new RuleSet();
+									o.setId(rs.getInt("id"));
 									o.setPath(rs.getString("path"));
 									o.setDescription(rs.getString("description"));
 									o.setDisabled(rs.getBoolean("disabled"));

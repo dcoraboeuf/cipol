@@ -13,14 +13,6 @@
 
 <#macro ljsh key>${loc("${key}")?js_string?html}</#macro>
 
-<#macro disabled value>
-	<#if value>
-		<span class="macro-disabled"><@lh key="general.disabled" /></span>
-	<#else>
-		<span class="macro-enabled"><@lh key="general.enabled" /></span>
-	</#if>
-</#macro>
-
 
 <#macro parameter p>	
 	<span class="macro-param">
