@@ -1,13 +1,14 @@
 /* Theme */
 
-@color-page-title-bg: #55DD55;
+@color-page-title-bg: lightgrey;
 @color-page-title-fg: white;
 
 @color-page-nav-bg: @color-page-title-bg;
 @color-page-nav-fg: @color-page-title-fg;
 
-@color-policy-bg: #9999FF;
-@color-policy-fg: white;
+@color-policy-bg: lighten(@color-page-title-bg, 10%);
+@color-policy-border: gray;
+@color-policy-fg: black;
 
 @color-policy-section-bg: @color-policy-bg;
 @color-policy-section-fg: white;
@@ -162,9 +163,12 @@ article.page {
 /* Home page */
 
 article.policy-summary {
+	float: left;
 	.rounded;
 	background-color: @color-policy-bg;
+	border: solid 2px @color-policy-border;
 	margin-bottom: 5px;
+	margin-right: 5px;
 	> header {
 		font-size: 120%;
 		font-weight: bold;
@@ -172,6 +176,9 @@ article.policy-summary {
 			color: @color-policy-fg;
 			text-decoration: none;
 		}
+	}
+	span.info {
+		color: lighten(@color-policy-fg, 50%);
 	}
 }
 
