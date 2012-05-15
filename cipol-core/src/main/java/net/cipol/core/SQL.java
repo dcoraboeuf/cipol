@@ -28,4 +28,6 @@ public interface SQL {
 	
 	String INSTANCE_CREATE = "insert into INSTANCE (category, reference) values (:category, :reference)";
 
+	String POLICY_GROUP_CREATE = "insert into GROUPS (category, reference, name, members) values ('POLICY', :uid, :name, '')";
+
 }

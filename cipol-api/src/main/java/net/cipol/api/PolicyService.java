@@ -20,4 +20,6 @@ public interface PolicyService {
 
 	String importPolicy(Policy policy, String name);
 
+	void groupCreate(String uid, String name);
+
 }

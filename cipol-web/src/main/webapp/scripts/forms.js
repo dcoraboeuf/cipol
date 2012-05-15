@@ -2,6 +2,23 @@ var Forms = new function () {
 	
 	var dh = Ext.DomHelper;
 	
+	function form_create (action, name) {
+		if (text_validate_required(name)) {
+			Ext.Ajax.request({
+				form: 'macro-form-' + name,
+				failure: function () {
+					alert('Could not update the value');
+				},
+				success: function () {
+					// Updates the old value to the new one
+					input.dom.setAttribute("oldvalue", value);
+					// Restore
+					text_field_restore(id);
+				}
+			});
+		}
+	}
+	
 	function action_state (id, state) {
 		if ("edit" == state) {
 			Ext.fly('macro-form-action-edit-' + id).addClass('action-hidden');
@@ -128,7 +145,8 @@ var Forms = new function () {
 	
 	return {
 		text_validate_required: text_validate_required,
-		text_field_edit: text_field_edit
+		text_field_edit: text_field_edit,
+		form_create: form_create
 	};
 	
 }();

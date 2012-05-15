@@ -104,6 +104,19 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 					.addValue("name", policy.getName())
 					.addValue("description", policy.getDescription()));
 	}
+	
+	@Override
+	@Transactional
+	@CacheEvict("policy")
+	@Secured(CipolRole.ADMIN)
+	public void groupCreate(String uid, String name) {
+		log.debug("Create policy group {} for {}", new Object[] {name, uid});
+		// Creates the group
+		getNamedParameterJdbcTemplate().update(SQL.POLICY_GROUP_CREATE,
+				new MapSqlParameterSource()
+					.addValue("uid", uid)
+					.addValue("name", name));
+	}
 
 	@Override
 	@Cacheable("policy")

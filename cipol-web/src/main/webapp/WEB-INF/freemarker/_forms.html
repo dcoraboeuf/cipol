@@ -18,6 +18,18 @@
 	</form>
 </#macro>
 
+<#macro form_create_js action text name maxlength=200 size=30 submit="general.create">
+	<div class="macro-form-create">
+		<@lh key=text/>
+		<input id="${name?html}" name="${name?html}" type="text" maxlength="${maxlength}" size="${size}" />
+		<#if submit == "">
+			<input type="image" src="images/add.png" onclick="Forms.form_create('${action?html}', '${name?html}')" />
+		<#else>
+			<input type="button" value="<@lh key=submit/>" onclick="Forms.form_create('${action?html}', '${name?html}')" />
+		</#if>
+	</div>
+</#macro>
+
 <#macro form_link action text tip role="">
 	<@authcheck role=role>
 		<a href="${action}" title="<@lh key=tip/>"><@lh key=text/></a>
