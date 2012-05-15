@@ -16,6 +16,8 @@
 							/>
 						<@form_text_field
 							id="name"
+							size=40
+							autoSize=true
 							label=loc("model.policy.name")
 							value=policy.name
 							editable=rolecheck("ROLE_ADMIN")
@@ -23,8 +25,9 @@
 							/>
 						<@form_text_field
 							id="description"
-							label=loc("model.policy.description")
 							size=40
+							autoSize=true
+							label=loc("model.policy.description")
 							value=policy.description
 							editable=rolecheck("ROLE_ADMIN")
 							action="ui/policy/update/${policy.uid}"
