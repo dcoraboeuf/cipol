@@ -10,9 +10,9 @@
 @color-policy-border: gray;
 @color-policy-fg: black;
 
-@color-policy-section-bg: @color-policy-bg;
-@color-policy-section-fg: white;
-@color-policy-section-body-bg: lighten(@color-policy-section-bg, 10%);
+@color-policy-section-bg: white;
+@color-policy-section-fg: gray;
+@color-policy-section-body-bg: white;
 
 @color-policy-group-bg: darken(@color-policy-bg, 10%);
 @color-policy-group-fg: white;
@@ -203,6 +203,8 @@ article.policy {
 			.rounded;
 			background-color: @color-policy-section-bg;
 			color: @color-policy-section-fg;
+			font-style: italic;
+			border-bottom: solid 2px @color-policy-section-fg;
 		}
 		> div {
 			.rounded;
