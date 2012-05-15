@@ -95,18 +95,6 @@ body {
 	color: @macro-disabled-color;
 }
 
-.macro-param {
-	.rounded;
-	background-color: white;
-	font-size: 80%;
-	.macro-param-name {
-		color: gray;
-	}
-	.macro-param-value {
-		font-weight: bold;
-	}
-}
-
 .macro-form-error {
 	border: solid 1px red;
 	background-color: #FFAAAA;
@@ -258,4 +246,10 @@ section.policy-rule {
 	margin-top: 5px;
 	background-color: @color-policy-rule-bg;
 	color: @color-policy-rule-fg;
+	.policy-rule-name {
+		font-weight: bold;
+	}
+	.policy-rule-description {
+		.info;
+	}
 }

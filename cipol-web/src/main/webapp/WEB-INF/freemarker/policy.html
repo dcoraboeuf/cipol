@@ -70,18 +70,18 @@
 						<div>
 							<#list ruleset.rules as rule>
 								<section class="policy-rule">
-									<header>
-										<span class="policy-rule-name">${rule.ruleId?html}</span>
-										<span class="policy-rule-description">${rule.description?html}</span>
-										<@disabled value=rule.disabled />
-									</header>
+									<!-- FIXME Description message for the rule -->
+									<span class="policy-rule-name">${rule.ruleId?html}</span>
 									<#if rule.parameters??>
-										<div class="parameters">
+										<span class="parameters">
 											<#list rule.parameters as param>
 												<@parameter p=param />
+												<#if param_has_next>,</#if>
 											</#list>
-										</div>
+										</span>
 									</#if>
+									<span class="policy-rule-description">${rule.description?html}</span>
+									<@disabled value=rule.disabled />
 								</section>
 							</#list>
 						</div>
