@@ -11,7 +11,7 @@
 		<@lh key=text/>
 		<input id="${name?html}" name="${name?html}" type="text" maxlength="${maxlength}" size="${size}" />
 		<#if submit == "">
-			<img src="images/add.png" class="action" onclick="return Forms.text_validate_required('${name?html}');" />
+			<input type="image" src="images/add.png" onclick="return Forms.text_validate_required('${name?html}');" />
 		<#else>
 			<input type="submit" value="<@lh key=submit/>" onclick="return Forms.text_validate_required('${name?html}');" />
 		</#if>
