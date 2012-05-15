@@ -7,10 +7,14 @@
 </#macro>
 
 <#macro form_create action text name maxlength=200 size=30 submit="general.create">
-	<form method="post" enctype="application/x-www-form-urlencoded" action="${action}">
+	<form class="macro-form-create" method="post" enctype="application/x-www-form-urlencoded" action="${action}">
 		<@lh key=text/>
 		<input id="${name?html}" name="${name?html}" type="text" maxlength="${maxlength}" size="${size}" />
-		<input type="submit" value="<@lh key=submit/>" onclick="return Forms.text_validate_required('${name?html}');" />
+		<#if submit == "">
+			<img src="images/add.png" class="action" onclick="return Forms.text_validate_required('${name?html}');" />
+		<#else>
+			<input type="submit" value="<@lh key=submit/>" onclick="return Forms.text_validate_required('${name?html}');" />
+		</#if>
 	</form>
 </#macro>
 
