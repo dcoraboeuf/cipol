@@ -60,8 +60,9 @@
 			</header>
 				<div>
 				<#list policy.rules as ruleset>
-					<section class="policy-ruleset">
+					<section id="section-policy-ruleset-${ruleset.id}" class="policy-ruleset">
 						<header>
+							<div id="section-policy-ruleset-dd-${ruleset.id}" class="policy-ruleset-dd"></div>
 							<span class="policy-ruleset-path">${ruleset.path}</span>
 							<span class="policy-ruleset-description">${ruleset.description?html}</span>
 							<@disabled value=ruleset.disabled />

@@ -55,6 +55,7 @@ has
 
 a RuleSet
 has
+	an integer as id,
 	a path,
 	a description,
 	a boolean as disabled,
