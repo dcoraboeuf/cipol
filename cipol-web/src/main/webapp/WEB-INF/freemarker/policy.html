@@ -1,5 +1,5 @@
 <#include "/_layouts.html">
-<@layout_simple pageId="policy" titleKey="policy.title" forms=true>
+<@layout_simple pageId="policy" titleKey="policy.title" forms=true script=true>
 	<article class="policy">
 		<section class="policy">
 			<header>
@@ -39,7 +39,10 @@
 		<section class="policy policy-groups">
 			<header>
 				Groups
-				<@form_create_js action="ui/policy/group/${policy.uid}/create" text="" name="name" size=16 submit="" />
+				<div class="macro-form-create">
+					<input id="policy-group-name" name="name" type="text" maxlength="200" size="16" />
+					<input type="image" src="images/add.png" onclick="Policy.groupCreate('${policy.uid}');" />
+				</div>
 			</header>
 			<div>
 				<table>

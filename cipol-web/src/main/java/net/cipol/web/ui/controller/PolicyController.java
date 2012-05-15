@@ -116,9 +116,11 @@ public class PolicyController {
 	}
 
 	@RequestMapping(value = "/group/{uid}/create", method = RequestMethod.POST)
-	public void groupCreate (@PathVariable String uid, @RequestParam String name) {
+	public @ResponseBody String groupCreate (@PathVariable String uid, @RequestParam String name) {
 		// Creates the group
 		policyService.groupCreate (uid, name);
+		// Returns an acknowledgment
+		return "OK";
 	}
 
 }

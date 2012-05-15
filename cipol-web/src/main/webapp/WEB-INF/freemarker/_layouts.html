@@ -1,7 +1,7 @@
 <#include "/_utils.html">
 <#import "/spring.ftl" as spring />
 
-<#macro layout_base pageId titleKey forms=false>
+<#macro layout_base pageId titleKey forms=false script=false>
 	<#if forms>
 		<#include "/_forms.html">
 	</#if>
@@ -20,6 +20,9 @@
 			<#if forms>
 				<script src="scripts/forms.js" type="text/javascript"></script>
 			</#if>
+			<#if script>
+				<script src="scripts/${pageId}.js" type="text/javascript"></script>
+			</#if>
 			<title>${loc("${titleKey}")} - ${loc("app.title")} ${loc("app.version")}</title>
 	    </head>
 		<body>
@@ -28,9 +31,9 @@
 	</html>
 </#macro>
 	
-<#macro layout_simple pageId titleKey forms=false>
+<#macro layout_simple pageId titleKey forms=false script=false>
 	<@comment text="layout_simple" />
-	<@layout_base pageId="${pageId}" titleKey="${titleKey}" forms=forms>
+	<@layout_base pageId="${pageId}" titleKey="${titleKey}" forms=forms script=script>
 		<article class="page">
 			<header>
 				${loc("${titleKey}")}
