@@ -17,12 +17,17 @@ var Policy = function () {
 				params: {
 					name: Ext.fly('policy-group-name').dom.value
 				},
-				failure: function () {
-					alert('Could not create the group');
+				failure: function (response) {
+					alert(String.format('[{0}] {1}', response.status, response.statusText));
 				},
-				success: function () {
-					Ext.fly('policy-group-name').dom.value = '';
-					groupAdd(groupName);
+				success: function (response) {
+					var message = response.responseText;
+					if (message == "OK") {
+						Ext.fly('policy-group-name').dom.value = '';
+						groupAdd(groupName);
+					} else {
+						alert(message);
+					}
 				}
 			});
 		}
