@@ -112,14 +112,24 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 	@Secured(CipolRole.ADMIN)
 	public void groupCreate(String uid, String name) {
 		log.debug("Create policy group {} for {}", new Object[] {name, uid});
-		// Creates the group
 		try {
+			// Checks the policy exists
+			checkPolicyExists (uid);
+			// Creates the group
 			getNamedParameterJdbcTemplate().update(SQL.POLICY_GROUP_CREATE,
 					new MapSqlParameterSource()
 						.addValue("uid", uid)
 						.addValue("name", name));
 		} catch (DuplicateKeyException ex) {
 			throw new PolicyGroupAlreadyExistsException(uid, name);
+		}
+	}
+
+	protected void checkPolicyExists(String uid) throws EmptyResultDataAccessException {
+		try {
+			getNamedParameterJdbcTemplate().queryForMap(SQL.POLICY_FIND_BY_UID, Collections.singletonMap("uid", uid));
+		} catch (EmptyResultDataAccessException ex) {
+			throw new PolicyNotFoundException(uid);
 		}
 	}
 
