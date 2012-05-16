@@ -13,7 +13,6 @@ import groovyx.net.http.HTTPBuilder;
 import groovyx.net.http.Method;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 class ITGJSON {
@@ -88,18 +87,20 @@ class ITGJSON {
 	}
 	
 	@Test
-	@Ignore
 	void group_create_ok() {
-		http.request ( Method.POST ) {
-			uri.path = 'ui/policy/group/9853bf50-6d1d-11e1-b0c4-0800200c9a66/create'
-			send ContentType.URLENC, [name: 'group1']
-			
-			response.success = { resp, content ->
-				println("Response status : $resp.status")
-				println("Response content: $content")
-				assertEquals (302, resp.status);
-			}
-		}
+		with_session ('admin', 'admin', {
+				http.request ( Method.POST ) {
+					uri.path = 'ui/policy/group/9853bf50-6d1d-11e1-b0c4-0800200c9a66/create'
+					send ContentType.URLENC, [name: 'group1']
+					
+					response.success = { resp, text ->
+						println("Response status : $resp.status")
+						println("Response content: $text")
+						assertEquals (200, resp.status)
+						assertEquals ("OK", text)
+					}
+				}
+			})
 	}	
 
 }
