@@ -39,10 +39,10 @@
 		<section class="policy policy-groups">
 			<header>
 				Groups
-				<div class="macro-form-create">
+				<form class="macro-form-create" onsubmit="Policy.groupCreate('${policy.uid}'); return false;">
 					<input id="policy-group-name" name="name" type="text" maxlength="200" size="16" />
-					<input type="image" src="images/add.png" onclick="Policy.groupCreate('${policy.uid}');" />
-				</div>
+					<input type="image" src="images/add.png" />
+				</form>
 			</header>
 			<div>
 				<table>
