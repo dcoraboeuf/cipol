@@ -26,6 +26,8 @@ var Policy = function () {
 				}
 			});
 		}
+		// Prevents submit
+		return false;
 	}
 
 	return {
