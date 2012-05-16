@@ -86,21 +86,41 @@ class ITGJSON {
 		assertTrue ("The test was not executed", testPassed);
 	}
 	
+	void doGroupCreate(name, handler) {
+		http.request ( Method.POST, ContentType.TEXT ) {
+			uri.path = 'ui/policy/group/9853bf50-6d1d-11e1-b0c4-0800200c9a66/create'
+			send ContentType.URLENC, [name: name]
+			response.success = { resp, reader ->
+				def content = reader.text
+				println("Response status : $resp.status")
+				println("Response content: $content")
+				assertEquals (200, resp.status)
+				handler(content)
+			}
+		}
+	}	
+	
 	@Test
 	void group_create_ok() {
 		with_session ('admin', 'admin', {
-				http.request ( Method.POST, ContentType.TEXT ) {
-					uri.path = 'ui/policy/group/9853bf50-6d1d-11e1-b0c4-0800200c9a66/create'
-					send ContentType.URLENC, [name: 'group1']
-					response.success = { resp, reader ->
-						def content = reader.text
-						println("Response status : $resp.status")
-						println("Response content: $content")
-						assertEquals (200, resp.status)
-						assertEquals ("OK", content)
-					}
-				}
+				doGroupCreate('group1', {content ->
+						assertEquals ("OK", content); 
+					})
 			})
-	}	
+	}
+	
+	@Test
+	void group_create_already_exists() {
+		with_session ('admin', 'admin', {
+				// Creates the actual group
+				doGroupCreate('group2', {content ->
+						assertEquals ("OK", content); 
+					})
+				// Attemps to create it a second time
+				doGroupCreate('group2', {content ->
+						assertEquals ('[CORE-007] Group "group2" already exists for policy "9853bf50-6d1d-11e1-b0c4-0800200c9a66".', content); 
+					})
+			})
+	}
 
 }
