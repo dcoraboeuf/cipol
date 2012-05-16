@@ -1,6 +1,7 @@
 <dataset>
 
 	<POLICY uid="100" name="Test" description="Test policy" />
+		<GROUPS id="100" category="POLICY" reference="100" name="group1" members="user1,user2" />
 	
 	<POLICY uid="200" name="Deletion test" description="Policy to delete" />
 		<GROUPS id="200" category="POLICY" reference="200" name="translators" members="translator1,translator2" />

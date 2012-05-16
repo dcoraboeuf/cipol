@@ -72,6 +72,22 @@ public class PolicyCoreTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
+	public void group_create_ok() throws DataSetException, SQLException {
+		policyService.groupCreate("100", "group2");
+		ITable groups = getTable("GROUPS", "select * from GROUPS where category = 'POLICY' and reference = '100' order by name");
+		assertEquals(2, groups.getRowCount());
+		assertEquals("group1", groups.getValue(0, "name"));
+		assertEquals("user1,user2", groups.getValue(0, "members"));
+		assertEquals("group2", groups.getValue(1, "name"));
+		assertEquals("", groups.getValue(1, "members"));
+	}
+	
+	@Test(expected = PolicyGroupAlreadyExistsException.class)
+	public void group_create_already_exists() throws DataSetException, SQLException {
+		policyService.groupCreate("100", "group1");
+	}
+	
+	@Test
 	public void load() {
 		Policy policy = policyService.loadPolicy("100");
 		assertNotNull(policy);
