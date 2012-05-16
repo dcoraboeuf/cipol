@@ -89,15 +89,15 @@ class ITGJSON {
 	@Test
 	void group_create_ok() {
 		with_session ('admin', 'admin', {
-				http.request ( Method.POST ) {
+				http.request ( Method.POST, ContentType.TEXT ) {
 					uri.path = 'ui/policy/group/9853bf50-6d1d-11e1-b0c4-0800200c9a66/create'
 					send ContentType.URLENC, [name: 'group1']
-					
-					response.success = { resp, text ->
+					response.success = { resp, reader ->
+						def content = reader.text
 						println("Response status : $resp.status")
-						println("Response content: $text")
+						println("Response content: $content")
 						assertEquals (200, resp.status)
-						assertEquals ("OK", text)
+						assertEquals ("OK", content)
 					}
 				}
 			})
