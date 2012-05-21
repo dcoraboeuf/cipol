@@ -12,6 +12,10 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath*:META-INF/spring/*.xml</param-value>
 	</context-param>
+    
+    <listener>
+    	<listener-class>net.cipol.web.support.InitListener</listener-class>
+    </listener>
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

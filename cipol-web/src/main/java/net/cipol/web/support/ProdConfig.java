@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Log4jConfigurer;
 
 @Component
 @Profile(CipolProfiles.PROD)
@@ -20,7 +19,7 @@ public class ProdConfig {
 
 	@PostConstruct
 	public void init() throws FileNotFoundException {
-		Log4jConfigurer.initLogging("classpath:/log4j_prod.properties");
+		//Log4jConfigurer.initLogging("classpath:/log4j_prod.properties");
 		logger.info("Using PROD configuration");
 	}
 

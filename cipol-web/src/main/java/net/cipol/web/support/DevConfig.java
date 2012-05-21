@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Log4jConfigurer;
 
 @Component
 @Profile({CipolProfiles.TEST, CipolProfiles.IT, CipolProfiles.DEV})
@@ -20,7 +19,7 @@ public class DevConfig {
 
 	@PostConstruct
 	public void init() throws FileNotFoundException {
-		Log4jConfigurer.initLogging("classpath:/log4j_dev.properties");
+		//Log4jConfigurer.initLogging("classpath:/log4j_dev.properties");
 		logger.info("Using DEV configuration");		
 	}
 
