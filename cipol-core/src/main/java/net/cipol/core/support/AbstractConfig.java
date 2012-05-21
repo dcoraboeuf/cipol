@@ -1,4 +1,4 @@
-package net.cipol.web.support;
+package net.cipol.core.support;
 
 import java.io.FileNotFoundException;
 
@@ -22,7 +22,15 @@ abstract class AbstractConfig {
 
 	@PostConstruct
 	public void init() throws FileNotFoundException {
+		initGeneral();
+		initLogging();
+	}
+
+	protected void initLogging() throws FileNotFoundException {
 		Log4jConfigurer.initLogging(loggingPath);
+	}
+
+	protected void initGeneral() {
 		logger.info("Using {} configuration", configName);
 	}
 

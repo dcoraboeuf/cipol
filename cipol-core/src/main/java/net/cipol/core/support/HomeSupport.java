@@ -1,4 +1,4 @@
-package net.cipol.core;
+package net.cipol.core.support;
 
 import java.io.File;
 
@@ -6,7 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class HomeSupport {
+public class HomeSupport {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(HomeSupport.class);

@@ -1,4 +1,6 @@
-package net.cipol.web.support;
+package net.cipol.core.support;
+
+import java.io.FileNotFoundException;
 
 import net.cipol.CipolProfiles;
 
@@ -11,6 +13,12 @@ public class ProdConfig extends AbstractConfig {
 
 	public ProdConfig() {
 		super("PROD", "classpath:/log4j_prod.properties");
+	}
+	
+	@Override
+	protected void initLogging() throws FileNotFoundException {
+		System.setProperty("cipol.home", HomeSupport.home().getAbsolutePath());
+		super.initLogging();
 	}
 
 }

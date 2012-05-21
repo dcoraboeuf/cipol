@@ -1,4 +1,4 @@
-package net.cipol.web.support;
+package net.cipol.core.support;
 
 import net.cipol.CipolProfiles;
 
