@@ -25,10 +25,15 @@ var Forms = new function () {
 		el.addClass('macro-form-error');
 	}
 	
+	function field_clear_validate (el) {
+		el.removeClass('macro-form-error');
+	}
+	
 	function text_validate_required (name) {
 		var field = Ext.fly(name);
 		var value = field.getValue();
 		if (value != "") {
+			field_clear_validate(field);
 			return true;
 		} else {
 			field_invalidate(field);

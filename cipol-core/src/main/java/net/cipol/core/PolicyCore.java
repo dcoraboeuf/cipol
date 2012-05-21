@@ -27,6 +27,7 @@ import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -103,6 +104,33 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 					.addValue("uid", uid)
 					.addValue("name", policy.getName())
 					.addValue("description", policy.getDescription()));
+	}
+	
+	@Override
+	@Transactional
+	@CacheEvict("policy")
+	@Secured(CipolRole.ADMIN)
+	public void groupCreate(String uid, String name) {
+		log.debug("Create policy group {} for {}", new Object[] {name, uid});
+		try {
+			// Checks the policy exists
+			checkPolicyExists (uid);
+			// Creates the group
+			getNamedParameterJdbcTemplate().update(SQL.POLICY_GROUP_CREATE,
+					new MapSqlParameterSource()
+						.addValue("uid", uid)
+						.addValue("name", name));
+		} catch (DuplicateKeyException ex) {
+			throw new PolicyGroupAlreadyExistsException(uid, name);
+		}
+	}
+
+	protected void checkPolicyExists(String uid) throws EmptyResultDataAccessException {
+		try {
+			getNamedParameterJdbcTemplate().queryForMap(SQL.POLICY_FIND_BY_UID, Collections.singletonMap("uid", uid));
+		} catch (EmptyResultDataAccessException ex) {
+			throw new PolicyNotFoundException(uid);
+		}
 	}
 
 	@Override

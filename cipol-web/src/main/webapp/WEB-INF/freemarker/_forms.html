@@ -6,11 +6,22 @@
 	</#if>
 </#macro>
 
+<#macro form_text action id name maxlength=300 size=16 image="images/add.png">
+	<form class="macro-form-create" onsubmit="${action}">
+		<input id="${id}" name="${name}" type="text" maxlength="${maxlength}" size="${size}" />
+		<input type="image" src="${image}" />
+	</form>
+</#macro>
+
 <#macro form_create action text name maxlength=200 size=30 submit="general.create">
-	<form method="post" enctype="application/x-www-form-urlencoded" action="${action}">
+	<form class="macro-form-create" method="post" enctype="application/x-www-form-urlencoded" action="${action}">
 		<@lh key=text/>
 		<input id="${name?html}" name="${name?html}" type="text" maxlength="${maxlength}" size="${size}" />
-		<input type="submit" value="<@lh key=submit/>" onclick="return Forms.text_validate_required('${name?html}');" />
+		<#if submit == "">
+			<input type="image" src="images/add.png" onclick="return Forms.text_validate_required('${name?html}');" />
+		<#else>
+			<input type="submit" value="<@lh key=submit/>" onclick="return Forms.text_validate_required('${name?html}');" />
+		</#if>
 	</form>
 </#macro>
 
@@ -30,7 +41,15 @@
 	</@authcheck>
 </#macro>
 
-<#macro form_text_field id label value editable=false maxlength=200 size=30 action="">
+<#macro form_text_field id label value editable=false maxlength=200 size=30 autoSize=false action="">
+	<#if autoSize>
+		<#assign fieldSize = value?length />
+		<#if fieldSize < size>
+			<#assign fieldSize = size />
+		</#if>
+	<#else>
+		<#assign fieldSize = size />
+	</#if>
 	<tr>
 		<td class="macro-form-label">
 			${label}
@@ -39,7 +58,7 @@
 			<td id="macro-form-cell-${id?html}" class="macro-form-editable">
 				<form id="macro-form-${id?html}" action="${action}" method="post" style="display:inline;" onsubmit="return false;">
 					<input id="macro-form-field-${id?html}" name="fieldName" type="hidden" value="${id}" />
-					<input id="macro-form-input-${id?html}" class="macro-form-editable" name="value" type="text" readonly="readonly" value="${value?html}" oldvalue="${value?html}" maxlength="${maxlength}" size="${size}" />
+					<input id="macro-form-input-${id?html}" class="macro-form-editable" name="value" type="text" readonly="readonly" value="${value?html}" oldvalue="${value?html}" maxlength="${maxlength}" size="${fieldSize}" />
 				</form>
 				<img id="macro-form-action-edit-${id?html}" onclick="Forms.text_field_edit('${id?web_safe}');" class="action" src="images/pencil.png" tabindex="-1" />
 				<img id="macro-form-action-accept-${id?html}" class="action action-hidden" src="images/accept.png" tabindex="-1" />

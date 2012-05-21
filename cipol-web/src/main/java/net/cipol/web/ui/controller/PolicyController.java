@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.cipol.api.PolicyService;
 import net.cipol.model.Policy;
-import net.cipol.model.support.PolicyField;
 
-import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
@@ -105,14 +102,6 @@ public class PolicyController {
 		policyService.deletePolicy(uid);
 		// Redirects to the home page
 		return HOME;
-	}
-
-	@RequestMapping(value = "/update/{uid}", method = RequestMethod.POST)
-	public @ResponseBody String update (@PathVariable String uid, @RequestParam String fieldName, @RequestParam String value) {
-		// Update
-		policyService.updatePolicy (uid, PolicyField.valueOf(StringUtils.upperCase(fieldName)), value);
-		// Returns an acknowledgment
-		return "OK";
 	}
 
 }

@@ -1,5 +1,5 @@
 <#include "/_layouts.html">
-<@layout_simple pageId="policy" titleKey="policy.title" forms=true>
+<@layout_simple pageId="policy" titleKey="policy.title" forms=true script=true>
 	<article class="policy">
 		<section class="policy">
 			<header>
@@ -16,6 +16,8 @@
 							/>
 						<@form_text_field
 							id="name"
+							size=40
+							autoSize=true
 							label=loc("model.policy.name")
 							value=policy.name
 							editable=rolecheck("ROLE_ADMIN")
@@ -23,8 +25,9 @@
 							/>
 						<@form_text_field
 							id="description"
-							label=loc("model.policy.description")
 							size=40
+							autoSize=true
+							label=loc("model.policy.description")
 							value=policy.description
 							editable=rolecheck("ROLE_ADMIN")
 							action="ui/policy/update/${policy.uid}"
@@ -36,10 +39,11 @@
 		<section class="policy policy-groups">
 			<header>
 				Groups
+				<@form_text action="return Policy.groupCreate('${policy.uid}');" id="policy-group-name" name="name" />
 			</header>
 			<div>
 				<table>
-					<tbody>
+					<tbody id="policy-groups">
 						<#list policy.groups as group>
 							<tr>
 								<th>
