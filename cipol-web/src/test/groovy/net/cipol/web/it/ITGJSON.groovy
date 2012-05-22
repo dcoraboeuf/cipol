@@ -114,11 +114,18 @@ class ITGJSON {
 		with_session ('admin', 'admin', {
 				// Creates the actual group
 				doGroupCreate('group2', {content ->
-						assertEquals ("OK", content); 
-					})
+					assertEquals ("OK", content); 
+				})
 				// Attemps to create it a second time
 				doGroupCreate('group2', {content ->
-						assertEquals ('[CORE-007] Group "group2" already exists for policy "9853bf50-6d1d-11e1-b0c4-0800200c9a66".', content); 
+						def expectedMessage = """\
+An error has occurred.
+Message: [CORE-007] Group "group2" already exists for policy "9853bf50-6d1d-11e1-b0c4-0800200c9a66".
+Reference: """
+						// Removes the last 36 characters of the content
+						def modifiedContent = content[0..-37]
+						// Comparison
+						assertEquals (expectedMessage, modifiedContent); 
 					})
 			})
 	}
