@@ -22,4 +22,6 @@ public interface PolicyService {
 
 	void groupCreate(String uid, String name);
 
+	void groupDelete(String uid, String name);
+
 }

@@ -34,4 +34,6 @@ public interface SQL {
 
 	String POLICY_GROUP_CREATE = "insert into GROUPS (category, reference, name, members) values ('POLICY', :uid, :name, '')";
 
+	String POLICY_GROUP_DELETE = "delete from GROUPS where category = 'POLICY' and reference = :uid and name = :name";
+
 }

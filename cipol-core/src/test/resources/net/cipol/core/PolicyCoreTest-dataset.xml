@@ -16,4 +16,9 @@
 			<RULEDEF ruleset="202" id="20200" ruleid="authorization" description="Only translators" disabled="false" />
 				<PARAM category="RULEDEF" reference="20200" id="2020000" name="allowed" value="@translators" />
 
+	<POLICY uid="3000" name="Test group" description="Test group policy" />
+		<GROUPS id="3000" category="POLICY" reference="3000" name="group1" members="user1,user2" />
+		<GROUPS id="3001" category="POLICY" reference="3000" name="group2" members="user1,user3" />
+		<GROUPS id="3002" category="POLICY" reference="3000" name="group3" members="user2,user4" />
+
 </dataset>

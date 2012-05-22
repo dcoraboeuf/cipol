@@ -9,6 +9,11 @@ var Policy = function () {
 		tpl.append('policy-groups', [ groupName ]);
 	}
 
+	function groupRemove (groupName) {
+		var id = 'group_' + groupName;
+		Ext.fly(id).remove();
+	}
+
 	function groupCreate (uid) {
 		var groupName = Ext.fly('policy-group-name').dom.value;
 		if (Forms.text_validate_required('policy-group-name')) {
@@ -34,9 +39,29 @@ var Policy = function () {
 		// Prevents submit
 		return false;
 	}
+	
+	function groupDelete (uid, name) {
+		// FIXME Prompting
+		// Execution
+		Ext.Ajax.request({
+			url: 'ui/policy/group/' + uid + '/delete/' + name,
+			failure: function (response) {
+				alert(String.format('[{0}] {1}', response.status, response.statusText));
+			},
+			success: function (response) {
+				var message = response.responseText;
+				if (message == "OK") {
+					groupRemove(name);
+				} else {
+					alert(message);
+				}
+			}
+		});
+	}
 
 	return {
-		groupCreate: groupCreate
+		groupCreate: groupCreate,
+		groupDelete: groupDelete
 	};
 
 } ();

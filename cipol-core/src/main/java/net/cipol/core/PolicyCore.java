@@ -133,6 +133,21 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 			throw new PolicyGroupAlreadyExistsException(uid, name);
 		}
 	}
+	
+	@Override
+	@Transactional
+	@CacheEvict("policy")
+	@Secured(CipolRole.ADMIN)
+	public void groupDelete(String uid, String name) {
+		log.debug("Delete policy group {} for {}", new Object[] {name, uid});
+		// Checks the policy exists
+		checkPolicyExists (uid);
+		// Deletes the group
+		getNamedParameterJdbcTemplate().update(SQL.POLICY_GROUP_DELETE,
+				new MapSqlParameterSource()
+					.addValue("uid", uid)
+					.addValue("name", name));
+	}
 
 	protected void checkPolicyExists(String uid) throws EmptyResultDataAccessException {
 		try {

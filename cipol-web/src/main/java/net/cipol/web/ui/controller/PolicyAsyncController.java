@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/ui/policy")
 public class PolicyAsyncController {
 	
+	private static final String ACK_OK = "OK";
+
 	private final Logger errors = LoggerFactory.getLogger("User");
 	
 	private final PolicyService policyService;
@@ -54,7 +56,7 @@ public class PolicyAsyncController {
 		// Update
 		policyService.updatePolicy (uid, PolicyField.valueOf(StringUtils.upperCase(fieldName)), value);
 		// Returns an acknowledgment
-		return "OK";
+		return ACK_OK;
 	}
 
 	@RequestMapping(value = "/group/{uid}/create", method = RequestMethod.POST)
@@ -62,7 +64,15 @@ public class PolicyAsyncController {
 		// Creates the group
 		policyService.groupCreate (uid, name);
 		// Returns an acknowledgment
-		return "OK";
+		return ACK_OK;
+	}
+
+	@RequestMapping(value = "/group/{uid}/delete/{name}", method = RequestMethod.GET)
+	public @ResponseBody String groupDelete (@PathVariable String uid, @PathVariable String name) {
+		// Deletes the group
+		policyService.groupDelete (uid, name);
+		// Returns an acknowledgment
+		return ACK_OK;
 	}
 
 	protected Locale getLocale() {

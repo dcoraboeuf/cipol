@@ -88,6 +88,23 @@ public class PolicyCoreTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
+	public void group_delete() throws DataSetException, SQLException {
+		// Before deletion
+		ITable groups = getTable("GROUPS_BEFORE", "select * from GROUPS where category = 'POLICY' and reference = '3000' order by name");
+		assertEquals (3, groups.getRowCount());
+		assertEquals("group1", groups.getValue(0, "name"));
+		assertEquals("group2", groups.getValue(1, "name"));
+		assertEquals("group3", groups.getValue(2, "name"));
+		// Deletes a group
+		policyService.groupDelete("3000", "group2");
+		// After deletion
+		groups = getTable("GROUPS_AFTER", "select * from GROUPS where category = 'POLICY' and reference = '3000' order by name");
+		assertEquals (2, groups.getRowCount());
+		assertEquals("group1", groups.getValue(0, "name"));
+		assertEquals("group3", groups.getValue(1, "name"));
+	}
+	
+	@Test
 	public void load() {
 		Policy policy = policyService.loadPolicy("100");
 		assertNotNull(policy);
