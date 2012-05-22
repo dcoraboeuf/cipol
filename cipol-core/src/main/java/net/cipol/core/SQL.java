@@ -18,9 +18,13 @@ public interface SQL {
 	
 	String PARAM_FIND_BY_CATEGORY_AND_REFERENCE = "select * from PARAM where category = :category and reference = :reference order by name, id";
 	
+	String PARAM_REMOVE_ALL_FOR_POLICY = "delete from param where id in (select p.id from param p, ruleset rs, ruledef rd where rs.policy = :uid and rs.id = rd.ruleset and p.category = 'RULEDEF' and p.reference = rd.id)";
+	
 	String PARAM_REMOVE = "delete from PARAM where category = :category and reference = :reference and name = :name";
 	
 	String PARAM_INSERT = "insert into PARAM (category, reference, name, value) values (:category, :reference, :name, :value)";
+	
+	String GROUP_REMOVE_ALL = "delete from GROUPS where category = :category and reference = :reference";
 	
 	String GROUP_FIND_BY_CATEGORY_AND_REFERENCE = "select * from GROUPS where category = :category and reference = :reference order by name";
 

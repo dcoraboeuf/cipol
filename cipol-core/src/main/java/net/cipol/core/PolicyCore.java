@@ -16,8 +16,8 @@ import net.cipol.model.Policy;
 import net.cipol.model.PolicySummary;
 import net.cipol.model.RuleDefinition;
 import net.cipol.model.RuleSet;
-import net.cipol.security.CipolRole;
 import net.cipol.model.support.PolicyField;
+import net.cipol.security.CipolRole;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -82,8 +82,17 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 	@Secured(CipolRole.ADMIN)
 	@CacheEvict("policy")
 	public void deletePolicy(String uid) {
+		NamedParameterJdbcTemplate t = getNamedParameterJdbcTemplate();
 		log.debug("Deleting policy {}", uid);
-		getNamedParameterJdbcTemplate().update(SQL.POLICY_DELETE, Collections.singletonMap("uid", uid));
+		// Delete the associated parameters
+		t.update(SQL.PARAM_REMOVE_ALL_FOR_POLICY, Collections.singletonMap("uid", uid));
+		// Groups
+		t.update(SQL.GROUP_REMOVE_ALL, 
+				new MapSqlParameterSource()
+					.addValue("category", "POLICY")
+					.addValue("reference", uid));
+		// Delete the policy
+		t.update(SQL.POLICY_DELETE, Collections.singletonMap("uid", uid));
 	}
 	
 	@Override
