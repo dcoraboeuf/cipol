@@ -46,22 +46,24 @@ var Policy = function () {
 	}
 	
 	function groupDelete (uid, name) {
-		// FIXME Prompting
-		// Execution
-		Ext.Ajax.request({
-			url: 'ui/policy/group/' + uid + '/delete/' + name,
-			failure: function (response) {
-				alert(String.format('[{0}] {1}', response.status, response.statusText));
-			},
-			success: function (response) {
-				var message = response.responseText;
-				if (message == "OK") {
-					groupRemove(name);
-				} else {
-					alert(message);
+		// Prompting
+		if (Forms.askForConfirmation('policy.group.delete.prompt', name)) {
+			// Execution
+			Ext.Ajax.request({
+				url: 'ui/policy/group/' + uid + '/delete/' + name,
+				failure: function (response) {
+					alert(String.format('[{0}] {1}', response.status, response.statusText));
+				},
+				success: function (response) {
+					var message = response.responseText;
+					if (message == "OK") {
+						groupRemove(name);
+					} else {
+						alert(message);
+					}
 				}
+			});
 			}
-		});
 	}
 
 	return {
