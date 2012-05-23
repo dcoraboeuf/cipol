@@ -1,12 +1,17 @@
 var Policy = function () {
 
-	function groupAdd (groupName) {
+	function groupAdd (uid, groupName) {
 		var tpl = new Ext.Template(
-			'<tr>',
-				'<th>{0}</th>',
+			'<tr id="group_{0}">',
+				'<th>',
+					'{0}',
+					' ',
+					'<img src="images/delete.png" class="action" onclick="{1}" />',
+				'</th>',
 			'</tr>'
 		);
-		tpl.append('policy-groups', [ groupName ]);
+		var action = String.format("Policy.groupDelete('{0}', '{1}');", uid, groupName);
+		tpl.append('policy-groups', [ groupName, action ]);
 	}
 
 	function groupRemove (groupName) {
@@ -29,7 +34,7 @@ var Policy = function () {
 					var message = response.responseText;
 					if (message == "OK") {
 						Ext.fly('policy-group-name').dom.value = '';
-						groupAdd(groupName);
+						groupAdd(uid, groupName);
 					} else {
 						alert(message);
 					}
