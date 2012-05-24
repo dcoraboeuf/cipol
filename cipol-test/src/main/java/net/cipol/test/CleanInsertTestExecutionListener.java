@@ -2,12 +2,14 @@ package net.cipol.test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseDataSourceConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
@@ -23,15 +25,15 @@ public class CleanInsertTestExecutionListener implements TestExecutionListener {
 	private static final Logger LOG = LoggerFactory.getLogger(CleanInsertTestExecutionListener.class);
 
 	@Override
-	public void beforeTestClass(TestContext testContext) throws Exception {
+	public void beforeTestClass(TestContext testContext) {
 	}
 
 	@Override
-	public void prepareTestInstance(TestContext testContext) throws Exception {
+	public void prepareTestInstance(TestContext testContext) {
 	}
 
 	@Override
-	public void beforeTestMethod(TestContext testContext) throws Exception {
+	public void beforeTestMethod(TestContext testContext) throws IOException, SQLException, DatabaseUnitException {
 		// locations of the data sets
 		List<String> dataSetResourcePaths = new ArrayList<String>();
 
@@ -83,7 +85,7 @@ public class CleanInsertTestExecutionListener implements TestExecutionListener {
 	}
 
 	@Override
-	public void afterTestMethod(TestContext testContext) throws Exception {
+	public void afterTestMethod(TestContext testContext) throws SQLException {
 		IDatabaseConnection c = DBUnitHelper.getConnection();
 		if (c != null) {
 			c.close();
@@ -92,7 +94,7 @@ public class CleanInsertTestExecutionListener implements TestExecutionListener {
 	}
 
 	@Override
-	public void afterTestClass(TestContext testContext) throws Exception {
+	public void afterTestClass(TestContext testContext) {
 	}
 
 }

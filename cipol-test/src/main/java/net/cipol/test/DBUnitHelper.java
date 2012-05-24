@@ -2,7 +2,7 @@ package net.cipol.test;
 
 import org.dbunit.database.IDatabaseConnection;
 
-public class DBUnitHelper {
+public abstract class DBUnitHelper {
 
 	private static final ThreadLocal<IDatabaseConnection> connection = new ThreadLocal<IDatabaseConnection>();
 
@@ -12,6 +12,9 @@ public class DBUnitHelper {
 
 	public static IDatabaseConnection getConnection() {
 		return connection.get();
+	}
+	
+	private DBUnitHelper() {
 	}
 
 }
