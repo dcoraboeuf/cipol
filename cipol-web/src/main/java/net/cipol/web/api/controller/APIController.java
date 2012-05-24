@@ -8,6 +8,7 @@ import net.cipol.model.CommitInformation;
 import net.cipol.model.ValidationReport;
 import net.cipol.model.VersionInformation;
 import net.cipol.model.support.ValidationReportSupport;
+import net.cipol.web.ui.locale.CurrentLocale;
 import net.sf.jstring.LocalizableException;
 import net.sf.jstring.Strings;
 
@@ -30,11 +31,13 @@ public class APIController {
 
 	private final APIService api;
 	private final Strings strings;
+	private final CurrentLocale currentLocale;
 
 	@Autowired
-	public APIController(APIService api, Strings strings) {
+	public APIController(APIService api, Strings strings, CurrentLocale currentLocale) {
 		this.api = api;
 		this.strings = strings;
+		this.currentLocale = currentLocale;
 	}
 
 	@RequestMapping(value = "/version", method = RequestMethod.GET)
@@ -75,8 +78,7 @@ public class APIController {
 	}
 
 	protected Locale getLocale() {
-		// FIXME Uses a filter to set the locale
-		return Locale.ENGLISH;
+		return currentLocale.getCurrentLocale();
 	}
 
 }
