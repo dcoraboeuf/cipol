@@ -6,6 +6,7 @@ import java.util.UUID;
 import net.cipol.api.PolicyService;
 import net.cipol.model.support.CoreException;
 import net.cipol.model.support.PolicyField;
+import net.cipol.web.ui.locale.CurrentLocale;
 import net.sf.jstring.Strings;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,11 +31,13 @@ public class PolicyAsyncController {
 	
 	private final PolicyService policyService;
 	private final Strings strings;
+	private final CurrentLocale currentLocale;
 	
 	@Autowired
-	public PolicyAsyncController(PolicyService policyService, Strings strings) {
+	public PolicyAsyncController(PolicyService policyService, Strings strings, CurrentLocale currentLocale) {
 		this.policyService = policyService;
 		this.strings = strings;
+		this.currentLocale = currentLocale;
 	}
 	
 	// TODO Moves this handler in a more generic location
@@ -76,8 +79,7 @@ public class PolicyAsyncController {
 	}
 
 	protected Locale getLocale() {
-		// FIXME Uses a filter to set the locale
-		return Locale.ENGLISH;
+		return currentLocale.getCurrentLocale();
 	}
 
 }
