@@ -13,6 +13,13 @@
 
 <#macro ljsh key>${loc("${key}")?js_string?html}</#macro>
 
+<#macro language value>
+	<#assign lnClass = "" />
+	<#if localeSelected (value)>
+		<#assign lnClass = "selected" />
+	</#if>
+	<a href="ui/?language=${value}" class="language ${lnClass}">${value?upper_case}</a>
+</#macro>
 
 <#macro parameter p>	
 	<span class="macro-param">
