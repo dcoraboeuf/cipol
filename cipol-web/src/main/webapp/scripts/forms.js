@@ -131,9 +131,25 @@ var Forms = new function () {
 		
 	}
 	
+	function loc (code) {
+	    var value = l[code];
+	    if (value != null) {
+	        return value;
+	    } else {
+	        return '##' + code + '##';
+	    }
+	}
+	
+	function askForConfirmation (code, args) {
+		var message = String.format(loc(code), args);
+		return confirm(message);
+	}
+	
 	return {
 		text_validate_required: text_validate_required,
-		text_field_edit: text_field_edit
+		text_field_edit: text_field_edit,
+		askForConfirmation: askForConfirmation,
+		loc: loc
 	};
 	
 }();

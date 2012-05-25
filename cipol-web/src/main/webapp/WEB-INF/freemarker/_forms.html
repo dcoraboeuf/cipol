@@ -31,6 +31,10 @@
 	</@authcheck>
 </#macro>
 
+<#macro form_delete_icon action>
+	<img src="images/delete.png" class="action" onclick="${action}" />
+</#macro>
+
 <#macro form_delete action text="general.delete" prompt="general.delete.prompt" tip="general.delete.tip" role="">
 	<@authcheck role=role>
 		<a

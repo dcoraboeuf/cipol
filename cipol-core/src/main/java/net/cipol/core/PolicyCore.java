@@ -1,5 +1,19 @@
 package net.cipol.core;
 
+import static net.cipol.core.SQLColumns.CATEGORY;
+import static net.cipol.core.SQLColumns.DESCRIPTION;
+import static net.cipol.core.SQLColumns.DISABLED;
+import static net.cipol.core.SQLColumns.ID;
+import static net.cipol.core.SQLColumns.MEMBERS;
+import static net.cipol.core.SQLColumns.NAME;
+import static net.cipol.core.SQLColumns.PATH;
+import static net.cipol.core.SQLColumns.REFERENCE;
+import static net.cipol.core.SQLColumns.RULESETID;
+import static net.cipol.core.SQLColumns.RULE_ID;
+import static net.cipol.core.SQLColumns.UID;
+import static net.cipol.core.SQLColumns.VALUE;
+import static net.cipol.core.SQLValues.CATEGORY_POLICY;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -16,8 +30,8 @@ import net.cipol.model.Policy;
 import net.cipol.model.PolicySummary;
 import net.cipol.model.RuleDefinition;
 import net.cipol.model.RuleSet;
-import net.cipol.security.CipolRole;
 import net.cipol.model.support.PolicyField;
+import net.cipol.security.CipolRole;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -71,8 +85,8 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 		// Inserts the record
 		getNamedParameterJdbcTemplate().update(SQL.POLICY_CREATE,
 				new MapSqlParameterSource()
-					.addValue("uid", uid)
-					.addValue("name", name));
+					.addValue(UID, uid)
+					.addValue(NAME, name));
 		// OK
 		return uid;
 	}
@@ -82,8 +96,17 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 	@Secured(CipolRole.ADMIN)
 	@CacheEvict("policy")
 	public void deletePolicy(String uid) {
+		NamedParameterJdbcTemplate t = getNamedParameterJdbcTemplate();
 		log.debug("Deleting policy {}", uid);
-		getNamedParameterJdbcTemplate().update(SQL.POLICY_DELETE, Collections.singletonMap("uid", uid));
+		// Delete the associated parameters
+		t.update(SQL.PARAM_REMOVE_ALL_FOR_POLICY, Collections.singletonMap(UID, uid));
+		// Groups
+		t.update(SQL.GROUP_REMOVE_ALL, 
+				new MapSqlParameterSource()
+					.addValue(CATEGORY, CATEGORY_POLICY)
+					.addValue(REFERENCE, uid));
+		// Delete the policy
+		t.update(SQL.POLICY_DELETE, Collections.singletonMap(UID, uid));
 	}
 	
 	@Override
@@ -101,9 +124,9 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 		getNamedParameterJdbcTemplate().update(
 				SQL.POLICY_UPDATE,
 				new MapSqlParameterSource()
-					.addValue("uid", uid)
-					.addValue("name", policy.getName())
-					.addValue("description", policy.getDescription()));
+					.addValue(UID, uid)
+					.addValue(NAME, policy.getName())
+					.addValue(DESCRIPTION, policy.getDescription()));
 	}
 	
 	@Override
@@ -118,16 +141,31 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 			// Creates the group
 			getNamedParameterJdbcTemplate().update(SQL.POLICY_GROUP_CREATE,
 					new MapSqlParameterSource()
-						.addValue("uid", uid)
-						.addValue("name", name));
+						.addValue(UID, uid)
+						.addValue(NAME, name));
 		} catch (DuplicateKeyException ex) {
 			throw new PolicyGroupAlreadyExistsException(uid, name);
 		}
 	}
+	
+	@Override
+	@Transactional
+	@CacheEvict("policy")
+	@Secured(CipolRole.ADMIN)
+	public void groupDelete(String uid, String name) {
+		log.debug("Delete policy group {} for {}", new Object[] {name, uid});
+		// Checks the policy exists
+		checkPolicyExists (uid);
+		// Deletes the group
+		getNamedParameterJdbcTemplate().update(SQL.POLICY_GROUP_DELETE,
+				new MapSqlParameterSource()
+					.addValue(UID, uid)
+					.addValue(NAME, name));
+	}
 
 	protected void checkPolicyExists(String uid) throws EmptyResultDataAccessException {
 		try {
-			getNamedParameterJdbcTemplate().queryForMap(SQL.POLICY_FIND_BY_UID, Collections.singletonMap("uid", uid));
+			getNamedParameterJdbcTemplate().queryForMap(SQL.POLICY_FIND_BY_UID, Collections.singletonMap(UID, uid));
 		} catch (EmptyResultDataAccessException ex) {
 			throw new PolicyNotFoundException(uid);
 		}
@@ -143,26 +181,26 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 			// TODO Uses external mappers that use a named-parameter JDBC template
 			final NamedParameterJdbcTemplate t = getNamedParameterJdbcTemplate();
 			// Gets the policy
-			Policy policy = t.queryForObject(SQL.POLICY_FIND_BY_UID, Collections.singletonMap("uid", policyId), new RowMapper<Policy>() {
+			Policy policy = t.queryForObject(SQL.POLICY_FIND_BY_UID, Collections.singletonMap(UID, policyId), new RowMapper<Policy>() {
 				@Override
 				public Policy mapRow(ResultSet rs, int i)
 						throws SQLException {
 					Policy policy = new Policy();
 					policy.setUid(policyId);
-					policy.setName(rs.getString("name"));
-					policy.setDescription(rs.getString("description"));
+					policy.setName(rs.getString(NAME));
+					policy.setDescription(rs.getString(DESCRIPTION));
 					// Policy groups
 					List<Group> groups = t.query(SQL.GROUP_FIND_BY_CATEGORY_AND_REFERENCE,
 								new MapSqlParameterSource()
-									.addValue("category", "POLICY")
-									.addValue("reference", policyId),
+									.addValue(CATEGORY, CATEGORY_POLICY)
+									.addValue(REFERENCE, policyId),
 								new RowMapper<Group>() {
 									@Override
 									public Group mapRow(ResultSet rs, int arg1)
 											throws SQLException {
 										Group o = new Group();
-										o.setName(rs.getString("name"));
-										List<String> members = Arrays.asList(StringUtils.split(rs.getString("members"), ","));
+										o.setName(rs.getString(NAME));
+										List<String> members = Arrays.asList(StringUtils.split(rs.getString(MEMBERS), ","));
 										o.setMembers(members);
 										return o;
 									}
@@ -171,20 +209,20 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 					policy.setGroups(groups);
 					// Policy rulesets
 					List<RuleSet> rulesets = t.query(SQL.RULESET_FIND_BY_POLICY,
-							Collections.singletonMap("uid", policyId),
+							Collections.singletonMap(UID, policyId),
 							new RowMapper<RuleSet>() {
 								@Override
 								public RuleSet mapRow(ResultSet rs, int i)
 										throws SQLException {
 									RuleSet o = new RuleSet();
-									o.setId(rs.getInt("id"));
-									o.setPath(rs.getString("path"));
-									o.setDescription(rs.getString("description"));
-									o.setDisabled(rs.getBoolean("disabled"));
+									o.setId(rs.getInt(ID));
+									o.setPath(rs.getString(PATH));
+									o.setDescription(rs.getString(DESCRIPTION));
+									o.setDisabled(rs.getBoolean(DISABLED));
 									// Rules
 									List<RuleDefinition> ruleDefinitions = t.query (
 											SQL.RULEDEF_FIND_BY_RULESET,
-											Collections.singletonMap("rulesetid", rs.getInt("id")),
+											Collections.singletonMap(RULESETID, rs.getInt(ID)),
 											new RowMapper<RuleDefinition>() {
 												@Override
 												public RuleDefinition mapRow(
@@ -192,16 +230,16 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 														int i)
 														throws SQLException {
 													RuleDefinition o = new RuleDefinition();
-													o.setRuleId(rs.getString("ruleId"));
-													o.setDescription(rs.getString("description"));
-													o.setDisabled(rs.getBoolean("disabled"));
+													o.setRuleId(rs.getString(RULE_ID));
+													o.setDescription(rs.getString(DESCRIPTION));
+													o.setDisabled(rs.getBoolean(DISABLED));
 													// Rule parameters
 													// TODO Uses a common mapper
 													List<ParamValue> params = t.query (
 															SQL.PARAM_FIND_BY_CATEGORY_AND_REFERENCE,
 															new MapSqlParameterSource()
-																.addValue("category", "RULEDEF")
-																.addValue("reference", rs.getInt("id")),
+																.addValue(CATEGORY, "RULEDEF")
+																.addValue(REFERENCE, rs.getInt(ID)),
 															new RowMapper<ParamValue>() {
 																@Override
 																public ParamValue mapRow(
@@ -209,8 +247,8 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 																		int i)
 																		throws SQLException {
 																	ParamValue o = new ParamValue();
-																	o.setName(rs.getString("name"));
-																	o.setValue(rs.getString("value"));
+																	o.setName(rs.getString(NAME));
+																	o.setValue(rs.getString(VALUE));
 																	return o;
 																}
 															});
@@ -245,9 +283,9 @@ public class PolicyCore extends AbstractDaoService implements PolicyService {
 			public PolicySummary mapRow(ResultSet rs, int i)
 					throws SQLException {
 				PolicySummary policy = new PolicySummary();
-				policy.setUid(rs.getString("uid"));
-				policy.setName(rs.getString("name"));
-				policy.setDescription(rs.getString("description"));
+				policy.setUid(rs.getString(UID));
+				policy.setName(rs.getString(NAME));
+				policy.setDescription(rs.getString(DESCRIPTION));
 				return policy;
 			}
 		});

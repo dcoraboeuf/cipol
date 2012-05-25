@@ -46,8 +46,9 @@
 					<tbody id="policy-groups">
 						<#list policy.groups as group>
 							<tr>
-								<th>
+								<th id="group_${group.name?html}">
 									${group.name?html}
+									<@form_delete_icon action="Policy.groupDelete('${policy.uid}', '${group.name?html}');" />
 								</th>
 								<#list group.members as member>
 									<td>${member?html}</td>

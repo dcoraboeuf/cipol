@@ -1,12 +1,22 @@
 var Policy = function () {
 
-	function groupAdd (groupName) {
+	function groupAdd (uid, groupName) {
 		var tpl = new Ext.Template(
-			'<tr>',
-				'<th>{0}</th>',
+			'<tr id="group_{0}">',
+				'<th>',
+					'{0}',
+					' ',
+					'<img src="images/delete.png" class="action" onclick="{1}" />',
+				'</th>',
 			'</tr>'
 		);
-		tpl.append('policy-groups', [ groupName ]);
+		var action = String.format("Policy.groupDelete('{0}', '{1}');", uid, groupName);
+		tpl.append('policy-groups', [ groupName, action ]);
+	}
+
+	function groupRemove (groupName) {
+		var id = 'group_' + groupName;
+		Ext.fly(id).remove();
 	}
 
 	function groupCreate (uid) {
@@ -24,7 +34,7 @@ var Policy = function () {
 					var message = response.responseText;
 					if (message == "OK") {
 						Ext.fly('policy-group-name').dom.value = '';
-						groupAdd(groupName);
+						groupAdd(uid, groupName);
 					} else {
 						alert(message);
 					}
@@ -34,9 +44,31 @@ var Policy = function () {
 		// Prevents submit
 		return false;
 	}
+	
+	function groupDelete (uid, name) {
+		// Prompting
+		if (Forms.askForConfirmation('policy.group.delete.prompt', name)) {
+			// Execution
+			Ext.Ajax.request({
+				url: 'ui/policy/group/' + uid + '/delete/' + name,
+				failure: function (response) {
+					alert(String.format('[{0}] {1}', response.status, response.statusText));
+				},
+				success: function (response) {
+					var message = response.responseText;
+					if (message == "OK") {
+						groupRemove(name);
+					} else {
+						alert(message);
+					}
+				}
+			});
+			}
+	}
 
 	return {
-		groupCreate: groupCreate
+		groupCreate: groupCreate,
+		groupDelete: groupDelete
 	};
 
 } ();

@@ -1,5 +1,8 @@
 package net.cipol.core;
 
+import static net.cipol.core.SQLColumns.*;
+import static net.cipol.core.SQLColumns.VALUE;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -35,8 +38,8 @@ public class ConfigCore extends AbstractDaoService implements ConfigService {
 				int i)
 				throws SQLException {
 			ParamValue o = new ParamValue();
-			o.setName(rs.getString("name"));
-			o.setValue(rs.getString("value"));
+			o.setName(rs.getString(NAME));
+			o.setValue(rs.getString(VALUE));
 			return o;
 		}
 	}
@@ -48,8 +51,8 @@ public class ConfigCore extends AbstractDaoService implements ConfigService {
 	
 	protected MapSqlParameterSource categoryReference (String category, String reference) {
 		return new MapSqlParameterSource()
-			.addValue("category", category)
-			.addValue("reference", reference);
+			.addValue(CATEGORY, category)
+			.addValue(REFERENCE, reference);
 	}
 	
 	@Override
@@ -85,8 +88,8 @@ public class ConfigCore extends AbstractDaoService implements ConfigService {
 						public Instance mapRow(ResultSet rs, int i)
 								throws SQLException {
 							Instance o = new Instance();
-							o.setCategory(rs.getString("category"));
-							o.setReference(rs.getString("reference"));
+							o.setCategory(rs.getString(CATEGORY));
+							o.setReference(rs.getString(REFERENCE));
 							return o;
 						}});
 		} catch (EmptyResultDataAccessException ex) {
@@ -108,9 +111,8 @@ public class ConfigCore extends AbstractDaoService implements ConfigService {
 		String category = type.getName();
 		// Query
 		try {
-			ParamValue paramValue = t.queryForObject (SQL.PARAM_FIND_BY_CATEGORY_AND_REFERENCE, new MapSqlParameterSource()
-						.addValue("category", category)
-						.addValue("reference", reference), new ParamRowMapper());
+			ParamValue paramValue = t.queryForObject (SQL.PARAM_FIND_BY_CATEGORY_AND_REFERENCE, 
+					categoryReference(category, reference), new ParamRowMapper());
 			return paramValue.getValue();
 		} catch (EmptyResultDataAccessException ex) {
 			if (required) {
@@ -130,10 +132,7 @@ public class ConfigCore extends AbstractDaoService implements ConfigService {
 		String category = actualType.getName();
 		// Loads the instance (just checking the existence)
 		try {
-			t.queryForMap(SQL.INSTANCE_FIND_BY_CATEGORY_AND_REFERENCE, 
-								new MapSqlParameterSource()
-									.addValue("category", category)
-									.addValue("reference", reference));
+			t.queryForMap(SQL.INSTANCE_FIND_BY_CATEGORY_AND_REFERENCE, categoryReference(category, reference));
 		} catch (EmptyResultDataAccessException ex) {
 			return null;
 		}
@@ -141,9 +140,7 @@ public class ConfigCore extends AbstractDaoService implements ConfigService {
 		// TODO Uses the mapper for parameters
 		List<ParamValue> params = t.query (
 				SQL.PARAM_FIND_BY_CATEGORY_AND_REFERENCE,
-				new MapSqlParameterSource()
-					.addValue("category", category)
-					.addValue("reference", reference),
+				categoryReference(category, reference),
 				new ParamRowMapper());
 		// Creates the instance
 		BeanWrapper wrapper = new BeanWrapperImpl(actualType);

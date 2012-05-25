@@ -6,7 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HomeSupport {
+public abstract class HomeSupport {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(HomeSupport.class);
@@ -33,6 +33,9 @@ public class HomeSupport {
 		}
 		log.info("Home at {}", home);
 		return home;
+	}
+	
+	private HomeSupport() {
 	}
 
 }
