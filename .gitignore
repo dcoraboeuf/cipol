@@ -7,5 +7,5 @@ cipol_env.py
 dev.sql
 .idea
 *.iml
-
+*.launch
 

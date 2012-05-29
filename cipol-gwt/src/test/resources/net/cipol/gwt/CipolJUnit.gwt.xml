@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <!-- Inherit our applications main module.                      -->
+  <inherits name='net.cipol.gwt.Cipol' />
+
+  <!-- Specify the path to any remote services.                   -->
+  <servlet path="/Cipol/greet" class="net.cipol.gwt.server.GreetingServiceImpl" />
+
+</module>
