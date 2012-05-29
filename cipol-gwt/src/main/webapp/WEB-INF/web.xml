@@ -5,20 +5,9 @@
 
 <web-app>
 
-  <!-- Servlets -->
-  <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>net.cipol.gwt.server.GreetingServiceImpl</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/Cipol/greet</url-pattern>
-  </servlet-mapping>
-
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>Cipol.html</welcome-file>
+    <welcome-file>Home.html</welcome-file>
   </welcome-file-list>
 
 </web-app>

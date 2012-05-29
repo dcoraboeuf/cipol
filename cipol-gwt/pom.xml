@@ -80,9 +80,9 @@
         <!-- Plugin configuration. There are many available options, see 
           gwt-maven-plugin documentation at codehaus.org -->
         <configuration>
-          <runTarget>Cipol.html</runTarget>
+          <runTarget>Home.html</runTarget>
           <hostedWebapp>${webappDirectory}</hostedWebapp>
-          <i18nMessagesBundle>net.cipol.gwt.client.Messages</i18nMessagesBundle>
+          <i18nMessagesBundle>net.cipol.gwt.base.Messages</i18nMessagesBundle>
         </configuration>
       </plugin>
 
