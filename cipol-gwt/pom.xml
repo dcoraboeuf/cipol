@@ -8,11 +8,12 @@
     <groupId>net.cipol</groupId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>net.cipol</groupId>
+
   <artifactId>cipol-gwt</artifactId>
+
   <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>GWT Maven Archetype</name>
+
+  <name>CIPOL GWT</name>
 
   <properties>
     <!-- Convenience property to set the GWT version -->
@@ -101,15 +102,6 @@
         </executions>
         <configuration>
           <webappDirectory>${webappDirectory}</webappDirectory>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
-        <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
         </configuration>
       </plugin>
     </plugins>
