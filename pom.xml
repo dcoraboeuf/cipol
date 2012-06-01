@@ -63,7 +63,7 @@
 		<module>cipol-jira</module>
 		<module>cipol-test</module>
 		<module>cipol-security</module>
-    <module>cipol-gwt</module>
+<!-- 		<module>cipol-gwt</module> -->
   </modules>
 
 	<dependencyManagement>
