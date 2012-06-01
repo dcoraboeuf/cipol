@@ -11,7 +11,11 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 	<context:component-scan base-package="net.cipol" />
 
 	<!--<task:annotation-driven /> -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven>
+		<mvc:return-value-handlers>
+			<bean class="net.cipol.web.page.support.PageMethodReturnValueHandler" />
+		</mvc:return-value-handlers>
+	</mvc:annotation-driven>
 
 	<!-- Interceptors -->
 	<mvc:interceptors>
